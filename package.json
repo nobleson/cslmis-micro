@@ -1,0 +1,65 @@
+{
+  "name": "cslmis-micro",
+  "version": "0.0.1",
+  "description": "Mircoservice Application for CSLMIS",
+  "dependencies": {
+    "@coreui/coreui": "^2.1.9",
+    "@coreui/coreui-plugin-chartjs-custom-tooltips": "^1.3.0",
+    "@coreui/icons": "0.2.0",
+    "@coreui/vue": "^2.1.2",
+    "@nuxtjs/axios": "^5.3.6",
+    "bootstrap": "^4.3.1",
+    "bootstrap-vue": "^2.0.0-rc.19",
+    "buefy": "^0.7.4",
+    "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "chart.js": "^2.8.0",
+    "core-js": "^2.6.5",
+    "css-vars-ponyfill": "^1.17.2",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "flag-icon-css": "^3.3.0",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.4.0",
+    "js-cookie": "^2.2.0",
+    "mocha": "^2.4.5",
+    "mongodb": "^2.1.16",
+    "morgan": "^1.7.0",
+    "nuxt": "^2.6.2",
+    "nuxt-buefy": "^0.3.5",
+    "object-assign": "4.1.0",
+    "perfect-scrollbar": "^1.4.0",
+    "popper.js": "^1.15.0",
+    "simple-line-icons": "^2.4.1",
+    "vue": "^2.6.10",
+    "vue-chartjs": "^3.4.2",
+    "vue-croppie": "^2.0.1",
+    "vue-image-upload-croppie": "^1.0.6",
+    "vue-perfect-scrollbar": "git+https://github.com/Degfy/vue-perfect-scrollbar.git#1.x"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0"
+  },
+  "engine": {
+    "node": "*",
+    "npm": "*"
+  },
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nobleson/cslmis-micro"
+  },
+  "author": "Ityav Luke <noblesityav@gmail.com>",
+  "license": "CC-BY-1.0",
+  "bugs": {
+    "url": "https://github.com/nobleson/cslmis-micro/issues"
+  },
+  "homepage": "https://github.com/nobleson/cslmis-micro"
+}
