@@ -2,16 +2,16 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
 
-const _e1020e3e = () => interopDefault(import('..\\pages\\login\\index.vue' /* webpackChunkName: "pages_login_index" */))
-const _92b65132 = () => interopDefault(import('..\\pages\\register\\index.vue' /* webpackChunkName: "pages_register_index" */))
-const _15a0824c = () => interopDefault(import('..\\pages\\cslmis\\Artisans.vue' /* webpackChunkName: "pages_cslmis_Artisans" */))
-const _82cf2a8a = () => interopDefault(import('..\\pages\\cslmis\\Centers.vue' /* webpackChunkName: "pages_cslmis_Centers" */))
-const _85eb9bd0 = () => interopDefault(import('..\\pages\\cslmis\\Companies.vue' /* webpackChunkName: "pages_cslmis_Companies" */))
-const _55970671 = () => interopDefault(import('..\\pages\\cslmis\\dashboard.vue' /* webpackChunkName: "pages_cslmis_dashboard" */))
-const _319ce5a2 = () => interopDefault(import('..\\pages\\cslmis\\Trades.vue' /* webpackChunkName: "pages_cslmis_Trades" */))
-const _13c5f67d = () => interopDefault(import('..\\pages\\pages\\Page404.vue' /* webpackChunkName: "pages_pages_Page404" */))
-const _4873d3ba = () => interopDefault(import('..\\pages\\pages\\Page500.vue' /* webpackChunkName: "pages_pages_Page500" */))
-const _5fbc556a = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
+const _c755a586 = () => interopDefault(import('..\\pages\\login\\index.vue' /* webpackChunkName: "pages_login_index" */))
+const _ec4814ea = () => interopDefault(import('..\\pages\\register\\index.vue' /* webpackChunkName: "pages_register_index" */))
+const _ad65aeb0 = () => interopDefault(import('..\\pages\\cslmis\\Artisans.vue' /* webpackChunkName: "pages_cslmis_Artisans" */))
+const _dc60ee42 = () => interopDefault(import('..\\pages\\cslmis\\Centers.vue' /* webpackChunkName: "pages_cslmis_Centers" */))
+const _c21b5188 = () => interopDefault(import('..\\pages\\cslmis\\Companies.vue' /* webpackChunkName: "pages_cslmis_Companies" */))
+const _377f2b95 = () => interopDefault(import('..\\pages\\cslmis\\dashboard.vue' /* webpackChunkName: "pages_cslmis_dashboard" */))
+const _61b772fe = () => interopDefault(import('..\\pages\\cslmis\\Trades.vue' /* webpackChunkName: "pages_cslmis_Trades" */))
+const _43e083d9 = () => interopDefault(import('..\\pages\\pages\\Page404.vue' /* webpackChunkName: "pages_pages_Page404" */))
+const _788e6116 = () => interopDefault(import('..\\pages\\pages\\Page500.vue' /* webpackChunkName: "pages_pages_Page500" */))
+const _fc0fdee4 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 Vue.use(Router)
 
@@ -89,43 +89,43 @@ export function createRouter() {
 
     routes: [{
       path: "/login",
-      component: _e1020e3e,
+      component: _c755a586,
       name: "login"
     }, {
       path: "/register",
-      component: _92b65132,
+      component: _ec4814ea,
       name: "register"
     }, {
       path: "/cslmis/Artisans",
-      component: _15a0824c,
+      component: _ad65aeb0,
       name: "cslmis-Artisans"
     }, {
       path: "/cslmis/Centers",
-      component: _82cf2a8a,
+      component: _dc60ee42,
       name: "cslmis-Centers"
     }, {
       path: "/cslmis/Companies",
-      component: _85eb9bd0,
+      component: _c21b5188,
       name: "cslmis-Companies"
     }, {
       path: "/cslmis/dashboard",
-      component: _55970671,
+      component: _377f2b95,
       name: "cslmis-dashboard"
     }, {
       path: "/cslmis/Trades",
-      component: _319ce5a2,
+      component: _61b772fe,
       name: "cslmis-Trades"
     }, {
       path: "/pages/Page404",
-      component: _13c5f67d,
+      component: _43e083d9,
       name: "pages-Page404"
     }, {
       path: "/pages/Page500",
-      component: _4873d3ba,
+      component: _788e6116,
       name: "pages-Page500"
     }, {
       path: "/",
-      component: _5fbc556a,
+      component: _fc0fdee4,
       name: "index"
     }],
 
