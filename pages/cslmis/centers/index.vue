@@ -14,12 +14,8 @@
 </template>
 
 <script>
-import MyCompo from '~/components/MyComponent.vue'
   export default {
-    name: 'centers',
-    components: {
-      MyCompo
-    },
+    name: 'centers'
 
   }
 </script>
