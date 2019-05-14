@@ -6,10 +6,10 @@
   <div class="form-wizard" style="width:800px; margin:0 auto;" color="red">
     <form-wizard @on-complete="onComplete"
                        :start-index="0"
-                       color="blue">
+                       color="#3E4095">
      <tab-content title="Personal details"
                   icon="icon-user">
-       <div>
+       <div class="form-wizard" style="width:800px; margin:0 auto;" color="red">
     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
 
      

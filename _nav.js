@@ -1,38 +1,35 @@
+
 export default {
   items: [
     {
       name: 'Dashboard',
-      url: '/cslmis/dashboard',
       icon: 'icon-speedometer',
       badge: {
-        variant: 'primary',
+        variant: 'secondary',
         text: 'NEW'
       }
     },
+    
     {
-      name: 'Company',
-      url: '/cslmis/companies'
+      name: 'Job Application',
+      url: '/cslmis/jobapplication',
+            icon: 'icon-pencil'
     },
     {
-      name: 'Centers',
-      url: '/cslmis/centers',
+      name: 'Job Advert',
+      url: '/cslmis/jobadvert',
+      icon: 'icon-star'
+    },
+    {
+      name: 'Retrenchment',
+      url: '/cslmis/retrenchement',
       icon: 'icon-pencil'
     },
     {
-      name: 'Artisans',
-      url: '/cslmis/artisans',
-      icon: 'icon-pencil'
+      name: 'Labour Statistic',
+      url: '/cslmis/labourstatistic',
+      icon: 'icon-star'
     },
-    {
-      name: 'Trades',
-      url: '/cslmis/trades',
-      icon: 'icon-pencil'
-    },
-    {
-      name: 'Facilities',
-      url: '/cslmis/facility',
-      icon: 'icon-pencil'
-    }
-
+    
   ]
 }

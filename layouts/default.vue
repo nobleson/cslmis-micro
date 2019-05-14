@@ -10,7 +10,7 @@
       </b-navbar-nav>
     </AppHeader>
     <div class="app-body">
-      <AppSidebar :navItems="nav"></AppSidebar>
+      <AppSidebar :navItems="nav" class="primary"></AppSidebar>
       <main class="main">
         <Breadcrumb :list="list"/>
         <div class="container-fluid">
@@ -72,6 +72,9 @@
     }
 </script>
 
-<style>
+<style scoped>
+.primary{
+  background-color: #3E4095;
+}
 
 </style>
