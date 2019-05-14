@@ -6,11 +6,11 @@ const _c755a586 = () => interopDefault(import('..\\pages\\login\\index.vue' /* w
 const _ec4814ea = () => interopDefault(import('..\\pages\\register\\index.vue' /* webpackChunkName: "pages_register_index" */))
 const _6f0c520c = () => interopDefault(import('..\\pages\\cslmis\\artisans\\index.vue' /* webpackChunkName: "pages_cslmis_artisans_index" */))
 const _48dc26a3 = () => interopDefault(import('..\\pages\\cslmis\\centers\\index.vue' /* webpackChunkName: "pages_cslmis_centers_index" */))
+const _3b3d24b4 = () => interopDefault(import('..\\pages\\cslmis\\companies\\index.vue' /* webpackChunkName: "pages_cslmis_companies_index" */))
 const _377f2b95 = () => interopDefault(import('..\\pages\\cslmis\\dashboard.vue' /* webpackChunkName: "pages_cslmis_dashboard" */))
 const _79ff2be0 = () => interopDefault(import('..\\pages\\cslmis\\facility\\index.vue' /* webpackChunkName: "pages_cslmis_facility_index" */))
 const _43e083d9 = () => interopDefault(import('..\\pages\\pages\\Page404.vue' /* webpackChunkName: "pages_pages_Page404" */))
 const _788e6116 = () => interopDefault(import('..\\pages\\pages\\Page500.vue' /* webpackChunkName: "pages_pages_Page500" */))
-const _fc67578e = () => interopDefault(import('..\\pages\\cslmis\\centers\\training-center.vue' /* webpackChunkName: "pages_cslmis_centers_training-center" */))
 const _0a79ac0f = () => interopDefault(import('..\\pages\\cslmis\\companies\\Companies.vue' /* webpackChunkName: "pages_cslmis_companies_Companies" */))
 const _2ffd56e6 = () => interopDefault(import('..\\pages\\cslmis\\trades\\Trades.vue' /* webpackChunkName: "pages_cslmis_trades_Trades" */))
 const _fc0fdee4 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
@@ -106,6 +106,10 @@ export function createRouter() {
       component: _48dc26a3,
       name: "cslmis-centers"
     }, {
+      path: "/cslmis/companies",
+      component: _3b3d24b4,
+      name: "cslmis-companies"
+    }, {
       path: "/cslmis/dashboard",
       component: _377f2b95,
       name: "cslmis-dashboard"
@@ -121,10 +125,6 @@ export function createRouter() {
       path: "/pages/Page500",
       component: _788e6116,
       name: "pages-Page500"
-    }, {
-      path: "/cslmis/centers/training-center",
-      component: _fc67578e,
-      name: "cslmis-centers-training-center"
     }, {
       path: "/cslmis/companies/Companies",
       component: _0a79ac0f,

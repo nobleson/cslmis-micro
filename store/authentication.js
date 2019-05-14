@@ -18,29 +18,41 @@ export const mutations = {
 export const actions= {
   authenticateUser(vuexContext,userData) {
     let myUrl;
-    let user = {
+    let user;
+    if(userData.isSignIn) {
+      user = {
       email: userData.email,
       password: userData.password,
       returnSecureToken: true
-    }
-    if(userData.isSignIn) {
-      myUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyCl6IxLV7itYUWRNZs9SUKYRT6w70_h3mc';
+    }      
+      myUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM';
     }else {
-      myUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyCl6IxLV7itYUWRNZs9SUKYRT6w70_h3mc';
+      
+        user = {
+        displayName: userData.username,
+        email: userData.email,
+        password: userData.password,
+        returnSecureToken: true
+      }
+
+      myUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM';
     }
 
-    return this.$axios.$post(myUrl,
+    return this.$axios.$post(myUrl, 
       user ).then(e => {
       vuexContext.commit('setUser', {email: e.email})
       let token = e.idToken;
       vuexContext.commit('setToken', token);
       Cookie.set('jwt', token);
       localStorage.setItem('user-token', token);
+
+/*       return this.$axios.$post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM',
+          {idToken: token} ).then(e => {
+        }); */
+    }).catch(function (error) { 
+      console.log(error);
     });
-
   },
-
-
   signOut(vuexContext) {
     localStorage.removeItem('user-token');
     Cookie.remove('jwt')

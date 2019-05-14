@@ -6,8 +6,16 @@
         <div>CSLMIS-Admin</div>
       </b-link>
       <SidebarToggler class="d-md-down-none" display="lg" />
+
       <b-navbar-nav class="ml-auto">
+        <b-nav-item-dropdown right>
+          <!-- Using 'button-content' slot -->
+          <template slot="button-content"><em>User</em></template>
+          <b-dropdown-item  href="#">Profile</b-dropdown-item>
+          <b-dropdown-item @click="logout" href="#">Logout</b-dropdown-item>
+        </b-nav-item-dropdown>
       </b-navbar-nav>
+
     </AppHeader>
     <div class="app-body">
       <AppSidebar :navItems="nav"></AppSidebar>
@@ -37,9 +45,13 @@
     import { Header as AppHeader, SidebarToggler, SidebarFooter, SidebarForm, SidebarHeader, SidebarMinimizer, SidebarNav, Aside as AppAside, AsideToggler, Footer as TheFooter, Breadcrumb } from '@coreui/vue'
     import DefaultHeaderDropdownAccnt from './DefaultHeaderDropdownAccnt'
     import AppSidebar from '~/components/Sidebar/Sidebar.vue'
+    import {mapGetters, mapActions} from 'vuex'
 
     export default {
-        middleware: ['check-auth'],
+        middleware: [
+          'check-auth',
+           'auth'
+           ],
         name: 'full',
         components: {
             AsideToggler,
@@ -68,7 +80,16 @@
             list () {
                 return this.$route.matched.filter((route) => route.name || route.meta.label )
             }
+        },
+        methods: {
+          ...mapActions({logoutUser: 'authentication/signOut'}),
+          logout() { 
+            this.logoutUser().then(e => { 
+              this.$router.push('/');
+            });
+          }
         }
+
     }
 </script>
 

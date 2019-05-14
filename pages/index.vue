@@ -1,192 +1,102 @@
 <template>
-<div class="">
-    <b-navbar class="navbar-expand-lg navbar-dark bg-dark static-top" toggleable="lg" type="dark" variant="info">
-        <div class="container">
-        <b-navbar-brand href="#">CSLMIS</b-navbar-brand>
-
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-        <b-collapse id="nav-collapse" is-nav>
-
-            <!-- Right aligned nav items -->
-            <b-navbar-nav class="ml-auto">
-                <b-nav-item href="#">Publications</b-nav-item>
-                <b-nav-item href="#">Reports</b-nav-item>
-                <b-nav-item href="#">About Us</b-nav-item>
-            </b-navbar-nav>
-        </b-collapse>
-        </div>
-    </b-navbar>
-
-    <header class=" pb-5">
-        <div class="container">
-
-            <!-- Portfolio Item Heading -->
-            <h1 class="my-4">CSLMIS
-                <small>Get certified</small>
-            </h1>
-
-            <!-- Portfolio Item Row -->
-            <div class="row">
-
-                <div class="col-md-8">
-                    <b-carousel
-                            id="carousel-1"
-                            v-model="slide"
-                            :interval="4000"
-                            controls
-                            indicators
-                            background="#ababab"
-                            img-width="1024"
-                            img-height="480"
-                            style="text-shadow: 1px 1px 2px #333;"
-                            @sliding-start="onSlideStart"
-                            @sliding-end="onSlideEnd"
-                    >
-                        <!-- Text slides with image -->
-                        <b-carousel-slide
-                                caption="First slide"
-                                text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-                                img-src="https://picsum.photos/1024/480/?image=52"
-                        ></b-carousel-slide>
-
-                        <!-- Slides with custom text -->
-                        <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54">
-                            <h1>Hello world!</h1>
-                        </b-carousel-slide>
-
-                        <!-- Slides with image only -->
-                        <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58"></b-carousel-slide>
-
-                        <!-- Slides with img slot -->
-                        <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-                        <b-carousel-slide>
-                            <img
-                                    slot="img"
-                                    class="d-block img-fluid w-100"
-                                    width="1024"
-                                    height="480"
-                                    src="https://picsum.photos/1024/480/?image=55"
-                                    alt="image slot"
-                            >
-                        </b-carousel-slide>
-
-                        <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-                        <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
-                                a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
-                            </p>
-                        </b-carousel-slide>
-                    </b-carousel>
+  <div class="app flex-row align-items-center">
+    <div class="container">
+       <b-row>
+           <b-col md="8">
+           <h4 class="text-center">CSLMIS Portal</h4>
+           </b-col>
+       </b-row>
+      <b-row class="justify-content-center">
+        <b-col md="8">
+          <b-card-group>
+            <b-card no-body class="text-white primary py-5 d-md-down-none" style="width:44%">
+              <b-card-body class="text-center">
+                <div>
+                  <img src="~/assets/images/logo.png" alt="Logo">
                 </div>
-
-                <div class="col-md-4">
-                    <h3 class="mt-3">Skill Exchange</h3>
-                    <p>Labour Market Information System</p>
-
-                    <h3 class="mt-3">Get Trained</h3>
-                    <p>Endless possibilities</p>
-                </div>
-
-            </div>
-            <!-- /.row -->
-
-            <!-- Related Projects Row -->
-        </div>
-    </header>
-    <section class="bg-white pt-5">
-        <h3 class="my-4 text-center">Top Training Centers</h3>
-
-
-        <div class="container">
-        <b-row>
-            <b-col v-for="(center, index) in topCenters" :key="index" sm="6" md="3" class="mb-4">
-                <b-card>
-                    <div class="box-part text-center">
-                        <i class="fa fa-address-card fa-3x"></i>
-                        <div class="title">
-                            <h4>{{center.name}}</h4>
-                        </div>
-
-                        <div class="text">
-                            <span>{{center.description}}</span>
-                        </div>
-
-                        <a href="#">Learn More</a>
-
-                    </div>
-                    <div slot="footer"><small class="text-muted">Training 33</small></div>
-
-                </b-card>
-            </b-col>
-        </b-row>
-        </div>
-        <!-- /.row -->
-    </section>
-    <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
-        <div class="container text-center">
-            <small>Copyright &copy; CSLMIS</small>
-        </div>
-    </footer>
-</div>
-
+                <h1>CORBON</h1>
+              </b-card-body>
+            </b-card>
+            <b-card no-body class="p-4">
+              <b-card-body>
+                <b-form>
+                  <h1>Login</h1>
+                  <p class="text-muted">Sign In to your account</p>
+                  <b-input-group class="mb-3">
+                    <b-input-group-prepend><b-input-group-text><i class="icon-user"></i></b-input-group-text></b-input-group-prepend>
+                    <b-form-input type="text" class="form-control" v-model="user.email" placeholder="Username" autocomplete="username email" />
+                  </b-input-group>
+                  <b-input-group class="mb-4">
+                    <b-input-group-prepend><b-input-group-text><i class="icon-lock"></i></b-input-group-text></b-input-group-prepend>
+                    <b-form-input type="password" v-model="user.password" class="form-control" placeholder="Password" autocomplete="current-password" />
+                  </b-input-group>
+                  <b-row>
+                    <b-col cols="6">
+                      <b-button @click="logIn" variant="primary" class="px-4">Login</b-button>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                      <b-col class="signup">
+                    <span class="pull-right mt-20">Don't have account yet? <router-link to='/register'>SignUp</router-link></span>
+                    </b-col>
+                  </b-row>
+                </b-form>
+              </b-card-body>
+            </b-card>
+          </b-card-group>
+        </b-col>
+      </b-row>
+      <b-row  class="justify-content-center">
+        <a href="https://admin.cslmis.gov.ng">CSLMIS</a>
+        <span class="ml-1">&copy; 2019 Admin Portal.</span>
+        <span>Powered by </span>
+        <a href="https://corbon.gov.ng"> CORBON </a>
+      </b-row>
+    </div>
+  </div>
 </template>
 
 <script>
-
+  import {mapGetters, mapActions} from 'vuex'
 export default {
-  layout: 'empty',
-    middleware: 'take-login',
-    data(){
-      return {
-          topCenters: [
-              {
-                  name: 'Mutual Links',
-                  description: 'Teaches computer programming and other technical skills'
-              },
-              {
-                  name: 'Mutual Links',
-                  description: 'Teaches computer programming and other technical skills'
-              },
-              {
-                  name: 'Mutual Links',
-                  description: 'Teaches computer programming and other technical skills'
-              },
-              {
-                  name: 'Mutual Links',
-                  description: 'Teaches computer programming and other technical skills'
-              }
+  name: 'Login',
+  layout: "auth",
 
-          ],
-          topCompanies: [
-              {
-                  name: 'NNPC',
-                  description: 'some descrtn to go with it'
-              },
-              {
-                  name: 'NNPC',
-                  description: 'some descrtn to go with it'
-              },
-              {
-                  name: 'NNPC',
-                  description: 'some descrtn to go with it'
-              },
-              {
-                  name: 'NNPC',
-                  description: 'some descrtn to go with it'
-              }
-          ]
+  data() {
+    return {
+      user: {
+        email: '',
+        password: '',
+        isSignIn: true
       }
     }
+  },
+  methods: {
+    ...mapActions({authenticateUser: 'authentication/authenticateUser'}),
+    logIn() {
+      this.authenticateUser(this.user).then(e => {
+       console.log(JSON.stringify("Login:"+e));
+        this.$router.push('/cslmis/dashboard');
+      });
+    },
+    resetPassword() {
+      //reset password code. probably dispatch to an action.
+    },
+    checkEmailVerificationStstus(){
+      return
+    }
+  }
 }
 </script>
-
-<style>
-    #page-content {
-        flex: 1 0 auto;
-    }
-
-
-
+<style scoped>
+.signup{
+    margin-top: 50px;
+}
+.bg-primary{
+  background-color: #3E4095;  
+}
+.primary{
+  background-color: #3E4095;  
+}
 </style>
+

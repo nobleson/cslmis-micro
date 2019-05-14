@@ -18,4 +18,25 @@
 export default {
   name: 'companies',
 }
+
+
+/* const companySchema = new mongoose.Schema({
+    _id: String,
+    companyName: String,
+    companyAcronym: String,
+    companyNationality: String,
+    companyStatus: String,
+    companyWebsite: String,
+    companyAddress: String,
+    companyTelephone: String,
+    companyEmail: String,
+    companyCAC: String,
+    companyFounded: String,
+    companyActivities: String,
+    companyLocalGovernment: String,
+    companyState: String,
+    dateRegistered: String
+    
+})
+https://shielded-savannah-72922.herokuapp.com/ */
 </script>
