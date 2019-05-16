@@ -27,7 +27,7 @@
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
-                      <b-button @click="logIn" variant="primary" class="px-4">Login</b-button>
+                    <b-nav-item href="#"><b-button variant="primary" @click="gotologin">Login</b-button></b-nav-item>
                     </b-col>
                   </b-row>
                 </b-form>

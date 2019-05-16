@@ -1,77 +1,86 @@
 <template>
 
     <div class="animated fadeIn">
-      <div slot="header">
-        <font-awesome-icon icon="arrow-left"></font-awesome-icon>
-        <b-button @click="$emit('changeComponent', 'JobApplicationView')">Back</b-button>
-      </div>
+     <b-button @click="$emit('changeComponent', 'JobApplicationView')">Back</b-button>
      <hr>
-     
-      <div class="form-wizard" style="width:800px; margin:0 auto;">
-      <b-card class="form-wizard" style="width:800px; margin:0 auto;">
-        <h2>  Job Application</h2>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <div class="app flex-row align-items-center">
+    <div class="container">
+      <b-row class="justify-content-center">
+        <b-col md="10" sm="8">
+          <b-card no-body class="mx-6">
+            <b-card-body class="p-6">
+            
+                <h1>Registeration Form</h1>
+                <p class="">Compulsory fields are marked with asteriks <span class="asteriks">*</span></p>
+                
+                <b-form  v-if="show">
 
-      <b-form-group id="input-group-2" label="Job Advert Id:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.jobAdvertId"
-          required
-          placeholder="Enter Job Advert Id"
-        ></b-form-input>
-      </b-form-group>
+                  <b-form-group >
+                    <label  label-for="jobAdvertId">Job Advert Id <span class="asteriks">*</span> </label>
+                    <b-form-input
+                      id="jobAdvertId"
+                      v-model="form.jobAdvertId"
+                      required
+                      placeholder="Enter Job Advert Id"
+                    ></b-form-input>
+                  </b-form-group>
 
-      <b-form-group id="input-group-2" label="Company Id:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.companyId"
-          required
-          placeholder="Enter Company Id"
-        ></b-form-input>
-      </b-form-group>
+                  <b-form-group>
+                    <label  label-for="companyId">Company Id: <span class="asteriks"></span> </label>
+                    <b-form-input
+                      id="companyId"
+                      v-model="form.companyId"
+                      placeholder="Enter Company Id"
+                    ></b-form-input>
+                  </b-form-group>
 
 
-      <b-form-group id="input-group-2" label="Artisan Id:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.artisanId"
-          required
-          placeholder="Enter artisan Id"
-        ></b-form-input>
+                <b-form-group>
+                <label label-for="artisanId">Artisan Id: <span class="asteriks">*</span> </label>
+                  <b-form-input
+                    id="artisanId"
+                    v-model="form.artisanId"
+                    required
+                    placeholder="Enter Artisan Id"
+                  ></b-form-input>
+                  </b-form-group>
       
-      </b-form-group>
-            <b-form-group id="input-group-2" label="Date of Birth:" label-for="input-2">
-        <datepicker value="2018-9-5" format="YYYY-M-D" name="date2"></datepicker>
+                   <b-form-group>
+                     <label label-for="dateApplied">Date Applied: <span class="asteriks">*</span> </label>
+                        <date-picker v-model="NewjobApplicationForm.dateApplied" :config="{format: 'DD/MM/YYYY'}"></date-picker>
       
-      </b-form-group>
+                  </b-form-group>
 
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
-    </b-form>
-     </b-card>
-     </div>
-    
+               <b-button type="button" variant="primary" @click="update">Submit</b-button>
+              </b-form>
+              <b-card class="mt-3" header="Form Data Result">
+              <pre class="m-0">{{ form }}</pre>
+             </b-card>
+            </b-card-body>
+          </b-card>
+        </b-col>
+      </b-row>
+      </div>
     </div>
+  </div>
 </template>
 <script>
+
 import datepicker from 'vue-date-picker'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
-
-  export default {
-    
-    name: 'new-artisan',
+export default {
+   name: 'new-artisan',
      components: {
       datepicker 
      },
     data() {
       return {
         form: {
-          email: '',
-          name: '',
-          stateoforign: null,
-          checked: [],
-          dateOfBirth: ''
+          jobAdvertId:'',
+          companyId:'',
+          artisanId:'',
+          dateApplied:'',          
         },
         stateoforign: [{ text: 'Select One', value: null },'Abia', 
 'Adamawa',
@@ -114,34 +123,15 @@ gender: [{ text: 'Select One', value: null },'Male','Female',],
         show: true
       }
     },
-    methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
-      },
-      onReset(evt) {
-        evt.preventDefault()
-        // Reset our form values
-        this.form.email = ''
-        this.form.name = ''
-        this.form.food = null
-        this.form.checked = []
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-      }
-    },
-     
-    methods: {
-      onComplete: function(){
-          alert('Yay. Done!');
-       }
-      },
+   
      
       }
 
 </script>
 
+<style>
+.asteriks{
+  color:red;
+}
+</style>
 

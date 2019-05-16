@@ -11,6 +11,7 @@ const _3e2b9094 = () => interopDefault(import('..\\pages\\cslmis\\jobadvert\\ind
 const _4302b67a = () => interopDefault(import('..\\pages\\cslmis\\jobapplication\\index.vue' /* webpackChunkName: "pages_cslmis_jobapplication_index" */))
 const _f3305b94 = () => interopDefault(import('..\\pages\\cslmis\\labourstatistic\\index.vue' /* webpackChunkName: "pages_cslmis_labourstatistic_index" */))
 const _3cedb4c3 = () => interopDefault(import('..\\pages\\cslmis\\retrenchement\\index.vue' /* webpackChunkName: "pages_cslmis_retrenchement_index" */))
+const _07f5212b = () => interopDefault(import('..\\pages\\pages\\emailVerify.vue' /* webpackChunkName: "pages_pages_emailVerify" */))
 const _d4f369c2 = () => interopDefault(import('..\\pages\\pages\\Page404.vue' /* webpackChunkName: "pages_pages_Page404" */))
 const _6b97af48 = () => interopDefault(import('..\\pages\\pages\\Page500.vue' /* webpackChunkName: "pages_pages_Page500" */))
 const _42c515ff = () => interopDefault(import('..\\pages\\cslmis\\centers\\training-center.vue' /* webpackChunkName: "pages_cslmis_centers_training-center" */))
@@ -127,6 +128,10 @@ export function createRouter() {
       path: "/cslmis/retrenchement",
       component: _3cedb4c3,
       name: "cslmis-retrenchement"
+    }, {
+      path: "/pages/emailVerify",
+      component: _07f5212b,
+      name: "pages-emailVerify"
     }, {
       path: "/pages/Page404",
       component: _d4f369c2,

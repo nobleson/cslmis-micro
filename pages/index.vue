@@ -10,7 +10,7 @@
 
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
-                <b-nav-item href="#">Login</b-nav-item>
+                <b-nav-item href="#"><b-button variant="primary" @click="gotologin">Login</b-button></b-nav-item>
             
             </b-navbar-nav>
         </b-collapse>
@@ -30,7 +30,7 @@
                 <h1 class="cent" align="center" >CONSTRUCTION SKILLS LABOUR MARKET <br> INFORNMATION SYSTEM</h1>
                 <h4 class="cent" align="center" >Register your company now............</h4>
             <div class="butt">
-                <b-col lg="15" align="center" class="pb-2"><b-button variant="primary"><h1>Register <i class="fa fa-arrow-right"></i></h1></b-button></b-col>
+                <b-col lg="15" align="center" class="pb-2"><b-button variant="primary" @click="gotoregister"><h1>Register <i class="fa fa-arrow-right"></i></h1></b-button></b-col>
             </div>
     </div>                  
 </div>
@@ -112,12 +112,21 @@ export default {
       return {
          
   }
-    }  
+    },
+    methods: {
+        gotoregister(){
+            this.$router.push("/register")
+        },
+      gotologin(){
+            this.$router.push("/login")
+        }
+    },  
+
 }
 </script>
 <style>
 *{padding:0; margin:0;box-sizing:border-box;} 
-h1,h2,h3,{margin-bottom: 5px}
+
 .section{
     display:flex;
     flex-direction: column;
