@@ -1,15 +1,20 @@
 <template>
   <div class="app flex-row align-items-center">
     <div class="container">
+       <b-row>
+           <b-col md="8">
+           <h4 class="text-center">CSLMIS Portal</h4>
+           </b-col>
+       </b-row>
       <b-row class="justify-content-center">
         <b-col md="8">
           <b-card-group>
-            <b-card no-body class="text-white bg-primary py-5 d-md-down-none" style="width:44%">
+            <b-card no-body class="text-white primary py-5 d-md-down-none" style="width:44%">
               <b-card-body class="text-center">
                 <div>
-                  <img src="~/assets/images/logo.png" alt="Logo">
+                  <img src="~/assets/images/Logo1.png" alt="Logo">
                 </div>
-                <h1>Corbon</h1>
+                <h1>CSLMIS</h1>
               </b-card-body>
             </b-card>
             <b-card no-body class="p-4">
@@ -27,7 +32,12 @@
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
-                    <b-nav-item href="#"><b-button variant="primary" @click="gotologin">Login</b-button></b-nav-item>
+                      <b-button @click="logIn" variant="primary" class="px-4">Login</b-button>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                      <b-col class="signup">
+                    <span class="pull-right mt-20">Don't have account yet? <router-link to='/register'>Apply</router-link></span>
                     </b-col>
                   </b-row>
                 </b-form>
@@ -36,10 +46,15 @@
           </b-card-group>
         </b-col>
       </b-row>
+      <b-row  class="justify-content-center">
+        <a href="https://admin.cslmis.gov.ng">CSLMIS</a>
+        <span class="ml-1">&copy; 2019 Admin Portal. </span>
+        <span>Powered by </span> 
+        <a href="https://corbon.gov.ng"> CORBON </a>
+      </b-row>
     </div>
   </div>
 </template>
-
 <script>
   import {mapGetters, mapActions} from 'vuex'
 export default {
@@ -59,12 +74,27 @@ export default {
     ...mapActions({authenticateUser: 'authentication/authenticateUser'}),
     logIn() {
       this.authenticateUser(this.user).then(e => {
+       console.log(JSON.stringify("Login:"+e));
         this.$router.push('/cslmis/dashboard');
       });
     },
     resetPassword() {
       //reset password code. probably dispatch to an action.
+    },
+    checkEmailVerificationStstus(){
+      return
     }
   }
 }
 </script>
+<style scoped>
+.signup{
+    margin-top: 50px;
+}
+.bg-primary{
+  background-color: #3E4095;  
+}
+.primary{
+  background-color: #3E4095;  
+}
+</style>

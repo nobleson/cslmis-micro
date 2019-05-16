@@ -142,13 +142,15 @@
 
               <b-form-group >
             <label label-for="companyState">Company State:<span class="asteriks">*</span> </label>
-                <b-form-input
-                  id="companyState"
-                  v-model="form.companyState"
-                  required
-                  placeholder="Enter Company State"
-                ></b-form-input>
-              </b-form-group>
+                <b-form-select
+                    id="companyState"
+                    @change="changedValue"
+                    v-model="Form.companyState"
+                    :options="stateoforign"
+                    required
+                  ></b-form-select>
+                </b-form-group>
+          
 
               <b-form-group id="input-group-2 " label="Date Regeistered " label-for="inputs">
                   <date-picker v-model="form.dateRegistered" :config="{format: 'DD/MM/YYYY'}"></date-picker>
