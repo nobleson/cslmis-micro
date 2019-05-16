@@ -20,6 +20,7 @@ void (function updateModules() {
   store.modules = store.modules || {}
 
   resolveStoreModules(require('@/store/alertFunctions.js'), 'alertFunctions.js')
+  resolveStoreModules(require('@/store/artisan.js'), 'artisan.js')
   resolveStoreModules(require('@/store/authentication.js'), 'authentication.js')
   resolveStoreModules(require('@/store/company.js'), 'company.js')
 
@@ -29,6 +30,7 @@ void (function updateModules() {
     // Whenever any Vuex module is updated...
     module.hot.accept([
       '@/store/alertFunctions.js',
+      '@/store/artisan.js',
       '@/store/authentication.js',
       '@/store/company.js',
       '@/store/index.js',

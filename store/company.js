@@ -50,15 +50,20 @@ export const actions= {
           companyAcronym: e.displayName,
           dateRegistered: date
         };
+        let emailInfo ={
+          requestType: 'VERIFY_EMAIL',
+          idToken: e.idToken
+        }
         vuexContext.dispatch('save',company);
+        vuexContext.dispatch('sendCompanyAccountEmail',emailInfo)
       });
     },
     save(vuexContext,company){
       let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/create';
 
      this.$axios.$post(herokuUrl,company)
-      .then(function (response) {
-        vuexContext.commit('successToggle')
+      .then(function (response) {        
+      vuexContext.commit('successToggle')
       vuexContext.dispatch('resetSuccess')
     })
       .catch(function (error) {
@@ -72,14 +77,29 @@ export const actions= {
     loadCompanies(vuexContext){
       let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/getall';
      this.$axios.$get(herokuUrl)
-      .then(function (response) {
-        let data = JSON.stringify(response)
-        vuexContext.commit('setCompanies',data)
-        console.log("companies loaded")
-
-    })
+      .then(function (response){
+       // let data = JSON.parse(response);
+        vuexContext.commit('setCompanies',response);
+        console.log("companies:"+vuexContext.state.companies)
+        //console.log("companies:"+response)
+      })
       .catch(function (error) {
         console.log("companies fails to load")
+      })
+      .finally(function () {
+      });
+
+    },
+    sendCompanyAccountEmail(vuexContext,emailInfo){
+
+      let firebaseUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode?key=AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM';
+     this.$axios.$post(firebaseUrl,emailInfo)
+      .then(function (response) {
+        console.log("verification details:"+JSON.stringify(response))
+        console.log("company verification email sent");
+    })
+      .catch(function (error) {
+        console.log("company verification email fails")
       })
       .finally(function () {
       });
@@ -93,6 +113,10 @@ export const actions= {
     },
     toggleErrorAlert(vuexContext){
       vuexContext.commit('errorToggle')
+    },
+    checkCompanyData(vuexContext){
+     let data  = vuexContext.getters('getCompanies')
+     console.log("companies loaded:"+data)
     },
     resetSuccess(vuexContext) { 
       setTimeout(function () {vuexContext.commit('successToggle');}, 5000);

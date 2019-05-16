@@ -1,55 +1,59 @@
 <template>
  <div class="animated fadeIn">
      <b-button @click="$emit('changeComponent', 'ArtisansListView')">Back</b-button>
-    <b-card>
-<b-row>
-  <div class="form-wizard" style="width:800px; margin:0 auto;" color="red">
+  <hr>
+  <b-row class="justify-content-center" >
+  </b-row>
+<b-row class="justify-content-center">
+  <b-col md="8">
+  <div class="form-wizard"  color="red">
     <form-wizard @on-complete="onComplete"
                        :start-index="0"
                        color="blue">
-     <tab-content title="Personal details"
+     <tab-content title="Personal Details"
                   icon="icon-user">
+          <b-alert v-if="successState" show variant="success">Artisan personal data saved successfully</b-alert>
+           <b-alert v-if="errorState" show variant="danger">Artisan personal data failed to save. Try again</b-alert>    
        <div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <b-form v-if="show">
 
-     
-
-      <b-form-group id="input-group-2" label="Firs name:" label-for="input-2">
+      <b-form-group id="input-group-2" label="Surname:" label-for="input-2">
         <b-form-input
-          id="input-2"
-          v-model="form.firstname"
+          id="surname"
+          v-model="personaForm.surname"
           required
-          placeholder="Enter First name"
+          placeholder="Enter Surname"
         ></b-form-input>
       </b-form-group>
 
       <b-form-group id="input-group-2" label="Middle Name:" label-for="input-2">
         <b-form-input
-          id="input-2"
-          v-model="form.name"
+          id="middleName"
+          v-model="personaForm.middleName"
           required
-          placeholder="Enter name"
+          placeholder="Middle name"
         ></b-form-input>
       </b-form-group>
 
-
-      <b-form-group id="input-group-2" label="Surname:" label-for="input-2">
+      <b-form-group id="input-group-2" label="Other name:" label-for="input-2">
         <b-form-input
-          id="input-2"
-          v-model="form.surname"
+          id="otherName"
+          v-model="personaForm.otherName"
           required
-          placeholder="Enter Surname"
+          placeholder="Enter other name"                                                                                                                                                       
         ></b-form-input>
       </b-form-group>
+
+
             <b-form-group id="input-group-2" label="Date of Birth:" label-for="input-2">
-        <datepicker :value="dateOfBirth" :readonly="true" format="YYYY-MM-DD" name="date1"></datepicker>
+              <date-picker v-model="personaForm.dateOfBirth" :config="{format: 'DD/MM/YYYY'}"></date-picker>
 
       </b-form-group>
 
        <b-form-group id="input-group-3" label="Gender" label-for="input-3">
         <b-form-select
-          id="input-3"
-          v-model="form.gender"
+          id="gender"
+          v-model="personaForm.gender"
           :options="gender"
           required
         ></b-form-select>
@@ -57,8 +61,8 @@
 
       <b-form-group id="input-group-2" label="Place Of Birth:" label-for="input-2">
         <b-form-input
-          id="input-2"
-          v-model="form.palceofbirth"
+          id="palceofbirth"
+          v-model="personaForm.palceofbirth"
           required
           placeholder="Enter Place Of Birth"
         ></b-form-input>
@@ -66,8 +70,8 @@
 
       <b-form-group id="input-group-2" label="Permanent Address:" label-for="input-2">
         <b-form-input
-          id="input-2"
-          v-model="form.permanentaddress"
+          id="permanentaddress"
+          v-model="personaForm.permanentaddress"
           required
           placeholder="Enter Permanentaddress"
         ></b-form-input>
@@ -81,44 +85,80 @@
         description="We'll never share your email with anyone else."
       >
         <b-form-input
-          id="input-1"
-          v-model="form.email"
+          id="email"
+          v-model="personaForm.email"
           type="email"
           required
           placeholder="Enter email"
         ></b-form-input>
       </b-form-group>
-
      <b-form-group id="input-group-3" label="State Of Origin" label-for="input-3">
         <b-form-select
-          id="input-3"
-          v-model="form.stateoforign"
+          id="state_origin"
+          @change="changedValue"
+          v-model="personaForm.state_origin"
           :options="stateoforign"
           required
         ></b-form-select>
       </b-form-group>
 
       <b-form-group id="input-group-2" label="Local Government:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.localgovernment"
-          required
-          placeholder="Enter Local Government"
-        ></b-form-input>
+                <b-form-select 
+                id="local_government"
+                v-model="personaForm.local_government"
+                required
+                >
+                <option disabled value="">[ Select Local Government ]</option>
+                <option v-for="item in localgovernment" v-bind:key ="item.id" :value="item">{{item}}</option>
+                </b-form-select>
       </b-form-group>
 
       <b-form-group id="input-group-2" label="Nationality" label-for="input-2">
         <b-form-input
-          id="input-2"
-          v-model="form.nationality"
+          id="nationality"
+          v-model="personaForm.nationality"
           required
           placeholder="Enter Nationality"
         ></b-form-input>
       </b-form-group>
+      <b-form-group>
+        <b-card class="mt-3">
+        <div>
+            <button>
+              <clipper-upload v-model="imgURL">upload image</clipper-upload>
+            </button>
+            <button @click="getResult">clip image</button>
+            <clipper-basic class="my-clipper" ref="clipper" :src="imgURL">
+                <div class="placeholder" slot="placeholder">No image</div>
+            </clipper-basic>
+            <div>
+                <div>result:</div>
+                <img class="result" :src="resultURL" alt="">
+            </div>
+        </div>
+        </b-card>
+        <b-card class="mt-3" title="Asrtisan Passport" sub-title="Upload Photo">
+          <b-card-text>
 
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
+            <img v-bind:src="imagePreview" v-show="showPreview" id="imagePreview"/>
+
+          </b-card-text>
+
+          <button v-on:click="submitFile()">Submit</button>
+            <label>
+              <input type="file" id="file" ref="file" accept="image/*" v-on:change="handleFileUpload()"/>
+            </label>
+        </b-card>
+      </b-form-group>
+
+
+      <b-button type="submit" variant="primary" @click="savePersona">Submit</b-button>
+      <b-button type="reset" variant="danger" @click="onReset">Reset</b-button>
     </b-form>
+
+    <b-card class="mt-3" header="Form Data Result">
+      <pre class="m-0">{{ personaForm }}</pre>
+    </b-card>
     
   </div>
      </tab-content>
@@ -132,7 +172,7 @@
       <b-form-group id="input-group-2" label="Center Name:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.center_name"
+          v-model="centerForm.center_name"
           required
           placeholder="Enter Center Name"
         ></b-form-input>
@@ -141,7 +181,7 @@
       <b-form-group id="input-group-2" label="Center Number:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.center_number"
+          v-model="centerForm.center_number"
           required
           placeholder="Enter Center Number"
         ></b-form-input>
@@ -150,7 +190,7 @@
 <b-form-group id="input-group-2" label="Candidate Name:" label-for="input-2">
         <b-form-input
           id="input-2"
-          v-model="form.candidate_name"
+          v-model="centerForm.candidate_name"
           required
           placeholder="Enter Candidate Name"
         ></b-form-input>
@@ -453,33 +493,87 @@
     </tab-content>
  </form-wizard>
   </div>
-  
-</b-row>
-      </b-card>
-    </div>
-
-
+  </b-col>
+  </b-row>
+  </div>
 </template>
 
 <script> 
 import datepicker from 'vue-date-picker'
-
+import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
+import { clipperBasic } from 'vuejs-clipper'
   export default {
     
     name: 'new-artisan',
      components: {
-      datepicker 
+      datepicker,
+      clipperBasic
      },
     data() {
+
       return {
-        form: {
-          email: '',
-          name: '',
-          stateoforign: null,
-          checked: [],
-          dateOfBirth: ''
+        employmentForm: {
+          trade: '',
+          yearsPractice: '',
+          employmentCompanies: '',
+          yearsOfEmployment: '',
+          jobRoles: '',
+          superviorsPhone_numbers: '',
+          currentWorkProject: '',
+          siteAddress: '',
+          currentEmploymentStatus: '',
+          recordDate: '',
+          artisanId: ''
         },
-        stateoforign: [{ text: 'Select One', value: null },'Abia', 
+        educationForm: {
+          schoolName: '',
+          yearStart: '',
+          yearEnd: '',
+          qualificationEarned: '',
+          artisanId: ''
+        },
+        apprentishipForm: {
+          apprentishipPlace: '',
+          apprentishipYear: '',
+          masterFullName: '',
+          masterPhoneNumber: '',
+          apprentishipCompletionStatus: '',
+          reasonForLeaving: '',
+          certificateTestimonial: '',
+          reasonForNotIssued: '',
+          tradeLearnt: '',
+          recordDate: '',
+          artisanId: ''
+        },
+        centerForm: {
+          centerName: '',
+          centerNumber: '',
+          candidateNumber: '',
+          candidateTrade: '',
+          artisanId: ''
+        },
+        personaForm: {
+          surname: '',
+          middleName: '',
+          otherName: '',
+          dateOfBirth: '',
+          gender: '',
+          placeOfBirth: '',
+          permanentAddress: '',
+          phoneNumber: '',
+          emailAddress: '',
+          state_origin: null,
+          local_government: '',
+          nationality: '',
+          photo: ''
+        },
+        imgURL: '',
+        resultURL: '',
+        form: {
+
+        },
+        stateoforign: [{ text: 'Select One', value: null },
+'Abia', 
 'Adamawa',
 'Akwa Ibom',
 'Anambra',
@@ -515,45 +609,166 @@ import datepicker from 'vue-date-picker'
 'Taraba',
 'Yobe',
 'Zamfara',
-],
+], 
 gender: [{ text: 'Select One', value: null },'Male','Female',],
-        show: true
+        show: true,
+        showPreview: false,
+        imagePreview: '',
+        file: '',
       }
     },
+    watch: {
+        defaultImage: function(value) {
+            if (value) {
+              console.log(value);
+              // do whatever you want with image value,(upload ..)
+            }
+        }
+    },
+    computed: {
+        ...mapGetters({successState: 'artisan/getSuccessState',errorState: 'artisan/getErrorState',localgovernment: 'artisan/getLocalGovernment'}),
+    },
     methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
+      ...mapActions({addPersona: 'artisan/addPersona',fetchLocalGovernment: 'artisan/loadLocalGovernment'}),
+      getResult: function () {
+          const canvas = this.$refs.clipper.clip();//call component's clip method
+          this.resultURL = canvas.toDataURL("image/jpg", 1);//canvas->image
       },
-      onReset(evt) {
-        evt.preventDefault()
-        // Reset our form values
-        this.form.email = ''
-        this.form.name = ''
-        this.form.food = null
-        this.form.checked = []
-        // Trick to reset/clear native browser form validation state
+      savePersona() { 
+        //let artisan = JSON.stringify(this.personaForm);
+        this.addPersona(this.personaForm).then(e => { 
+          console.log('Artisan Added Successfully'); 
+          this.onReset();
+        });  
+      },
+      onSubmit() {
+       // alert(JSON.stringify(this.personaForm))
+      },
+      onReset() {
+          this.personaForm.surname = '',
+          this.personaForm.middleName ='',
+          this.personaForm.otherName = '',
+          this.personaForm.dateOfBirth ='',
+          this.personaForm.gender ='',
+          this.personaForm.placeOfBirth = '',
+          this.personaForm.permanentAddress = '',
+          this.personaForm.phoneNumber =  '',
+          this.personaForm.emailAddress = '',
+          this.personaForm.state_origin = null,
+          this.personaForm.local_government = '',
+          this.personaForm.nationality =  '',
+          this.personaForm.photo = ''
+
         this.show = false
         this.$nextTick(() => {
           this.show = true
         })
-      }
-    },
-     
-    methods: {
-      onComplete: function(){
+      },
+     onComplete: function(){
           alert('Yay. Done!');
-       }
+     },
+     changedValue(){
+        this.fetchLocalGovernment(this.personaForm.state_origin).then(e => { 
+          console.log('Local government fetched'); 
+        });            
+     },
+    submitFile(){
+        /*
+                Initialize the form data
+            */
+            let formData = new FormData();
+
+            /*
+                Add the form data we need to submit
+            */
+            formData.append('file', this.file);
+
+        /*
+          Make the request to the POST /single-file URL
+        */
+            axios.post( '/single-file',
+                formData,
+                {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+              }
+            ).then(function(){
+          console.log('SUCCESS!!');
+        })
+        .catch(function(){
+          console.log('FAILURE!!');
+        });
+      },
+
+      /*
+        Handles a change on the file upload
+      */
+      handleFileUpload(){
+        /*
+          Set the local file variable to what the user has selected.
+        */
+        this.file = this.$refs.file.files[0];
+
+        /*
+          Initialize a File Reader object
+        */
+        let reader  = new FileReader();
+
+        /*
+          Add an event listener to the reader that when the file
+          has been loaded, we flag the show preview as true and set the
+          image to be what was read from the reader.
+        */
+        reader.addEventListener("load", function () {
+          this.showPreview = true;
+          this.imagePreview = reader.result;
+          console.log("Base64:"+reader.result);            
+
+        }.bind(this), false);
+
+        /*
+          Check to see if the file is not empty.
+        */
+        if( this.file ){
+          /*
+            Ensure the file is an image file.
+          */
+          if ( /\.(jpe?g|png|gif)$/i.test( this.file.name ) ) {
+            /*
+              Fire the readAsDataURL method which will read the file in and
+              upon completion fire a 'load' event which we will listen to and
+              display the image in the preview.
+            */
+            reader.readAsDataURL( this.file );
+         // var base64 = this.getBase64Image(document.getElementById("imagePreview"));
+          }
+        }
+      },
+      getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        var dataURL = canvas.toDataURL("image/png");
+        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
       }
-      
-      }
+
+    }
+     
+}
 
 </script>
 <style scoped>
-.form-wizard{
-  background-color:lightgrey;
+    .my-clipper {
+        width: 100%;
+        max-width: 700px;
+    }
 
-
-}
-
+    .placeholder {
+        text-align: center;
+        padding: 20px;
+        background-color: lightgray;
+    }
 </style>

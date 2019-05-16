@@ -35,7 +35,9 @@ export default {
     computed: {
           ...mapGetters({companies: 'company/getCompanies'}),
           processCompanies: function(){
-           return   this.companies;
+          let json = JSON.parse(JSON.stringify(this.companies));
+          console.log("Json:"+json);
+           return  json;
           }
     },
     methods: {

@@ -32,18 +32,20 @@
     "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.15.0",
     "simple-line-icons": "^2.4.1",
-    "vue": "^2.6.10",
+    "vue": "^2.6.7",
     "vue-bootstrap-datetimepicker": "^5.0.1",
     "vue-chartjs": "^3.4.2",
     "vue-date-picker": "^2.5.0",
     "vue-form-wizard": "^0.8.4",
+    "vue-image-upload-croppie": "^1.0.6",
     "vue-perfect-scrollbar": "git+https://github.com/Degfy/vue-perfect-scrollbar.git#1.x",
     "vue2-simplert": "^1.0.0",
-    "vue2-simplert-plugin": "^0.5.3"
+    "vue2-simplert-plugin": "^0.5.3",
+    "vuejs-clipper": "^0.2.12"
   },
   "devDependencies": {
+    "node-sass": "^4.12.0",
     "nodemon": "^1.18.9",
-    "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0"
   },
   "engine": {
