@@ -41,7 +41,8 @@
     "vue-chartjs": "^3.4.2",
     "vue-date-picker": "^2.5.0",
     "vue-form-wizard": "^0.8.4",
-    "vue-perfect-scrollbar": "git+https://github.com/Degfy/vue-perfect-scrollbar.git#1.x"
+    "vue-perfect-scrollbar": "git+https://github.com/Degfy/vue-perfect-scrollbar.git#1.x",
+    "vuejs-clipper": "^0.2.13"
   },
   "devDependencies": {
     "node-sass": "^4.12.0",

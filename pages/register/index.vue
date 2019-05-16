@@ -151,7 +151,7 @@
               </b-form-group>
 
               <b-form-group id="input-group-2 " label="Date Regeistered " label-for="inputs">
-                  <date-picker v-model="companyform.DateRegistered" :config="{format: 'DD/MM/YYYY'}"></date-picker>
+                  <date-picker v-model="form.dateRegistered" :config="{format: 'DD/MM/YYYY'}"></date-picker>
               </b-form-group>
             
                <b-button type="button" variant="primary" @click="update">Submit</b-button>
@@ -178,14 +178,16 @@
 <script>
 import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
 import datepicker from 'vue-date-picker'
+import { clipperBasic } from 'vuejs-clipper'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 export default {
   name: 'Register',
   layout: "empty",
-  components:{
-    datepicker
-  },
+  components: {
+      datepicker,
+      clipperBasic
+     },
     data() {
       return {
         form: {
