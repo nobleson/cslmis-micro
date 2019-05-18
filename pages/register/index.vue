@@ -10,7 +10,8 @@
 
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
-            
+           <b-nav-item href="#"><b-button variant="primary" @click="pages">Home</b-button></b-nav-item>
+
             </b-navbar-nav>
         </b-collapse>
         </div>
@@ -22,112 +23,113 @@
     <div class="container">
       <b-row class="justify-content-center">
         <b-col md="10" sm="8">
-          <b-card no-body class="mx-6">
-            <b-card-body class="p-6">
-            
+              <mdb-card class="">
+              <mdb-card-body class="">
                 <h1>Registeration Form</h1>
                 <p class="">Compulsory fields are marked with asteriks <span class="asteriks">*</span></p>
                 
                 <b-form  v-if="show">
+                
+              
+                <b-form-group >
+                  <label  label-for="companyName">Company Name <span class="asteriks">*</span> </label>
+                  <b-form-input
+                    id="companyName"
 
-      <b-form-group >
-         <label  label-for="companyName">Company Name <span class="asteriks">*</span> </label>
-        <b-form-input
-          id="companyName"
-          v-model="form.companyName"
-          required
-          placeholder="Enter Company Name"
-        ></b-form-input>
-      </b-form-group>
+                    v-model="form.companyName"
+                    required
+                    placeholder="Enter Company Name"
+                  ></b-form-input>
+                </b-form-group>
 
-      <b-form-group>
-        <label  label-for="companyAcronym">Company Acronym: <span class="asteriks"></span> </label>
-        <b-form-input
-          id="companyAcronym"
-          v-model="form.companyAcronym"
-          placeholder="Enter Company Acronym"
-        ></b-form-input>
-      </b-form-group>
-
-
-      <b-form-group>
-      <label label-for="companyNationality">Company Nationality: <span class="asteriks">*</span> </label>
-        <b-form-input
-          id="companyNationality"
-          v-model="form.companyNationality"
-          required
-          placeholder="Enter Company Nationality"
-        ></b-form-input>
-         </b-form-group>
-      
-      <b-form-group>
-        <label label-for="companyStatus">Company Status:<span class="asteriks">*</span> </label>
-        <b-form-input
-          id="companyStatus"
-          v-model="form.companyStatus"
-          placeholder="Enter Company Status"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group  label="Company Website:" label-for="input-2">
-        <b-form-input
-          id="companyWebsite"
-          v-model="form.companyWebsite"
-          placeholder="Enter Company Website"
-        ></b-form-input>
-      </b-form-group>
+                <b-form-group>
+                  <label  label-for="companyAcronym">Company Acronym: <span class="asteriks"></span> </label>
+                  <b-form-input
+                    id="companyAcronym"
+                    v-model="form.companyAcronym"
+                    placeholder="Enter Company Acronym"
+                  ></b-form-input>
+                </b-form-group>
 
 
-      <b-form-group >
-      <label  label-for="companyAddress">Company Address:<span class="asteriks">*</span> </label>
-        <b-form-input
-          id="companyAddress"
-          v-model="form.companyAddress"
-          required
-          placeholder="Enter Company Address"
-        ></b-form-input>
-      </b-form-group>
+                <b-form-group>
+                <label label-for="companyNationality">Company Nationality: <span class="asteriks">*</span> </label>
+                  <b-form-input
+                    id="companyNationality"
+                    v-model="form.companyNationality"
+                    required
+                    placeholder="Enter Company Nationality"
+                  ></b-form-input>
+                  </b-form-group>
+                
+                <b-form-group>
+                  <label label-for="companyStatus">Company Status:<span class="asteriks">*</span> </label>
+                  <b-form-input
+                    id="companyStatus"
+                    v-model="form.companyStatus"
+                    placeholder="Enter Company Status"
+                  ></b-form-input>
+                </b-form-group>
 
-      <b-form-group>
-      <label  label-for="companyTelephone">Company Telephone:<span class="asteriks">*</span> </label>
-        <b-form-input
-          id="companyTelephone"
-          v-model="form.companyTelephone"
-          required
-          placeholder="Enter Company Telephone"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group>
-        <label label-for="companyEmail">Company Email:<span class="asteriks">*</span> </label>
-        <b-form-input
-          id="companyEmail"
-          v-model="form.companyEmail"
-          required
-          placeholder="Enter Company Email"
-        ></b-form-input>
-      </b-form-group>
+                <b-form-group  label="Company Website:" label-for="input-2">
+                  <b-form-input
+                    id="companyWebsite"
+                    v-model="form.companyWebsite"
+                    placeholder="Enter Company Website"
+                  ></b-form-input>
+                </b-form-group>
 
 
-      <b-form-group>
-        <label label-for="companyNumber">Company Number:<span class="asteriks">*</span> </label>
-        <b-form-input
-          id="companyNumber"
-          v-model="form.companyNumber"
-          required
-          placeholder="Enter Company Number"
-        ></b-form-input>
-      </b-form-group>
-         
-         <b-form-group>
-            <label label-for="companyFounded">Year Founded:<span class="asteriks">*</span> </label>
-        <b-form-input
-          id="companyFounded"
-          v-model="form.companyFounded"
-          required
-          placeholder="Enter Year Founded"
-        ></b-form-input>
-      </b-form-group>
+                <b-form-group >
+                <label  label-for="companyAddress">Company Address:<span class="asteriks">*</span> </label>
+                  <b-form-input
+                    id="companyAddress"
+                    v-model="form.companyAddress"
+                    required
+                    placeholder="Enter Company Address"
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group>
+                <label  label-for="companyTelephone">Company Telephone:<span class="asteriks">*</span> </label>
+                  <b-form-input
+                    id="companyTelephone"
+                    v-model="form.companyTelephone"
+                    required
+                    placeholder="Enter Company Telephone"
+                  ></b-form-input>
+                </b-form-group>
+
+                <b-form-group>
+                  <label label-for="companyEmail">Company Email:<span class="asteriks">*</span> </label>
+                  <b-form-input
+                    id="companyEmail"
+                    v-model="form.companyEmail"
+                    required
+                    placeholder="Enter Company Email"
+                  ></b-form-input>
+                </b-form-group>
+
+
+                <b-form-group>
+                  <label label-for="companyNumber">Company Number:<span class="asteriks">*</span> </label>
+                  <b-form-input
+                    id="companyNumber"
+                    v-model="form.companyNumber"
+                    required
+                    placeholder="Enter Company Number"
+                  ></b-form-input>
+                </b-form-group>
+                  
+                  <b-form-group>
+                      <label label-for="companyFounded">Year Founded:<span class="asteriks">*</span> </label>
+                  <b-form-input
+                    id="companyFounded"
+                    v-model="form.companyFounded"
+                    required
+                    placeholder="Enter Year Founded"
+                  ></b-form-input>
+                </b-form-group>
 
                 <b-form-group >
                   <label label-for="companyActivities">Company Activities:<span class="asteriks">*</span> </label>
@@ -140,16 +142,15 @@
                 </b-form-group>
 
 
-              <b-form-group >
-            <label label-for="companyState">Company State:<span class="asteriks">*</span> </label>
-                <b-form-select
-                    id="companyState"
-                    @change="changedValue"
-                    v-model="Form.companyState"
-                    :options="stateoforign"
-                    required
-                  ></b-form-select>
-                </b-form-group>
+         <b-form-group>
+        <label label-for="companyState">Company State:<span class="asteriks">*</span> </label>
+        <b-form-select
+          id="companyState"
+          v-model="form.companyState"
+          :options="companyState"
+          required
+        ></b-form-select>
+      </b-form-group>
           
 
               <b-form-group id="input-group-2 " label="Date Regeistered " label-for="inputs">
@@ -161,9 +162,9 @@
               <b-card class="mt-3" header="Form Data Result">
               <pre class="m-0">{{ form }}</pre>
              </b-card>
-            </b-card-body>
-          </b-card>
-        </b-col>
+             </mdb-card-body>
+             </mdb-card>
+          </b-col>
       </b-row>
     </div>
   </div>       
@@ -178,6 +179,7 @@
 </div>
 </template>
 <script>
+import { mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
 import datepicker from 'vue-date-picker'
 import { clipperBasic } from 'vuejs-clipper'
@@ -188,8 +190,12 @@ export default {
   layout: "empty",
   components: {
       datepicker,
-      clipperBasic
-     },
+      clipperBasic,
+			mdbCard,
+			mdbCardBody,
+      mdbBtn,
+      
+		},
     data() {
       return {
         form: {
@@ -209,7 +215,7 @@ export default {
           companyState:'',
           dateRegistered:''          
         },
-        stateoforign: [{ text: 'Select One', value: null },'Abia', 
+        companyState: [{ text: 'Select One', value: null },'Abia', 
 'Adamawa',
 'Akwa Ibom',
 'Anambra',
@@ -287,5 +293,6 @@ gender: [{ text: 'Select One', value: null },'Male','Female',],
 .code{
     margin-top: 10%;
 }
+ 
 </style>
 

@@ -47,7 +47,7 @@
         </b-col>
       </b-row>
       <b-row  class="justify-content-center">
-        <a href="https://admin.cslmis.gov.ng">CSLMIS</a>
+        <a href="https://admin.cslmis.gov.ng">CSLMIS </a>
         <span class="ml-1">&copy; 2019 Admin Portal. </span>
         <span>Powered by </span> 
         <a href="https://corbon.gov.ng"> CORBON </a>

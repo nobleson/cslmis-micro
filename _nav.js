@@ -11,15 +11,17 @@ export default {
     },
     
     {
-      name: 'Job Application',
-      url: '/cslmis/jobapplication',
-            icon: 'icon-pencil'
-    },
-    {
       name: 'Job Advert',
       url: '/cslmis/jobadvert',
       icon: 'icon-star'
     },
+    
+    {
+      name: 'Job Application',
+      url: '/cslmis/jobapplication',
+            icon: 'icon-pencil'
+    },
+   
     {
       name: 'Retrenchment',
       url: '/cslmis/retrenchement',

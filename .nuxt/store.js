@@ -21,6 +21,7 @@ void (function updateModules() {
 
   resolveStoreModules(require('@/store/authentication.js'), 'authentication.js')
   resolveStoreModules(require('@/store/company.js'), 'company.js')
+  resolveStoreModules(require('@/store/newJobApplication.js'), 'newJobApplication.js')
 
   // If the environment supports hot reloading...
 
@@ -30,6 +31,7 @@ void (function updateModules() {
       '@/store/authentication.js',
       '@/store/company.js',
       '@/store/index.js',
+      '@/store/newJobApplication.js',
     ], () => {
       // Update `root.modules` with the latest definitions.
       updateModules()

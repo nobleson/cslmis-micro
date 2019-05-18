@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
 import JobApplicationView from '~/components/jobapplication/JobApplicationView.vue'
 import JobApplicationDetail from '~/components/jobapplication/JobApplicationDetail.vue'
 import NewJobApplication from '~/components/jobapplication/NewJobApplication.vue'
@@ -23,7 +24,8 @@ export default {
     changeCurrentComponent(newComponent) {
       this.currentComponent = newComponent;
     }
-  }
+  },
+  
 }
 </script>
 <style <style lang="scss" scoped>

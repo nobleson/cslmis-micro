@@ -1,22 +1,16 @@
 <template>
 <div class="main">
-    <b-navbar class="navbar-expand-lg navbar-dark bg-dark static-top" toggleable="lg" type="dark" variant="info">
-        <div class="container">
-        <b-navbar-brand href="#">CSLMIS COMPANIES</b-navbar-brand>
 
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-        <b-collapse id="nav-collapse" is-nav>
-
-            <!-- Right aligned nav items -->
-            <b-navbar-nav class="ml-auto">
-                <b-nav-item href="#"><b-button variant="primary" @click="gotologin">Login</b-button></b-nav-item>
-            
-            </b-navbar-nav>
-        </b-collapse>
-        </div>
-    </b-navbar>
-
+    <mdb-navbar dark color="bg-dark" >
+    <!-- Navbar brand -->
+    <mdb-navbar-brand >
+      CSLMIS COMPANIES
+    </mdb-navbar-brand>
+      <mdb-navbar-nav right>
+        <mdb-nav-item href="#" active class="ml-auto"><b-button variant="primary" @click="gotologin">Login</b-button></mdb-nav-item> 
+      </mdb-navbar-nav>
+    </mdb-navbar>
+   
 <div class="section">
            
            <div class="logo" align="center">
@@ -26,11 +20,11 @@
             
             </div>
             <!-- Portfolio Item Row -->
-    <div class="text">
+            <div class="text">
                 <h1 class="cent" align="center" >CONSTRUCTION SKILLS LABOUR MARKET <br> INFORNMATION SYSTEM</h1>
                 <h4 class="cent" align="center" >Register your company now............</h4>
             <div class="butt">
-                <b-col lg="15" align="center" class="pb-2"><b-button variant="primary" @click="gotoregister"><h1>Register <i class="fa fa-arrow-right"></i></h1></b-button></b-col>
+                <b-col lg="15" align="center" class="pb-2"><mdb-btn color="indigo" @click="gotoregister"><h1>Register <i class="fa fa-arrow-right"></i></h1></mdb-btn></b-col>
             </div>
     </div>                  
 </div>
@@ -106,8 +100,18 @@
 </div>
 </template>
 <script>
+import { mdbDropdown, mdbDropdownToggle, mdbDropdownMenu, mdbDropdownItem, mdbContainer, mdbNavbar, mdbNavbarBrand, mdbNavbarToggler, mdbNavbarNav, mdbNavItem } from 'mdbvue';
+import { mdbBtn } from 'mdbvue';
 export default {
     layout: 'empty',
+    components: {
+      mdbNavbar,
+      mdbNavbarBrand,
+      mdbNavbarNav,
+      mdbNavItem,
+      mdbContainer,
+      mdbBtn
+        },
     data(){
       return {
          

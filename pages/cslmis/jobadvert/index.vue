@@ -23,7 +23,8 @@ export default {
     changeCurrentComponent(newComponent) {
       this.currentComponent = newComponent;
     }
-  }
+  },
+    
 }
 </script>
 <style <style lang="scss" scoped>

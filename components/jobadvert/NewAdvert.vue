@@ -1,12 +1,38 @@
 <template>
-
-    <div class="animated fadeIn">
-     <b-button @click="$emit('changeComponent', 'JobAdvertView')">Back</b-button>
-     <hr>
-    <b-card>
-   <b-row>
-  </b-row>
-  </b-card>
+<div>
+  
+    <div class="container">
+    <div >
+      <mdbCard>
+        <mdb-input label="Job Tittle" size="lg" />
+        <mdb-input label="Medium input" size="md" />
+        <mdb-input label="Small input" size="sm" />
+      </mdbCard>
+    </div> 
+  </div>
   </div>
 </template>
+<script>
+
+import { mdbInput } from 'mdbvue';
+  export default {
+    name: "Input",
+    components: {
+      mdbInput,
+      mdbCard
+    },
+    data() {
+      return {
+        value: ''
+      };
+    }
+  }
+</script>
+<style>
+.top{
+  margin-top:20%;
+   margin-top:10%;
+}
+</style>
+
 
