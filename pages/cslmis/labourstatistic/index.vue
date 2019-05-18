@@ -5,18 +5,15 @@
 </template>
 
 <script>
-import JobAdvertView from '~/components/jobadvert/JobAdvertView.vue'
-import JobAdvertDetail from '~/components/jobadvert/JobAdvertDetail.vue'
-import NewAdvert from '~/components/jobadvert/NewAdvert.vue'
+import LabourStatisticView from '~/components/labourstatistic/LabourStatisticView.vue'
 export default {
-  components: {
-    JobAdvertView,
-    JobAdvertDetail,
-    NewAdvert
+  components:{
+    LabourStatisticView
   },
   data() {
     return {
-      currentComponent: 'JobAdvertView'
+    
+      currentComponent: 'LabourStatisticView'
     }
   },
   methods: {

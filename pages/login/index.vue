@@ -37,7 +37,7 @@
                   </b-row>
                   <b-row>
                       <b-col class="signup">
-                    <span class="pull-right mt-20">Don't have account yet? <router-link to='/register'>Apply</router-link></span>
+                    <span class="pull-right mt-20">Don't have account yet? <router-link to='/application'>Apply</router-link></span>
                     </b-col>
                   </b-row>
                 </b-form>

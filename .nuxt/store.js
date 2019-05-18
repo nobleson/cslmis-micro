@@ -19,6 +19,7 @@ void (function updateModules() {
   // Enforce store modules
   store.modules = store.modules || {}
 
+  resolveStoreModules(require('@/store/application.js'), 'application.js')
   resolveStoreModules(require('@/store/authentication.js'), 'authentication.js')
   resolveStoreModules(require('@/store/company.js'), 'company.js')
   resolveStoreModules(require('@/store/newJobApplication.js'), 'newJobApplication.js')
@@ -28,6 +29,7 @@ void (function updateModules() {
   if (process.client && module.hot) {
     // Whenever any Vuex module is updated...
     module.hot.accept([
+      '@/store/application.js',
       '@/store/authentication.js',
       '@/store/company.js',
       '@/store/index.js',

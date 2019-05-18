@@ -10,8 +10,8 @@
 
             <!-- Right aligned nav items -->
             <b-navbar-nav class="ml-auto">
-           <b-nav-item href="#"></b-nav-item>
-                <mdb-btn color="secondary" >Home</mdb-btn>
+           <b-nav-item href="#"><b-button variant="primary" >Home</b-button></b-nav-item>
+
             </b-navbar-nav>
         </b-collapse>
         </div>
@@ -42,7 +42,8 @@
                     <b-form-group id="input-group-2 " label="Date Applied" label-for="inputs">
                           <date-picker v-model="form.dateApplied" :config="{format: 'DD/MM/YYYY'}"></date-picker>
                     </b-form-group>
-                  <mdb-btn color="secondary" type="button" @click="submitApplication">Submit</mdb-btn>
+                
+                 <mdb-btn color="secondary" type="button" @click="submitApplication">Submit</mdb-btn>
               </form>         
             
              </mdb-card-body>
@@ -85,7 +86,6 @@ export default {
     data() {
       return {
         form: {
-          _id: "Pg76sjvQ5XWxD8OZ20qyfOOhqP23",
           companyName:'',
           companyAcronym:'',
           companyNationality:'',
@@ -144,17 +144,16 @@ gender: [{ text: 'Select One', value: null },'Male','Female',],
     },
    mounted(){
       },
-    computed: {
+    /* computed: {
         ...mapGetters({getCompany: 'company/getCompany'})
-    }, 
+    }, */ 
     methods: {
-      ...mapActions({apply: 'company/sendApplication'}),
+      ...mapActions({apply: 'application/sendApplication'}),
       submitApplication(){
-       
-          this.apply(this.form).then(e => { 
-              console.log('Application Submitted Successfully'); 
-        }); 
-       }
+        this.apply(this.form).then(e => { 
+           this.$bvModal.msgBoxOk('Application Submitted. You will be contacted via the email you used in the form ')
+        });
+        this.reset();
       },
       logIn() {
       this.authenticateUser(this.user).then(e => {
@@ -166,9 +165,24 @@ gender: [{ text: 'Select One', value: null },'Male','Female',],
         this.$router.push('/cslmis/dashboard');
 
       },
-
+      reset(){
+          this.form.companyName = '',
+          this.form.companyAcronym ='',
+          this.form.companyNationality ='',
+          this.form.companyStatus ='',
+          this.form.companyWebsite ='',
+          this.form.companyAddress ='',
+          this.form.companyTelephone ='',
+          this.form.companyEmail ='',
+          this.form.companyNumber ='',
+          this.form.companyFounded ='',
+          this.form.companyActivities ='',
+          this.form.companyState ='',
+          this.form.dateApplied ='' 
+        }
      
       }
+}
 
 </script>
 

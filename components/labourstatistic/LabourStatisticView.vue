@@ -1,71 +1,41 @@
 <template>
+<div class="container">
+  <mdb-card class="card-body">
+    <mdb-card-title>Artisans</mdb-card-title>
+    <mdb-card-sub-title>Total Number of Artisans</mdb-card-sub-title> 
+    <div class="flex-row"> 
+  <mdb-collapse :toggleTag="['a', 'icon']" :togglers="1" :ToggleClass="['btn btn-primary']">
   <div>
-        <b-row>
-            <b-col align-self="end"  class="pb-3 pl-auto" cols="12">
-          
-                <b-button @click="$emit('changeComponent','NewLabourStatistic')" class="">Create New</b-button>
-             <hr>
-            </b-col>
-            <hr>
-         <b-col v-for="(arti,i) in artisans" :key="i" cols="2">
-
-            
-           <b-button @click="$emit('changeComponent','LabourStatisticDetail')">Manage</b-button>
-           <hr>
-            <b-card
-            title="Artisan Workshop"
-            img-src="/img/logo-symbol.png"
-            img-alt="Artisan Logo"
-            img-top
-            tag="article"
-            style="max-width: 20rem;"
-            class="mb-2"
-            
-          >
-          </b-card>
-             
-        
-            
-         </b-col>
-          
-        </b-row>
-      
+    <mdb-input label="Large input" size="lg" />
+    <mdb-input label="Large input" size="lg" />
+    <mdb-input label="Large input" size="lg" />
+    <mdb-input label="Large input" size="lg" />
     
   </div>
+     <mdb-btn color="info" >Save Changes</mdb-btn>
+    </mdb-collapse>
+    </div>
+    <mdb-card-footer  class="text mt-4"><center>21,400</center></mdb-card-footer>
+  </mdb-card>
+</div>
 </template>
-
 <script>
+import { mdbBtn } from 'mdbvue';
+import { mdbInput } from 'mdbvue';
+import { mdbCard, mdbCardBody, mdbCardTitle, mdbCardText, mdbMask, mdbCardHeader, mdbCardFooter } from 'mdbvue';
+import { mdbCollapse, mdbContainer } from 'mdbvue';
   export default {
-    name: 'artisans',
-    data() {
-      return {
-        artisans: [
-          {
-            name: 'my name'
-          },
-{
-            name: 'my name'
-          },
-{
-            name: 'my name'
-          },
-{
-            name: 'my name'
-          },
-{
-            name: 'my name'
-          },
-{
-            name: 'my name'
-          },
-{
-            name: 'my name'
-          },
-        ]
-      }
+    name: 'Panels',
+    components: {
+      mdbCard,
+      mdbCardTitle,
+      mdbCardText,
+      mdbCollapse,
+      mdbMask,
+      mdbContainer,
+      mdbCardFooter,
+      mdbInput,
+      mdbBtn
     }
   }
 </script>
-<style <style lang="scss" scoped>
-
-</style>
