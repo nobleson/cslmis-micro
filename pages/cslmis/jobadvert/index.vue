@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
 import JobAdvertView from '~/components/jobadvert/JobAdvertView.vue'
 import JobAdvertDetail from '~/components/jobadvert/JobAdvertDetail.vue'
 import NewAdvert from '~/components/jobadvert/NewAdvert.vue'
@@ -24,7 +25,7 @@ export default {
       this.currentComponent = newComponent;
     }
   },
-    
+  
 }
 </script>
 <style <style lang="scss" scoped>

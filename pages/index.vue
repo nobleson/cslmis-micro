@@ -1,7 +1,7 @@
 <template>
 <div class="main">
-
-    <mdb-navbar dark color="bg-dark" >
+    
+    <mdb-navbar dark color="bg-dark" class="fixed-top">
     <!-- Navbar brand -->
     <mdb-navbar-brand >
       CSLMIS COMPANIES
@@ -10,7 +10,8 @@
         <mdb-nav-item href="#" active class="ml-auto"><b-button variant="primary" @click="gotologin">Login</b-button></mdb-nav-item> 
       </mdb-navbar-nav>
     </mdb-navbar>
-   
+    
+
 <div class="section">
            
            <div class="logo" align="center">
@@ -137,6 +138,7 @@ export default {
     text-align: justify;
     justify-content: center;
     align-items:center;  
+    padding-top:10%;
 }
 
 .text {

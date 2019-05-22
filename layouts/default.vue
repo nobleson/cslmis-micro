@@ -39,7 +39,8 @@
     import AppSidebar from '~/components/Sidebar/Sidebar.vue'
 
     export default {
-        middleware: ['check-auth'],
+        middleware: ['check-auth','auth'],
+                    
         name: 'full',
         components: {
             AsideToggler,

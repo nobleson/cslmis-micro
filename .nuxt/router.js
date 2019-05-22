@@ -7,6 +7,8 @@ const _8d9fe3fa = () => interopDefault(import('..\\pages\\login\\index.vue' /* w
 const _6cef1705 = () => interopDefault(import('..\\pages\\register\\index.vue' /* webpackChunkName: "pages_register_index" */))
 const _6378de74 = () => interopDefault(import('..\\pages\\cslmis\\artisans\\index.vue' /* webpackChunkName: "pages_cslmis_artisans_index" */))
 const _3afd702e = () => interopDefault(import('..\\pages\\cslmis\\centers\\index.vue' /* webpackChunkName: "pages_cslmis_centers_index" */))
+const _b1795528 = () => interopDefault(import('..\\pages\\cslmis\\companies\\index.vue' /* webpackChunkName: "pages_cslmis_companies_index" */))
+const _bb6052e2 = () => interopDefault(import('..\\pages\\cslmis\\dashboard.vue' /* webpackChunkName: "pages_cslmis_dashboard" */))
 const _5dff718a = () => interopDefault(import('..\\pages\\cslmis\\facility\\index.vue' /* webpackChunkName: "pages_cslmis_facility_index" */))
 const _3e2b9094 = () => interopDefault(import('..\\pages\\cslmis\\jobadvert\\index.vue' /* webpackChunkName: "pages_cslmis_jobadvert_index" */))
 const _4302b67a = () => interopDefault(import('..\\pages\\cslmis\\jobapplication\\index.vue' /* webpackChunkName: "pages_cslmis_jobapplication_index" */))
@@ -94,15 +96,15 @@ export function createRouter() {
     scrollBehavior,
 
     routes: [{
-      path: "/application",
+      path: "/cslmis/application",
       component: _d20d1f88,
       name: "application"
     }, {
-      path: "/login",
+      path: "/cslmis/login",
       component: _8d9fe3fa,
       name: "login"
     }, {
-      path: "/register",
+      path: "/cslmis/register",
       component: _6cef1705,
       name: "register"
     }, {
@@ -113,6 +115,14 @@ export function createRouter() {
       path: "/cslmis/centers",
       component: _3afd702e,
       name: "cslmis-centers"
+    }, {
+      path: "/cslmis/companies",
+      component: _b1795528,
+      name: "cslmis-companies"
+    }, {
+      path: "/cslmis/dashboard",
+      component: _bb6052e2,
+      name: "cslmis-dashboard"
     }, {
       path: "/cslmis/facility",
       component: _5dff718a,

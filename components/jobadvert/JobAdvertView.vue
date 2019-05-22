@@ -11,9 +11,9 @@
 
             
            <b-button @click="$emit('changeComponent','JobAdvertDetail')">Manage</b-button>
-           <hr>
+           
             <b-card
-            title="Artisan Workshop"
+            title="Job Available"
             img-src="/img/logo-symbol.png"
             img-alt="Artisan Logo"
             img-top
@@ -36,7 +36,7 @@
 
 <script>
   export default {
-    name: 'artisans',
+    name: 'jobadvert',
     data() {
       return {
         artisans: [

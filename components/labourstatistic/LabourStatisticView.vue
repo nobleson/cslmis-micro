@@ -1,25 +1,24 @@
 <template>
 <div class="container">
   <mdb-card class="card-body">
-    <mdb-card-title>Artisans</mdb-card-title>
-    <mdb-card-sub-title>Total Number of Artisans</mdb-card-sub-title> 
-    <div class="flex-row"> 
-  <mdb-collapse :toggleTag="['a', 'icon']" :togglers="1" :ToggleClass="['btn btn-primary']">
-  <div>
-    <mdb-input label="Large input" size="lg" />
-    <mdb-input label="Large input" size="lg" />
-    <mdb-input label="Large input" size="lg" />
-    <mdb-input label="Large input" size="lg" />
-    
-  </div>
-     <mdb-btn color="info" >Save Changes</mdb-btn>
-    </mdb-collapse>
+    <div class="d-flex justify-content-end" style="background:lightgray">
+      <h2><span class="badge badge-info">21,400</span></h2>
     </div>
-    <mdb-card-footer  class="text mt-4"><center>21,400</center></mdb-card-footer>
+    <h1>Artisans</h1>
+    <h6>Total Number of Artisans</h6>
+  <mdb-collapse :toggleClass="['btn btn-primary',]" :toggleText="['Edit',]">
+  <div>
+     <mdb-input label="Enter Number of Artisans" v-model="form.numberOfArtisans" required />
+     </div>
+     <mdb-btn class="btn btn-secondary float-right" >Save Changes</mdb-btn>
+    </mdb-collapse>
+    
   </mdb-card>
-</div>
+  
+  </div>
 </template>
 <script>
+ import { mdbIcon } from 'mdbvue';
 import { mdbBtn } from 'mdbvue';
 import { mdbInput } from 'mdbvue';
 import { mdbCard, mdbCardBody, mdbCardTitle, mdbCardText, mdbMask, mdbCardHeader, mdbCardFooter } from 'mdbvue';
@@ -35,7 +34,21 @@ import { mdbCollapse, mdbContainer } from 'mdbvue';
       mdbContainer,
       mdbCardFooter,
       mdbInput,
-      mdbBtn
+      mdbBtn,
+      mdbIcon
+    },
+    data (){
+      return {
+          form:{
+        numberOfArtisans:'',
+      }
+      }
+      
     }
+    
   }
 </script>
+<style scoped>
+
+
+</style>

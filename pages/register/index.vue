@@ -28,7 +28,7 @@
                 <h1>Application Form</h1>
                 <p class="">Compulsory fields are marked with asteriks <span class="asteriks">*</span></p>
                 <form>
-                    <mdb-input label="Company Name" v-model="form.companyName" size="lg"/>
+                    <mdb-input label="Company Name" v-model="form.companyName" size="lg" aria-required="*"/>
                     <mdb-input label=" Company Acronym" v-model="form.companyAcronym" />
                     <mdb-input label="Company Nationality" v-model="form.companyNationality" />
                     <mdb-input label="Company Status" v-model="form.companyStatus" />
