@@ -7,7 +7,7 @@
       CSLMIS COMPANIES
     </mdb-navbar-brand>
       <mdb-navbar-nav right>
-        <mdb-nav-item href="#" active class="ml-auto"><b-button variant="primary" @click="gotologin">Login</b-button></mdb-nav-item> 
+        <mdb-nav-item href="#" active class="ml-auto"></mdb-nav-item> 
       </mdb-navbar-nav>
     </mdb-navbar>
     
@@ -25,7 +25,10 @@
                 <h1 class="cent" align="center" >CONSTRUCTION SKILLS LABOUR MARKET <br> INFORNMATION SYSTEM</h1>
                 <h4 class="cent" align="center" >Register your company now............</h4>
             <div class="butt">
-                <b-col lg="15" align="center" class="pb-2"><mdb-btn color="indigo" @click="gotoregister"><h1>Register <i class="fa fa-arrow-right"></i></h1></mdb-btn></b-col>
+                <b-col lg="15" align="center" class="pb-2">
+                    <mdb-btn color="indigo" @click="gotoapplication"><h1>Register <i class="fa fa-arrow-right"></i></h1>
+                    </mdb-btn>
+                </b-col>
             </div>
     </div>                  
 </div>
@@ -120,10 +123,10 @@ export default {
     },
     methods: {
         gotoregister(){
-            this.$router.push("/register")
+            this.$router.push("/cslmis/application")
         },
       gotologin(){
-            this.$router.push("/login")
+            this.$router.push("/cslmis/application")
         }
     },  
 

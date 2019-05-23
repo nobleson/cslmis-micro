@@ -63,7 +63,9 @@ import { mdbInput, mdbCard, mdbCardbody, mdbBtn } from 'mdbvue';
         
 
       };
-    }
+      
+    },
+    
   }
 </script>
 <style>

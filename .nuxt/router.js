@@ -2,9 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
 
-const _d20d1f88 = () => interopDefault(import('..\\pages\\application\\index.vue' /* webpackChunkName: "pages_application_index" */))
-const _8d9fe3fa = () => interopDefault(import('..\\pages\\login\\index.vue' /* webpackChunkName: "pages_login_index" */))
-const _6cef1705 = () => interopDefault(import('..\\pages\\register\\index.vue' /* webpackChunkName: "pages_register_index" */))
+const _8205e8d2 = () => interopDefault(import('..\\pages\\cslmis\\application\\index.vue' /* webpackChunkName: "pages_cslmis_application_index" */))
 const _6378de74 = () => interopDefault(import('..\\pages\\cslmis\\artisans\\index.vue' /* webpackChunkName: "pages_cslmis_artisans_index" */))
 const _3afd702e = () => interopDefault(import('..\\pages\\cslmis\\centers\\index.vue' /* webpackChunkName: "pages_cslmis_centers_index" */))
 const _b1795528 = () => interopDefault(import('..\\pages\\cslmis\\companies\\index.vue' /* webpackChunkName: "pages_cslmis_companies_index" */))
@@ -13,7 +11,10 @@ const _5dff718a = () => interopDefault(import('..\\pages\\cslmis\\facility\\inde
 const _3e2b9094 = () => interopDefault(import('..\\pages\\cslmis\\jobadvert\\index.vue' /* webpackChunkName: "pages_cslmis_jobadvert_index" */))
 const _4302b67a = () => interopDefault(import('..\\pages\\cslmis\\jobapplication\\index.vue' /* webpackChunkName: "pages_cslmis_jobapplication_index" */))
 const _f3305b94 = () => interopDefault(import('..\\pages\\cslmis\\labourstatistic\\index.vue' /* webpackChunkName: "pages_cslmis_labourstatistic_index" */))
+const _2576099e = () => interopDefault(import('..\\pages\\cslmis\\login\\index.vue' /* webpackChunkName: "pages_cslmis_login_index" */))
+const _50e9b18a = () => interopDefault(import('..\\pages\\cslmis\\register\\index.vue' /* webpackChunkName: "pages_cslmis_register_index" */))
 const _3cedb4c3 = () => interopDefault(import('..\\pages\\cslmis\\retrenchement\\index.vue' /* webpackChunkName: "pages_cslmis_retrenchement_index" */))
+const _851f9a8c = () => interopDefault(import('..\\pages\\dashboard\\dashboard.vue' /* webpackChunkName: "pages_dashboard_dashboard" */))
 const _07f5212b = () => interopDefault(import('..\\pages\\pages\\emailVerify.vue' /* webpackChunkName: "pages_pages_emailVerify" */))
 const _d4f369c2 = () => interopDefault(import('..\\pages\\pages\\Page404.vue' /* webpackChunkName: "pages_pages_Page404" */))
 const _6b97af48 = () => interopDefault(import('..\\pages\\pages\\Page500.vue' /* webpackChunkName: "pages_pages_Page500" */))
@@ -97,16 +98,8 @@ export function createRouter() {
 
     routes: [{
       path: "/cslmis/application",
-      component: _d20d1f88,
-      name: "application"
-    }, {
-      path: "/cslmis/login",
-      component: _8d9fe3fa,
-      name: "login"
-    }, {
-      path: "/cslmis/register",
-      component: _6cef1705,
-      name: "register"
+      component: _8205e8d2,
+      name: "cslmis-application"
     }, {
       path: "/cslmis/artisans",
       component: _6378de74,
@@ -140,9 +133,21 @@ export function createRouter() {
       component: _f3305b94,
       name: "cslmis-labourstatistic"
     }, {
+      path: "/cslmis/login",
+      component: _2576099e,
+      name: "cslmis-login"
+    }, {
+      path: "/cslmis/register",
+      component: _50e9b18a,
+      name: "cslmis-register"
+    }, {
       path: "/cslmis/retrenchement",
       component: _3cedb4c3,
       name: "cslmis-retrenchement"
+    }, {
+      path: "/dashboard/dashboard",
+      component: _851f9a8c,
+      name: "dashboard-dashboard"
     }, {
       path: "/pages/emailVerify",
       component: _07f5212b,
