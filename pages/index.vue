@@ -7,7 +7,7 @@
       CSLMIS COMPANIES
     </mdb-navbar-brand>
       <mdb-navbar-nav right>
-        <mdb-nav-item href="#" active class="ml-auto"></mdb-nav-item> 
+       <b-button @click="login" variant="primary" class="px-4">Login</b-button>
       </mdb-navbar-nav>
     </mdb-navbar>
     
@@ -26,7 +26,7 @@
                 <h4 class="cent" align="center" >Register your company now............</h4>
             <div class="butt">
                 <b-col lg="15" align="center" class="pb-2">
-                    <mdb-btn color="indigo" @click="gotoapplication"><h1>Register <i class="fa fa-arrow-right"></i></h1>
+                    <mdb-btn color="indigo" @click="gotoregister"><h1>Register <i class="fa fa-arrow-right"></i></h1>
                     </mdb-btn>
                 </b-col>
             </div>
@@ -89,12 +89,8 @@
                         </div>
                         </div>
                 </b-card>
-    </b-col>
-            
-            
-        
-        </b-row>
- 
+    </b-col>    
+    </b-row>
 
 <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
     <div class="cont text-center">  
@@ -107,7 +103,7 @@
 import { mdbDropdown, mdbDropdownToggle, mdbDropdownMenu, mdbDropdownItem, mdbContainer, mdbNavbar, mdbNavbarBrand, mdbNavbarToggler, mdbNavbarNav, mdbNavItem } from 'mdbvue';
 import { mdbBtn } from 'mdbvue';
 export default {
-    layout: 'empty',
+    layout:'empty',
     components: {
       mdbNavbar,
       mdbNavbarBrand,
@@ -122,14 +118,13 @@ export default {
   }
     },
     methods: {
-        gotoregister(){
-            this.$router.push("/cslmis/application")
-        },
-      gotologin(){
-            this.$router.push("/cslmis/application")
-        }
-    },  
-
+       gotoregister(){
+           this.$router.push('/cslmis/login')
+       },
+    login() {
+        this.$router.push('/cslmis/login');
+     },
+   }
 }
 </script>
 <style>

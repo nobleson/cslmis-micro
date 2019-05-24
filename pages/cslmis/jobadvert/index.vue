@@ -25,22 +25,6 @@ export default {
       this.currentComponent = newComponent;
     }
   },
-  mounted(){
-         
-        this.loadDashboard()
-      },
-    computed: {
-
-
-    }, 
-    methods: {
-      ...mapGetters({companyId: 'authentication/getCompanyId'}),
-      loadDashboard(){
-      this._id = localStorage.getItem('companyId')
-      console.log('Company Id'+this._id)
-       }
-      
-      }
   
   
 }

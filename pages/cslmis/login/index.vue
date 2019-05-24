@@ -59,7 +59,7 @@
   import {mapGetters, mapActions} from 'vuex'
 export default {
   name: 'Login',
-  layout: "auth",
+  layout: "empty",
 
   data() {
     return {

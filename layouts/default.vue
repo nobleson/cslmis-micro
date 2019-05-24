@@ -46,8 +46,7 @@
     import { mdbDropdown, mdbDropdownToggle, mdbDropdownMenu, mdbDropdownItem, mdbContainer, mdbNavbar, mdbNavbarBrand, mdbNavbarToggler, mdbNavbarNav, mdbNavItem } from 'mdbvue';
      import {mapGetters, mapActions} from 'vuex'
     export default {
-        middleware: ['check-auth','auth'],
-                    
+        middleware: ['check-auth','auth'],     
         name: 'full',
         components: {
             AsideToggler,

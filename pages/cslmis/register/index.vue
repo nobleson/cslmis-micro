@@ -72,7 +72,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 export default {
    name: 'Register',
-  layout: "auth",
+  layout: "default",
   components: {
       datepicker,
       clipperBasic,

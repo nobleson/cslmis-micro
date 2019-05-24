@@ -64,7 +64,7 @@
 </template>
 <script>
 
- import { mdbInput } from 'mdbvue';
+import { mdbInput } from 'mdbvue';
 import { mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
 import datepicker from 'vue-date-picker'
@@ -73,7 +73,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 export default {
   name: 'Register',
-  layout: "auth",
+  layout: "defualt",
   components: {
       datepicker,
       clipperBasic,
@@ -155,15 +155,10 @@ gender: [{ text: 'Select One', value: null },'Male','Female',],
         });
         this.reset();
       },
-      logIn() {
-      this.authenticateUser(this.user).then(e => {
-        this.$router.push('/cslmis/dashboard');
-      });
-    },
+     
       register() {
 
         this.$router.push('/cslmis/dashboard');
-
       },
       reset(){
           this.form.companyName = '',
