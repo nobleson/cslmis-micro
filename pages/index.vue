@@ -1,13 +1,13 @@
 <template>
 <div class="main">
     
-    <mdb-navbar dark color="bg-dark" class="fixed-top">
+    <mdb-navbar  class="top">
     <!-- Navbar brand -->
     <mdb-navbar-brand >
-      CSLMIS COMPANIES
+      <img src="~/assets/images/log1.png">
     </mdb-navbar-brand>
       <mdb-navbar-nav right>
-       <b-button @click="login" variant="primary" class="px-4">Login</b-button>
+       <mdb-btn color="white" @click="login" variant="primary" class="px-4"><h6 class="buut2">Login</h6></mdb-btn>
       </mdb-navbar-nav>
     </mdb-navbar>
     
@@ -17,7 +17,7 @@
            <div class="logo" align="center">
 
             <!-- Portfolio Item Heading -->
-            <img src="~/assets/images/Logo1.png" alt="Logo image">
+            <img src="~/assets/images/logo1.png" alt="Logo image">
             
             </div>
             <!-- Portfolio Item Row -->
@@ -25,14 +25,14 @@
                 <h1 class="cent" align="center" >CONSTRUCTION SKILLS LABOUR MARKET <br> INFORNMATION SYSTEM</h1>
                 <h4 class="cent" align="center" >Register your company now............</h4>
             <div class="butt">
-                <b-col lg="15" align="center" class="pb-2">
-                    <mdb-btn color="indigo" @click="gotoregister"><h1>Register <i class="fa fa-arrow-right"></i></h1>
+                <b-col lg="15" align="center">
+                    <mdb-btn color="white" @click="gotoregister"><h1 class="buut"><b>Register</b> <i class="fa fa-arrow-right"></i></h1>
                     </mdb-btn>
                 </b-col>
             </div>
     </div>                  
 </div>
- 
+
 <b-row class="cards">
     <b-col>
                 <b-card>
@@ -92,7 +92,7 @@
     </b-col>    
     </b-row>
 
-<footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+<footer  class="py-4 green text-white-50">
     <div class="cont text-center">  
     <small>Copyright &copy; CSLMIS</small>
     </div>
@@ -130,13 +130,17 @@ export default {
 <style>
 *{padding:0; margin:0;box-sizing:border-box;} 
 
+footer{
+    color:#008751;
+}
+
 .section{
     display:flex;
     flex-direction: column;
     text-align: justify;
     justify-content: center;
     align-items:center;  
-    padding-top:10%;
+    padding-top:4%;
 }
 
 .text {
@@ -146,10 +150,15 @@ justify-content: center;
 align-content: center;
 color:white;
 min-width: auto;
-min-height: 12em;
-background: rgba(0, 0, 0, 0.3)
+background: rgba(0, 0, 0, 0.548)
 }
 
+ .cent{
+      color:whitesmoke;
+      font-family:'Roboto';
+      text-shadow: 20%;
+      
+ }
 .good {
 display: flex;
 flex-direction: column;
@@ -160,8 +169,11 @@ min-height: auto;
 
 }
 .section:nth-of-type(1){
-    background-image: url("../assets/images/1.jpg");
-    background-position: center;  
+   
+    background: url("../assets/images/3.png") no-repeat;  
+    background-color: rgba(14, 12, 12, 0.918);
+    background-position: center 0;
+    background-size: 100% auto;
 }
 
 .text{
@@ -170,12 +182,26 @@ padding-bottom:2%;
 }
 
 .butt{
+        
    padding-top: 2%;
+}
+
+.buut{
+        
+ color:#008753;
+}
+.buut2{
+        
+ color:#008753;
 }
 
 .logo{
     
     padding-bottom: 2%;
+}
+.top{
+
+    background-color:#008753;
 }
 
 .cards{

@@ -92,9 +92,9 @@ export default {
     margin-top: 50px;
 }
 .bg-primary{
-  background-color: #3E4095;  
+  background-color: #008751;  
 }
 .primary{
-  background-color: #3E4095;  
+  background-color: #008751;  
 }
 </style>
