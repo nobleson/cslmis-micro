@@ -4,7 +4,7 @@
     <mdb-navbar  class="top">
     <!-- Navbar brand -->
     <mdb-navbar-brand >
-      <img src="~/assets/images/log1.png">
+      <img src="~/assets/images/lg.png">
     </mdb-navbar-brand>
       <mdb-navbar-nav right>
        <mdb-btn color="white" @click="login" variant="primary" class="px-4"><h6 class="buut2">Login</h6></mdb-btn>
@@ -17,7 +17,7 @@
            <div class="logo" align="center">
 
             <!-- Portfolio Item Heading -->
-            <img src="~/assets/images/logo1.png" alt="Logo image">
+            <img src="~/assets/images/new.png" alt="Logo image">
             
             </div>
             <!-- Portfolio Item Row -->
@@ -213,7 +213,7 @@ padding-bottom:2%;
     align-items:center;
     padding-top: 2%;
     padding-bottom: 2%;
-    padding-left: 15%;
+    padding-left: 17%;
     padding-right: 15%;
 }
 

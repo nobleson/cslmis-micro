@@ -11,7 +11,7 @@
             <div class="mx-4">
                    <b-card>
                      <div class="logo">
-                           <center><img src="~/assets/images/Logo1.png" alt="Logo image"></center>
+                           <center><img src="~/assets/images/new.png" alt="Logo image"></center>
                     </div>
                     <h2><strong>Company Registered</strong></h2>
                     <b-card-text>

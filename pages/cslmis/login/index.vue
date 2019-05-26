@@ -12,7 +12,7 @@
             <b-card no-body class="text-white primary py-5 d-md-down-none" style="width:44%">
               <b-card-body class="text-center">
                 <div>
-                  <img src="~/assets/images/Logo1.png" alt="Logo">
+                  <img src="~/assets/images/new.png" alt="Logo">
                 </div>
                 <h1>CSLMIS</h1>
               </b-card-body>
