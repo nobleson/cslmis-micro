@@ -1,20 +1,23 @@
 <template>
 <div class="">
-    <b-navbar class="navbar-expand-lg navbar-dark bg-dark static-top" toggleable="lg" type="dark" variant="info">
+    <b-navbar toggleable="lg" class="top">
         <div class="container">
-        <b-navbar-brand href="#">CSLMIS</b-navbar-brand>
+        <b-navbar-brand href="#"><img src="~/assets/images/logo.png"></b-navbar-brand>
 
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+        <b-navbar-toggle target="nnpm av-collapse"></b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
 
             <!-- Right aligned nav items -->
+            
             <b-navbar-nav class="ml-auto">
-                <b-nav-item href="#">Publications</b-nav-item>
-                <b-nav-item href="#">Reports</b-nav-item>
-                <b-nav-item href="#">About Us</b-nav-item>
+                <b-nav-item href="#"></b-nav-item>
+                <b-nav-item href="#">
+                  <b-button @click="login">Login</b-button>
+                </b-nav-item>
             </b-navbar-nav>
         </b-collapse>
+        
         </div>
     </b-navbar>
 
@@ -29,7 +32,7 @@
             <!-- Portfolio Item Row -->
             <div class="row">
 
-                <div class="col-md-8">
+                <div>
                     <b-carousel
                             id="carousel-1"
                             v-model="slide"
@@ -81,13 +84,7 @@
                     </b-carousel>
                 </div>
 
-                <div class="col-md-4">
-                    <h3 class="mt-3">Skill Exchange</h3>
-                    <p>Labour Market Information System</p>
-
-                    <h3 class="mt-3">Get Trained</h3>
-                    <p>Endless possibilities</p>
-                </div>
+               
 
             </div>
             <!-- /.row -->
@@ -97,34 +94,56 @@
     </header>
     <section class="bg-white pt-5">
         <h3 class="my-4 text-center">Top Training Centers</h3>
+<div class="ptb steps-section ptb-sm ptb-xs"> 
+    <div class="container"> 
+      <div class="row"> 
+        <div class="col-xs-12"> 
+         </div> 
+	      <div class="col-xs-12"> 
+	        <div class="row steps-section"> 
+	           <div class="col-sm-4 col-xs-12"> 
+                 <div class="steps-description mb-xs clearfix"> 
+                    <i class="stp-one-img steps-img"></i> 
+                    <h3 class="medium-heading">Choose your programme</h3> 
+                    <p> 
+                    Start by exploring our programmes to determine which is a good fit for you. 
+                    </p> 
+                </div> 
+                </div> 
+                <div class="col-sm-4 col-xs-12"> 
+                <div class="steps-description mb-xs clearfix"> 
+                    <i class="stp-two-img steps-img"></i> 
+                                                            
+                    <h3 class="medium-heading">Start your application</h3> 
+                    <p> 
+                        Ready to apply? The online application will walk you through all application steps. 
+                    </p> 
+                </div> 
+                </div> 
+                <div class="col-sm-4 col-xs-12"> 
+                <div class="steps-description clearfix"> 
+                     <i class="stp-three-img steps-img"></i> 
+                                                                
+                    <h3 class="medium-heading">Wait for selection</h3> 
+                    <p> 
+                    Once you’re selected, huge life changes are ahead. If you decide to accept the offer. 
+                    </p> 
+                </div> 
+                </div> 
+              </div> 
+            </div> 
+         </div> 
+        </div> 
+    </div>
 
-
-        <div class="container">
-        <b-row>
-            <b-col v-for="(center, index) in topCenters" :key="index" sm="6" md="3" class="mb-4">
-                <b-card>
-                    <div class="box-part text-center">
-                        <i class="fa fa-address-card fa-3x"></i>
-                        <div class="title">
-                            <h4>{{center.name}}</h4>
-                        </div>
-
-                        <div class="text">
-                            <span>{{center.description}}</span>
-                        </div>
-
-                        <a href="#">Learn More</a>
-
-                    </div>
-                    <div slot="footer"><small class="text-muted">Training 33</small></div>
-
-                </b-card>
-            </b-col>
-        </b-row>
-        </div>
+    <div class="container">
+    <b-row>
+            
+      </b-row>
+    </div>
         <!-- /.row -->
     </section>
-    <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
+    <footer id="sticky-footer" class="py-4 text-white-50">
         <div class="container text-center">
             <small>Copyright &copy; CSLMIS</small>
         </div>
@@ -134,50 +153,23 @@
 </template>
 
 <script>
-
+import { mdbBtn } from 'mdbvue';
+import {mapGetters, mapActions} from 'vuex'
 export default {
-  layout: 'empty',
-    middleware: 'take-login',
+    layout:'empty',
     data(){
       return {
-          topCenters: [
-              {
-                  name: 'Mutual Links',
-                  description: 'Teaches computer programming and other technical skills'
-              },
-              {
-                  name: 'Mutual Links',
-                  description: 'Teaches computer programming and other technical skills'
-              },
-              {
-                  name: 'Mutual Links',
-                  description: 'Teaches computer programming and other technical skills'
-              },
-              {
-                  name: 'Mutual Links',
-                  description: 'Teaches computer programming and other technical skills'
-              }
-
-          ],
-          topCompanies: [
-              {
-                  name: 'NNPC',
-                  description: 'some descrtn to go with it'
-              },
-              {
-                  name: 'NNPC',
-                  description: 'some descrtn to go with it'
-              },
-              {
-                  name: 'NNPC',
-                  description: 'some descrtn to go with it'
-              },
-              {
-                  name: 'NNPC',
-                  description: 'some descrtn to go with it'
-              }
-          ]
-      }
+          component:{
+              mdbBtn
+          },
+         
+        
+        }
+    },
+      methods:{
+            Login(){
+                this.$router.push('cslmis/login')
+            }
     }
 }
 </script>
@@ -187,6 +179,11 @@ export default {
         flex: 1 0 auto;
     }
 
-
-
+.top{
+    background-color: #008751;
+    color:white;
+}
+footer{
+    background-color: #008751;
+}
 </style>

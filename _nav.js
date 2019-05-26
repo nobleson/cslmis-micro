@@ -9,11 +9,7 @@ export default {
         text: 'NEW'
       }
     },
-    {
-      name: 'Company',
-      url: '/cslmis/companies'
-    },
-    {
+     {
       name: 'Centers',
       url: '/cslmis/centers',
       icon: 'icon-pencil'
