@@ -8,6 +8,7 @@
     "@coreui/icons": "0.2.0",
     "@coreui/vue": "^2.1.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.18",
+    "@fortawesome/free-brands-svg-icons": "^5.8.2",
     "@fortawesome/free-solid-svg-icons": "^5.8.2",
     "@fortawesome/vue-fontawesome": "^0.1.6",
     "@nuxtjs/axios": "^5.3.6",
@@ -25,12 +26,13 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.0",
     "js-cookie": "^2.2.0",
-    "mdbvue": "^5.4.0",
+    "mdbvue": "^5.4.1",
     "mocha": "^2.4.5",
     "mongodb": "^2.1.16",
     "morgan": "^1.7.0",
     "nuxt": "^2.6.2",
     "nuxt-buefy": "^0.3.5",
+    "nuxt-fontawesome": "^0.4.0",
     "object-assign": "4.1.0",
     "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.15.0",
@@ -43,8 +45,8 @@
     "vue-perfect-scrollbar": "git+https://github.com/Degfy/vue-perfect-scrollbar.git#1.x"
   },
   "devDependencies": {
+    "node-sass": "^4.12.0",
     "nodemon": "^1.18.9",
-    "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0"
   },
   "engine": {

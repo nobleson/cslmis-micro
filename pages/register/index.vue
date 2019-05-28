@@ -49,6 +49,6 @@
 <script>
 export default {
   name: 'Register',
-  layout: "auth"
+  layout: "default"
 }
 </script>

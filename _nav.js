@@ -1,15 +1,16 @@
+
 export default {
   items: [
     {
       name: 'Dashboard',
-      url: '/cslmis/dashboard',
       icon: 'icon-speedometer',
       badge: {
-        variant: 'primary',
+        variant: 'secondary',
         text: 'NEW'
       }
     },
-     {
+    
+    {
       name: 'Centers',
       url: '/cslmis/centers',
       icon: 'icon-pencil'
@@ -17,7 +18,7 @@ export default {
     {
       name: 'Artisans',
       url: '/cslmis/artisans',
-      icon: 'icon-pencil'
+      icon: 'icon-star'
     },
     {
       name: 'Trades',
@@ -28,7 +29,8 @@ export default {
       name: 'Facilities',
       url: '/cslmis/facility',
       icon: 'icon-pencil'
-    }
-
+    },
+    
+    
   ]
 }

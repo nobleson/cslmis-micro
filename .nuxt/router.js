@@ -2,13 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
 
-const _8d9fe3fa = () => interopDefault(import('..\\pages\\login\\index.vue' /* webpackChunkName: "pages_login_index" */))
+const _71c1b44a = () => interopDefault(import('..\\pages\\dashboard.vue' /* webpackChunkName: "pages_dashboard" */))
+const _851f9a8c = () => interopDefault(import('..\\pages\\dashboard\\dashboard.vue' /* webpackChunkName: "pages_dashboard_dashboard" */))
 const _6cef1705 = () => interopDefault(import('..\\pages\\register\\index.vue' /* webpackChunkName: "pages_register_index" */))
 const _6378de74 = () => interopDefault(import('..\\pages\\cslmis\\artisans\\index.vue' /* webpackChunkName: "pages_cslmis_artisans_index" */))
 const _3afd702e = () => interopDefault(import('..\\pages\\cslmis\\centers\\index.vue' /* webpackChunkName: "pages_cslmis_centers_index" */))
 const _5dff718a = () => interopDefault(import('..\\pages\\cslmis\\facility\\index.vue' /* webpackChunkName: "pages_cslmis_facility_index" */))
+const _2576099e = () => interopDefault(import('..\\pages\\cslmis\\login\\index.vue' /* webpackChunkName: "pages_cslmis_login_index" */))
 const _24e8f444 = () => interopDefault(import('..\\pages\\cslmis\\trades\\index.vue' /* webpackChunkName: "pages_cslmis_trades_index" */))
-const _851f9a8c = () => interopDefault(import('..\\pages\\dashboard\\dashboard.vue' /* webpackChunkName: "pages_dashboard_dashboard" */))
 const _d4f369c2 = () => interopDefault(import('..\\pages\\pages\\Page404.vue' /* webpackChunkName: "pages_pages_Page404" */))
 const _6b97af48 = () => interopDefault(import('..\\pages\\pages\\Page500.vue' /* webpackChunkName: "pages_pages_Page500" */))
 const _42c515ff = () => interopDefault(import('..\\pages\\cslmis\\centers\\training-center.vue' /* webpackChunkName: "pages_cslmis_centers_training-center" */))
@@ -89,9 +90,14 @@ export function createRouter() {
     scrollBehavior,
 
     routes: [{
-      path: "/login",
-      component: _8d9fe3fa,
-      name: "login"
+      path: "/dashboard",
+      component: _71c1b44a,
+      name: "dashboard",
+      children: [{
+        path: "dashboard",
+        component: _851f9a8c,
+        name: "dashboard-dashboard"
+      }]
     }, {
       path: "/register",
       component: _6cef1705,
@@ -109,13 +115,13 @@ export function createRouter() {
       component: _5dff718a,
       name: "cslmis-facility"
     }, {
+      path: "/cslmis/login",
+      component: _2576099e,
+      name: "cslmis-login"
+    }, {
       path: "/cslmis/trades",
       component: _24e8f444,
       name: "cslmis-trades"
-    }, {
-      path: "/dashboard/dashboard",
-      component: _851f9a8c,
-      name: "dashboard-dashboard"
     }, {
       path: "/pages/Page404",
       component: _d4f369c2,

@@ -13,6 +13,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faSpinner, faAlignLeft } from '@fortawesome/free-solid-svg-icons'
 import 'bootstrap-css-only/css/bootstrap.min.css'; 
 import 'mdbvue/build/css/mdb.css';
+import Image from 'bootstrap-vue/es/components/image'
+
+
+
 
 
 library.add(faSpinner, faAlignLeft)
@@ -21,5 +25,6 @@ library.add(faUserSecret)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(datePicker);
+Vue.use(Image)
 Vue.use(VueFormWizard)
 Vue.use(BootstrapVue)
