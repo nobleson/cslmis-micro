@@ -176,28 +176,24 @@ import { mdbBtn } from 'mdbvue';
 import {mapGetters, mapActions} from 'vuex'
 export default {
     layout:'empty',
+     component:{
+                mdbBtn
+              },
     data(){
       return {
           slide: 0,
-        sliding: null,
-          component:{
-              mdbBtn,
-             
-          },
-
+          sliding: null
         }
     },
-      method:{
-             login() {
-        this.$router.push('/cslmis/login');
-     }
-   },
      methods: {
       onSlideStart(slide) {
         this.sliding = true
       },
       onSlideEnd(slide) {
         this.sliding = false
+      },
+      login(){
+        this.$router.push('/cslmis/login')
       }
     }
 }

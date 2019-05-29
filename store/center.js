@@ -16,9 +16,9 @@ export const getters = {
 export const actions= {
   
     updateCenter(vuexContext,centerData) {
-        var _id = "Pg76sjvQ5XWxD8OZ20qyfOOhqP23";
+      var _id = "EP0qVNXhLFZlZNbwYW2PLGuad8Q2";
         let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/'+_id;
-      //  console.log("companyData:"+JSON.parse(companyData)); 
+      //  console.log("centerData:"+JSON.parse(centerData)); 
         this.$axios.$put(herokuUrl,centerData)
         .then(function (response) {
           vuexContext.commit('setCenter',response)

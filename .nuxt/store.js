@@ -21,7 +21,6 @@ void (function updateModules() {
 
   resolveStoreModules(require('..\\store\\authentication.js'), 'authentication.js')
   resolveStoreModules(require('..\\store\\center.js'), 'center.js')
-  resolveStoreModules(require('..\\store\\company.js'), 'company.js')
 
   // If the environment supports hot reloading...
 
@@ -30,7 +29,6 @@ void (function updateModules() {
     module.hot.accept([
       '..\\store\\authentication.js',
       '..\\store\\center.js',
-      '..\\store\\company.js',
       '..\\store\\index.js',
     ], () => {
       // Update `root.modules` with the latest definitions.

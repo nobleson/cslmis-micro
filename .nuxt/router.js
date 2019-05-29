@@ -2,11 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
 
-const _71c1b44a = () => interopDefault(import('..\\pages\\dashboard.vue' /* webpackChunkName: "pages_dashboard" */))
-const _851f9a8c = () => interopDefault(import('..\\pages\\dashboard\\dashboard.vue' /* webpackChunkName: "pages_dashboard_dashboard" */))
+const _a84b65d0 = () => interopDefault(import('..\\pages\\Dashboard\\index.vue' /* webpackChunkName: "pages_Dashboard_index" */))
 const _6cef1705 = () => interopDefault(import('..\\pages\\register\\index.vue' /* webpackChunkName: "pages_register_index" */))
 const _6378de74 = () => interopDefault(import('..\\pages\\cslmis\\artisans\\index.vue' /* webpackChunkName: "pages_cslmis_artisans_index" */))
 const _3afd702e = () => interopDefault(import('..\\pages\\cslmis\\centers\\index.vue' /* webpackChunkName: "pages_cslmis_centers_index" */))
+const _47330333 = () => interopDefault(import('..\\pages\\cslmis\\Dashboard\\index.vue' /* webpackChunkName: "pages_cslmis_Dashboard_index" */))
 const _5dff718a = () => interopDefault(import('..\\pages\\cslmis\\facility\\index.vue' /* webpackChunkName: "pages_cslmis_facility_index" */))
 const _2576099e = () => interopDefault(import('..\\pages\\cslmis\\login\\index.vue' /* webpackChunkName: "pages_cslmis_login_index" */))
 const _24e8f444 = () => interopDefault(import('..\\pages\\cslmis\\trades\\index.vue' /* webpackChunkName: "pages_cslmis_trades_index" */))
@@ -90,14 +90,9 @@ export function createRouter() {
     scrollBehavior,
 
     routes: [{
-      path: "/dashboard",
-      component: _71c1b44a,
-      name: "dashboard",
-      children: [{
-        path: "dashboard",
-        component: _851f9a8c,
-        name: "dashboard-dashboard"
-      }]
+      path: "/Dashboard",
+      component: _a84b65d0,
+      name: "Dashboard"
     }, {
       path: "/register",
       component: _6cef1705,
@@ -110,6 +105,10 @@ export function createRouter() {
       path: "/cslmis/centers",
       component: _3afd702e,
       name: "cslmis-centers"
+    }, {
+      path: "/cslmis/Dashboard",
+      component: _47330333,
+      name: "cslmis-Dashboard"
     }, {
       path: "/cslmis/facility",
       component: _5dff718a,
