@@ -20,6 +20,7 @@ void (function updateModules() {
   store.modules = store.modules || {}
 
   resolveStoreModules(require('..\\store\\authentication.js'), 'authentication.js')
+  resolveStoreModules(require('..\\store\\center.js'), 'center.js')
   resolveStoreModules(require('..\\store\\company.js'), 'company.js')
 
   // If the environment supports hot reloading...
@@ -28,6 +29,7 @@ void (function updateModules() {
     // Whenever any Vuex module is updated...
     module.hot.accept([
       '..\\store\\authentication.js',
+      '..\\store\\center.js',
       '..\\store\\company.js',
       '..\\store\\index.js',
     ], () => {

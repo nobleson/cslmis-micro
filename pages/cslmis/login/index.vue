@@ -27,7 +27,12 @@
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
-                      <b-button @click="logIn" variant="primary" class="px-4">Login</b-button>
+                      <b-button @click="login" variant="primary" class="px-4">Login</b-button>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                     <b-col class="signup">
+                    <span class="pull-right mt-20">Don't have account yet? <router-link to='/cslmis/dashboard'>Sign Up</router-link></span>
                     </b-col>
                   </b-row>
                 </b-form>
@@ -44,7 +49,7 @@
   import {mapGetters, mapActions} from 'vuex'
 export default {
   name: 'Login',
-  layout: "empty",
+  layout: "auth",
 
   data() {
     return {
@@ -57,7 +62,7 @@ export default {
   },
   methods: {
     ...mapActions({authenticateUser: 'authentication/authenticateUser'}),
-    logIn() {
+    login() {
       this.authenticateUser(this.user).then(e => {
         this.$router.push('/cslmis/dashboard');
       });

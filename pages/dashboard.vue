@@ -17,6 +17,6 @@
 import {mapGetters, mapActions, mapState} from 'vuex'
   export default {
     name: 'dashboard',
-    layout:'empty'
+    layout:'default'
   }
 </script>

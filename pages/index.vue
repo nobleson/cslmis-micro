@@ -5,7 +5,9 @@
         <div class="container">
         <b-navbar-brand href="#"><img src="~/assets/images/logo.png"></b-navbar-brand>
 
-        <b-navbar-toggle target="nnpm av-collapse"></b-navbar-toggle>
+        <b-navbar-toggle target="nnpm av-collapse">
+          
+        </b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
             <!-- Right aligned nav items -->
@@ -13,7 +15,6 @@
                 <b-nav-item href="#">
                     <b-button @click="login">login</b-button>
                 </b-nav-item>
-               
             </b-navbar-nav>
         </b-collapse>
         
@@ -174,8 +175,7 @@
 import { mdbBtn } from 'mdbvue';
 import {mapGetters, mapActions} from 'vuex'
 export default {
-    name:'login',
-    layout:'auth',
+    layout:'empty',
     data(){
       return {
           slide: 0,
@@ -187,7 +187,7 @@ export default {
 
         }
     },
-      methods:{
+      method:{
              login() {
         this.$router.push('/cslmis/login');
      }
