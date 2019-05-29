@@ -18,26 +18,7 @@ import {mapGetters, mapActions, mapState} from 'vuex'
   export default {
     name: 'dashboard',
     layout:'empty',
-    data(){
-      return{
-        _id: '',
-      }
-    },
-    mounted(){
-         
-        loadDashboard()
-      },
-    computed: {
-        ...mapGetters({centerId: 'center/getCenterId'})
-
-
-    }, 
-    methods: {
-      loadDashboard(){
-       this._id = this.centerId
-      console.log('Center Id'+this._id)
-       }
-      
-      }
+    
+   
   }
 </script>
