@@ -1,5 +1,8 @@
 <template>
   <div class="app flex-row align-items-center">
+    <div class="id">
+      <img src="~/assets/images/bg.jpg" alt="Logo" height="5000" width="4000">
+      </div>
     <div class="container">
        <b-row>
            <b-col md="8">
@@ -48,8 +51,8 @@
       </b-row>
       <b-row  class="justify-content-center">
         <a href="https://admin.cslmis.gov.ng">CSLMIS</a>
-        <span class="ml-1">&copy; 2019 Admin Portal.</span>
-        <span>Powered by </span>
+        <span class="ml-1" >&copy; 2019 Admin Portal.</span>
+        <span class="ad">Powered by </span>
         <a href="https://corbon.gov.ng"> CORBON </a>
       </b-row>
     </div>
@@ -93,10 +96,20 @@ export default {
     margin-top: 50px;
 }
 .bg-primary{
-  background-color: #3E4095;  
+  background-color: #008751;  
 }
 .primary{
-  background-color: #3E4095;  
+  background-color: #008751;  
 }
+.id{
+  position: absolute;
+}
+.ml-1{
+  color:white;
+}
+.ad{
+   color:white;
+}
+
 </style>
 
