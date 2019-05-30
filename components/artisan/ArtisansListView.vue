@@ -14,7 +14,7 @@
            
             <b-card
             title="Artisan Workshop"
-            img-src="/img/pw.png"
+            img-src="/img/logo-symbol.png"
             img-alt="Artisan Logo"
             img-top
             tag="article"

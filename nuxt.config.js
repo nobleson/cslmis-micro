@@ -7,7 +7,11 @@ module.exports = {
   ** Headers of the page
   */
   head: {
+<<<<<<< HEAD
     title: 'CSLMIS | Admin',
+=======
+    title: 'CSLMIS | Dashboard',
+>>>>>>> 5dd587c6647464ea3f38bf0e2e576cc8ec43c1e0
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -45,6 +49,20 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     'nuxt-buefy',
+    [
+      'nuxt-fontawesome', {
+        imports: [
+         {
+           set: '@fortawesome/free-solid-svg-icons',
+           icons: ['fas']
+         },
+         {
+           set:'@fortawesome/free-brands-svg-icons',
+           icons: ['fab']
+         }
+       ]
+      }
+]
   ],
   /*
   ** Axios module configuration

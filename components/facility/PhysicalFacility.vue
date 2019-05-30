@@ -7,7 +7,7 @@
       <b-card-body>
         <b-row>
           <div class=""> Physical Facilities & lots More</div> 
-          
+          <b-button variant="secondary">Check</b-button>
         </b-row>
       </b-card-body>
     </b-card>

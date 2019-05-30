@@ -9,6 +9,7 @@
   <div class="form-wizard"  color="red">
     <form-wizard @on-complete="onComplete"
                        :start-index="0"
+<<<<<<< HEAD
                        color="blue">
      <tab-content title="Personal Details"
                   icon="icon-user">
@@ -16,6 +17,15 @@
            <b-alert v-if="errorState" show variant="danger">Artisan personal data failed to save. Try again</b-alert>    
        <div>
     <b-form v-if="show">
+=======
+                       color="#3E4095">
+     <tab-content title="Personal details"
+                  icon="icon-user">
+       <div class="form-wizard" style="width:800px; margin:0 auto;" color="red">
+    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+
+     
+>>>>>>> 5dd587c6647464ea3f38bf0e2e576cc8ec43c1e0
 
       <b-form-group id="input-group-2" label="Surname:" label-for="input-2">
         <b-form-input

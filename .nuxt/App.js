@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import NuxtLoading from './components/nuxt-loading.vue'
 
+import '..\\node_modules\\@fortawesome\\fontawesome-svg-core\\styles.css'
+
 import '..\\node_modules\\buefy\\dist\\buefy.css'
 
 import '..\\assets\\scss\\coreui.scss'
@@ -13,7 +15,11 @@ import _77430317 from '..\\layouts\\empty.vue'
 const layouts = { "_auth": _2d217e9e,"_default": _6f6c098b,"_DefaultHeaderDropdownAccnt": _7987d37e,"_empty": _77430317 }
 
 export default {
+<<<<<<< HEAD
   head: {"title":"CSLMIS | Admin","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"package content"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"~\u002Fassets\u002Fimages\u002Ffavicon.ico"},{"rel":"stylesheet","type":"text\u002Fcss","href":"\u002F\u002Fcdn.materialdesignicons.com\u002F2.4.85\u002Fcss\u002Fmaterialdesignicons.min.css"}],"style":[],"script":[]},
+=======
+  head: {"title":"CSLMIS | Dashboard","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"package content"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"\u002Ffavicon.ico"},{"rel":"stylesheet","type":"text\u002Fcss","href":"\u002F\u002Fcdn.materialdesignicons.com\u002F2.4.85\u002Fcss\u002Fmaterialdesignicons.min.css"}],"style":[],"script":[]},
+>>>>>>> 5dd587c6647464ea3f38bf0e2e576cc8ec43c1e0
 
   render(h, props) {
     const loadingEl = h('NuxtLoading', { ref: 'loading' })
