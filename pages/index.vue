@@ -3,6 +3,10 @@
     <div class="id">
       <img src="~/assets/images/bg.jpg" alt="Logo" height="5000" width="4000">
       </div>
+      <div>
+        <p> <b>Sammy Slim</b>
+        </p>
+        </div>
     <div class="container">
        <b-row>
            <b-col md="8">
