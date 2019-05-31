@@ -4,8 +4,7 @@
       <img src="~/assets/images/bg.jpg" alt="Logo" height="5000" width="4000">
       </div>
       <div>
-        <p> <b>Sammy Slim</b>
-        </p>
+       
         </div>
     <div class="container">
        <b-row>
@@ -94,41 +93,9 @@ export default {
   }
 }
 </script>
-<<<<<<< HEAD
-<style>
-*{padding:0; margin:0;box-sizing:border-box;} 
-.section{
-    display:flex;
-    flex-direction: column;
-    text-align: justify;
-    justify-content: center;
-    align-items:center;  
-}
-
-.text {
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-content: center;
-color:white;
-min-width: auto;
-min-height: 12em;
-background: rgba(0, 0, 0, 0.3)
-}
-
-.good {
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-content: center;
-min-width: auto;
-min-height: auto;
-
-=======
 <style scoped>
 .signup{
     margin-top: 50px;
->>>>>>> 6b5788059446f501fd6a69b68d105c539f57cee9
 }
 .bg-primary{
   background-color: #008751;  
