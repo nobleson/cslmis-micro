@@ -11,8 +11,8 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
-import nuxt_plugin_buefy_77011801 from 'nuxt_plugin_buefy_77011801' // Source: .\\buefy.js (mode: 'all')
-import nuxt_plugin_axios_95bbcea0 from 'nuxt_plugin_axios_95bbcea0' // Source: .\\axios.js (mode: 'all')
+import nuxt_plugin_buefy_48336973 from 'nuxt_plugin_buefy_48336973' // Source: .\\buefy.js (mode: 'all')
+import nuxt_plugin_axios_f3572bbc from 'nuxt_plugin_axios_f3572bbc' // Source: .\\axios.js (mode: 'all')
 import nuxt_plugin_bootstrapvue_872a6430 from 'nuxt_plugin_bootstrapvue_872a6430' // Source: ..\\plugins\\bootstrapvue.js (mode: 'all')
 
 // Component: <NoSsr>
@@ -149,12 +149,12 @@ async function createApp(ssrContext) {
 
   // Plugin execution
 
-  if (typeof nuxt_plugin_buefy_77011801 === 'function') {
-    await nuxt_plugin_buefy_77011801(app.context, inject)
+  if (typeof nuxt_plugin_buefy_48336973 === 'function') {
+    await nuxt_plugin_buefy_48336973(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_axios_95bbcea0 === 'function') {
-    await nuxt_plugin_axios_95bbcea0(app.context, inject)
+  if (typeof nuxt_plugin_axios_f3572bbc === 'function') {
+    await nuxt_plugin_axios_f3572bbc(app.context, inject)
   }
 
   if (typeof nuxt_plugin_bootstrapvue_872a6430 === 'function') {
