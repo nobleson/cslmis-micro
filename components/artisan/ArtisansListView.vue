@@ -36,32 +36,9 @@
 
 <script>
   export default {
-    name: 'artisans',
     data() {
       return {
-        artisans: [
-          {
-            name: 'my name'
-          },
-{
-            name: 'my name'
-          },
-{
-            name: 'my name'
-          },
-{
-            name: 'my name'
-          },
-{
-            name: 'my name'
-          },
-{
-            name: 'my name'
-          },
-{
-            name: 'my name'
-          },
-        ]
+        artisans: []
       }
     }
   }

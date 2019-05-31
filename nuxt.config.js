@@ -7,14 +7,18 @@ module.exports = {
   ** Headers of the page
   */
   head: {
+<<<<<<< HEAD
+    title: 'CSLMIS | Admin',
+=======
     title: 'CSLMIS | Dashboard',
+>>>>>>> 5dd587c6647464ea3f38bf0e2e576cc8ec43c1e0
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: 'package content' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/x-icon', href: '~/assets/images/favicon.ico' },
 
     ]
   },

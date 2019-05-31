@@ -1,21 +1,29 @@
 <template>
-  <div class="animated fadeIn">
-    <b-card header-tag="header">
-      <div slot="header">
-        <i class="icon-drop"></i> Centers index
-      </div>
-      <b-card-body>
-        <b-row>
-          <div>something</div>
-        </b-row>
-      </b-card-body>
-    </b-card>
+ <div class="animated fadeIn">
+        <component @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
   </div>
 </template>
 
 <script>
+import CenterListView from '~/components/center/CenterListView.vue';
+import NewCenter from '~/components/center/NewCenter.vue';
+import CenterDetails from '~/components/center/CenterDetails.vue';
   export default {
-    name: 'centers'
+    components: {
+      CenterListView,
+      CenterDetails,
+      NewCenter
+    },
+    data(){
+      return{
+       currentComponent: 'CenterListView'
+      }
+    },
+    methods: {
+      changeCurrentComponent(newComponent){
+        this.currentComponent = newComponent;
+      }
+    }
 
   }
 </script>
