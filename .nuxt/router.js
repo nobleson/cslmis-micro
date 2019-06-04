@@ -10,8 +10,6 @@ const _47330333 = () => interopDefault(import('..\\pages\\cslmis\\Dashboard\\ind
 const _5dff718a = () => interopDefault(import('..\\pages\\cslmis\\facility\\index.vue' /* webpackChunkName: "pages_cslmis_facility_index" */))
 const _2576099e = () => interopDefault(import('..\\pages\\cslmis\\login\\index.vue' /* webpackChunkName: "pages_cslmis_login_index" */))
 const _24e8f444 = () => interopDefault(import('..\\pages\\cslmis\\trades\\index.vue' /* webpackChunkName: "pages_cslmis_trades_index" */))
-const _d4f369c2 = () => interopDefault(import('..\\pages\\pages\\Page404.vue' /* webpackChunkName: "pages_pages_Page404" */))
-const _6b97af48 = () => interopDefault(import('..\\pages\\pages\\Page500.vue' /* webpackChunkName: "pages_pages_Page500" */))
 const _42c515ff = () => interopDefault(import('..\\pages\\cslmis\\centers\\training-center.vue' /* webpackChunkName: "pages_cslmis_centers_training-center" */))
 const _97f43af0 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
@@ -121,14 +119,6 @@ export function createRouter() {
       path: "/cslmis/trades",
       component: _24e8f444,
       name: "cslmis-trades"
-    }, {
-      path: "/pages/Page404",
-      component: _d4f369c2,
-      name: "pages-Page404"
-    }, {
-      path: "/pages/Page500",
-      component: _6b97af48,
-      name: "pages-Page500"
     }, {
       path: "/cslmis/centers/training-center",
       component: _42c515ff,
