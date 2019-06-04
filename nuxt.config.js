@@ -28,7 +28,9 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    "~assets/scss/coreui.scss"
+    "~assets/scss/coreui.scss",
+    'bootstrap-css-only/css/bootstrap.min.css',
+    'mdbvue/build/css/mdb.css'
   ],
 
   /*
@@ -61,6 +63,9 @@ module.exports = {
     ** You can extend webpack config here
     */
     extend(config, ctx) {
+      transpile: [
+        'mdbvue'
+      ]
     }
   }
 }

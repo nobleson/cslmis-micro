@@ -5,7 +5,9 @@ import 'vue-form-wizard/dist/vue-form-wizard.min.css'
 import datePicker from 'vue-bootstrap-datetimepicker';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
-import VuejsClipper from 'vuejs-clipper'
+import VuejsClipper from 'vuejs-clipper';
+import 'bootstrap-css-only/css/bootstrap.min.css'; 
+import 'mdbvue/build/css/mdb.css';
 // install
 Vue.use(VuejsClipper ,{
     components: {

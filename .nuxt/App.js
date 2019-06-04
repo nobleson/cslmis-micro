@@ -5,6 +5,10 @@ import '..\\node_modules\\buefy\\dist\\buefy.css'
 
 import '..\\assets\\scss\\coreui.scss'
 
+import '..\\node_modules\\bootstrap-css-only\\css\\bootstrap.min.css'
+
+import '..\\node_modules\\mdbvue\\build\\css\\mdb.css'
+
 import _2d217e9e from '..\\layouts\\auth.vue'
 import _6f6c098b from '..\\layouts\\default.vue'
 import _7987d37e from '..\\layouts\\DefaultHeaderDropdownAccnt.vue'
