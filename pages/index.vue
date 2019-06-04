@@ -98,17 +98,10 @@
           alt="image slot"
         >
       </b-carousel-slide>
-
       <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-
-         
     </b-carousel>
-
-
-    
-         </div>
+    </div>
    
-    
 <section class="container">
     <b-row>  
         <div class="container">         

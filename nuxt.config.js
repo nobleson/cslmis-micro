@@ -28,7 +28,9 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    "~assets/scss/coreui.scss"
+    "~assets/scss/coreui.scss",
+    'bootstrap-css-only/css/bootstrap.min.css',
+    'mdbvue/build/css/mdb.css'
   ],
 
   /*
@@ -89,6 +91,9 @@ module.exports = {
         'b-carousel-slide': 'img-src',
         'b-embed': 'src'
       }
+      transpile: [
+        'mdbvue'
+      ]
     }
   }
 }
