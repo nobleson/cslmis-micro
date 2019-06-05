@@ -1,7 +1,7 @@
 <template>
   <div class="app flex-row align-items-center">
   <div class="id">
-     <img src="~/assets/images/bg.jpg" alt="Logo"  height="5000" width="4000">
+     <img src="~/assets/images/bg2.jpg" alt="Logo"  height="5000" width="4000">
   </div>
     <div class="container">
        <b-row>
