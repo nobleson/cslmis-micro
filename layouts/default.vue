@@ -62,7 +62,7 @@
             SidebarHeader,
             SidebarNav,
             SidebarMinimizer,
-             mdbNavbar,
+            mdbNavbar,
             mdbNavbarBrand,
             mdbNavbarToggler,
             mdbNavbarNav,
@@ -72,7 +72,6 @@
             mdbDropdownToggle,
             mdbDropdownMenu,
             mdbDropdownItem
-           
         },
         data () {
             return {

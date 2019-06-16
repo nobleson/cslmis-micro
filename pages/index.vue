@@ -10,7 +10,6 @@
        <mdb-btn color="white" @click="login" variant="primary" class="px-4"><h6 class="buut2">Login</h6></mdb-btn>
       </mdb-navbar-nav>
     </mdb-navbar>
-    
 
 <div class="section">
            
@@ -22,7 +21,7 @@
             </div>
             <!-- Portfolio Item Row -->
             <div class="text">
-                <h1 class="cent" align="center" >CONSTRUCTION SKILLS LABOUR MARKET <br> INFORNMATION SYSTEM</h1>
+                <h1 class="cent" align="center" >CONSTRUCTION - LABOUR MARKET <br> INFORNMATION SYSTEM</h1>
                 <h4 class="cent" align="center" >Register your company now............</h4>
             <div class="butt">
                 <b-col lg="15" align="center">
@@ -75,7 +74,7 @@
 
 <footer  class="py-4 text-white-100">
     <div class="cont text-center">  
-    <small>Copyright &copy; CSLMIS 2019</small>
+    <small>Copyright &copy; C - LMIS 2019</small>
     </div>
 </footer>
 </div>
@@ -149,7 +148,6 @@ background: rgba(0, 0, 0, 0.548)
  }
 
 .section:nth-of-type(1){
-   
     background: url("../assets/images/3.png") no-repeat;  
     background-color: rgba(14, 12, 12, 0.918);
     background-position: center 0;
