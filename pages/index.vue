@@ -1,6 +1,5 @@
 <template>
 <div class="main">
-    
     <mdb-navbar  class="top">
     <!-- Navbar brand -->
     <mdb-navbar-brand >
