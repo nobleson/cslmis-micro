@@ -20,7 +20,7 @@
             </div>
             <!-- Portfolio Item Row -->
             <div class="text">
-                <h1 class="cent" align="center" >CONSTRUCTION - LABOUR MARKET <br> INFORNMATION SYSTEM</h1>
+                <h1 class="cent" align="center" >CONSTRUCTION - LABOUR MARKET <br> INFORMATION SYSTEM</h1>
                 <h4 class="cent" align="center" >Register your company now............</h4>
             <div class="butt">
                 <b-col lg="15" align="center">
