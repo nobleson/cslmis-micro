@@ -6,7 +6,7 @@
       <img src="~/assets/images/lg.png">
     </mdb-navbar-brand>
       <mdb-navbar-nav right>
-       <mdb-btn color="white" @click="login" variant="primary" class="px-4"><h6 class="buut2">Login</h6></mdb-btn>
+       <mdb-btn color="white" @click="login"  class="px-4">Login</mdb-btn>
       </mdb-navbar-nav>
     </mdb-navbar>
 
@@ -15,7 +15,7 @@
            <div class="logo" align="center">
 
             <!-- Portfolio Item Heading -->
-            <img src="~/assets/images/new.png" alt="Logo image">
+            <img src="~/assets/images/new.png" alt="Logo image" width="150" height="150">
             
             </div>
             <!-- Portfolio Item Row -->
