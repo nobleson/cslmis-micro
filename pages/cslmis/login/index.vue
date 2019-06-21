@@ -75,7 +75,7 @@ export default {
     logIn() {
       this.authenticateUser(this.user).then(e => {
        console.log(JSON.stringify("Login:"+e));
-        this.$router.push('/cslmis/dashboard');
+        this.$router.push('/cslmis/Dashboard');
       });
     },
     resetPassword() {
