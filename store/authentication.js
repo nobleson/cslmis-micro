@@ -2,7 +2,8 @@ import Cookie from 'js-cookie'
 
 export const state = () => ({
   user: null,
-  token: null
+  token: null,
+  _id:  null
 })
 
 export const mutations = {
@@ -11,6 +12,9 @@ export const mutations = {
   },
   setToken(state, tok) {
     state.token = tok;
+  },
+  setCenterId(state, id) {
+    state._id = id;
   }
 
 }
@@ -18,31 +22,37 @@ export const mutations = {
 export const actions= {
   authenticateUser(vuexContext,userData) {
     let myUrl;
-    let user = {
+    let user;
+    if(userData.isSignIn) {
+      user = {
       email: userData.email,
       password: userData.password,
       returnSecureToken: true
-    }
-    if(userData.isSignIn) {
-      myUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyCl6IxLV7itYUWRNZs9SUKYRT6w70_h3mc';
-    }else {
-      myUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyCl6IxLV7itYUWRNZs9SUKYRT6w70_h3mc';
-    }
+    }      
+      myUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM';
+     }
 
-    return this.$axios.$post(myUrl,
+
+    return this.$axios.$post(myUrl, 
       user ).then(e => {
+      vuexContext.commit('setCenterId',e.localId )
       vuexContext.commit('setUser', {email: e.email})
       let token = e.idToken;
       vuexContext.commit('setToken', token);
       Cookie.set('jwt', token);
       localStorage.setItem('user-token', token);
+      localStorage.setItem('centerId', e.localId);
+
+/*       return this.$axios.$post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM',
+          {idToken: token} ).then(e => {
+        }); */
+    }).catch(function (error) { 
+      console.log(error);
     });
-
   },
-
-
   signOut(vuexContext) {
     localStorage.removeItem('user-token');
+    localStorage.removeItem('centerId');
     Cookie.remove('jwt')
     vuexContext.commit('setToken', null);
     this.$router.push('/auth')
@@ -70,5 +80,6 @@ export const actions= {
 export const getters = {
   getUser: state => state.user,
   getToken: state => state.token,
+  getCenterId: state => state._id,
   isAuthenticated: state => state.token !== null
 }
