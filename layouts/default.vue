@@ -3,7 +3,7 @@
     <AppHeader fixed>
       <SidebarToggler class="d-lg-none" display="md" mobile />
       <b-link class="navbar-brand" to="#">
-        <div>CSLMIS-Admin</div>
+        <div>C-LMIS | Admin</div>
       </b-link>
       <SidebarToggler class="d-md-down-none" display="lg" />
 
@@ -18,9 +18,9 @@
 
     </AppHeader>
     <div class="app-body">
-      <AppSidebar :navItems="nav"></AppSidebar>
+      <AppSidebar :navItems="nav" style="background-color: #00695c"></AppSidebar>
       <main class="main">
-        <Breadcrumb :list="list"/>
+        <Breadcrumb :list="list" style="background-color: #2BBBAD; color: #ffffff;"/>
         <div class="container-fluid">
           <router-view></router-view>
         </div>

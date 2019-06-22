@@ -1,29 +1,32 @@
 <template>
  <div class="animated fadeIn">
-        <component @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
+        <component :providerData="currentProviderData" @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
   </div>
 </template>
 
 <script>
 import CenterListView from '~/components/center/CenterListView.vue';
-import NewCenter from '~/components/center/NewCenter.vue';
+import CenterRegister from '~/components/center/CenterRegister.vue';
 import CenterDetails from '~/components/center/CenterDetails.vue';
   export default {
     components: {
       CenterListView,
       CenterDetails,
-      NewCenter
+     CenterRegister
     },
     data(){
       return{
-       currentComponent: 'CenterListView'
+       currentComponent: 'CenterListView',
+       currentProviderData: null
       }
     },
     methods: {
-      changeCurrentComponent(newComponent){
-        this.currentComponent = newComponent;
+      changeCurrentComponent(event){
+      this.currentProviderData = event.data;
+      this.currentComponent = event.component;        
       }
     }
+
 
   }
 </script>

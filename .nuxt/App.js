@@ -17,7 +17,7 @@ import _77430317 from '..\\layouts\\empty.vue'
 const layouts = { "_auth": _2d217e9e,"_default": _6f6c098b,"_DefaultHeaderDropdownAccnt": _7987d37e,"_empty": _77430317 }
 
 export default {
-  head: {"title":"CSLMIS | Admin","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"package content"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"~\u002Fassets\u002Fimages\u002Ffavicon.ico"},{"rel":"stylesheet","type":"text\u002Fcss","href":"\u002F\u002Fcdn.materialdesignicons.com\u002F2.4.85\u002Fcss\u002Fmaterialdesignicons.min.css"}],"style":[],"script":[]},
+  head: {"title":"CSLMIS | Admin","meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"hid":"description","name":"description","content":"package content"}],"link":[{"rel":"icon","type":"image\u002Fx-icon","href":"~\u002Fassets\u002Fimages\u002Ffavicon.ico"},{"rel":"stylesheet","href":"https:\u002F\u002Ffonts.googleapis.com\u002Ficon?family=Material+Icons"},{"rel":"stylesheet","href":"https:\u002F\u002Fmaxcdn.bootstrapcdn.com\u002Ffont-awesome\u002F4.7.0\u002Fcss\u002Ffont-awesome.min.css"},{"rel":"stylesheet","type":"text\u002Fcss","href":"\u002F\u002Fcdn.materialdesignicons.com\u002F2.4.85\u002Fcss\u002Fmaterialdesignicons.min.css"}],"style":[],"script":[]},
 
   render(h, props) {
     const loadingEl = h('NuxtLoading', { ref: 'loading' })

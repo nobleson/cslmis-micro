@@ -1,12 +1,12 @@
 <template>
   <div class="app flex-row align-items-center">
   <div class="id">
-     <img src="~/assets/images/bg2.jpg" alt="Logo"  height="5000" width="4000">
+     <img src="~/assets/images/bg1.png" alt="Logo"  height="5000" width="4000">
   </div>
     <div class="container">
        <b-row>
            <b-col md="8">
-           <h4 class="text-center">CSLMIS Portal</h4>
+           <h4 class="text-center">Construction LMIS Portal</h4>
            </b-col>
        </b-row>
       <b-row class="justify-content-center">
@@ -17,6 +17,7 @@
                 <div>
                   <img src="~/assets/images/logo.png" alt="Logo">
                 </div>
+                <h6 class="text-white">Brand by</h6>
                 <h1>CORBON</h1>
               </b-card-body>
             </b-card>
@@ -50,10 +51,10 @@
         </b-col>
       </b-row>
       <b-row  class="justify-content-center">
-        <a href="https://admin.cslmis.gov.ng">CSLMIS</a>
+        <a href="https://admin.cslmis.gov.ng">Construction LMIS</a>
         <span class="ml-1">&copy; 2019 Admin Portal.</span>
-        <span class="ad">Powered by </span>
-        <a href="https://corbon.gov.ng"> CORBON </a>
+        <span class="ad"> &nbsp;&nbsp;Brand by </span>
+        <a href="https://corbon.gov.ng">  &nbsp;&nbsp;CORBON </a>
       </b-row>
     </div>
   </div>

@@ -20,20 +20,38 @@ void (function updateModules() {
   store.modules = store.modules || {}
 
   resolveStoreModules(require('@/store/alertFunctions.js'), 'alertFunctions.js')
-  resolveStoreModules(require('@/store/artisan.js'), 'artisan.js')
+  resolveStoreModules(require('@/store/assesors.js'), 'assesors.js')
+  resolveStoreModules(require('@/store/assessment.js'), 'assessment.js')
   resolveStoreModules(require('@/store/authentication.js'), 'authentication.js')
+  resolveStoreModules(require('@/store/awardingbody.js'), 'awardingbody.js')
   resolveStoreModules(require('@/store/company.js'), 'company.js')
+  resolveStoreModules(require('@/store/artisan.js'), 'artisan.js')
+  resolveStoreModules(require('@/store/licensingbody.js'), 'licensingbody.js')
+  resolveStoreModules(require('@/store/program.js'), 'program.js')
+  resolveStoreModules(require('@/store/provider.js'), 'provider.js')
+  resolveStoreModules(require('@/store/regulatorybody.js'), 'regulatorybody.js')
+  resolveStoreModules(require('@/store/trade.js'), 'trade.js')
+  resolveStoreModules(require('@/store/user.js'), 'user.js')
 
   // If the environment supports hot reloading...
 
   if (process.client && module.hot) {
     // Whenever any Vuex module is updated...
     module.hot.accept([
-      '@/store/alertFunctions.js',
-      '@/store/artisan.js',
-      '@/store/authentication.js',
-      '@/store/company.js',
       '@/store/index.js',
+      '@/store/alertFunctions.js',
+      '@/store/assesors.js',
+      '@/store/assessment.js',
+      '@/store/authentication.js',
+      '@/store/awardingbody.js',
+      '@/store/company.js',
+      '@/store/artisan.js',
+      '@/store/licensingbody.js',
+      '@/store/program.js',
+      '@/store/provider.js',
+      '@/store/regulatorybody.js',
+      '@/store/trade.js',
+      '@/store/user.js',
     ], () => {
       // Update `root.modules` with the latest definitions.
       updateModules()

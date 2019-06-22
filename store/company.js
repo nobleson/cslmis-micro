@@ -4,6 +4,7 @@ export const state = () => ({
   companyFormReset: false,
   companyNameMsg: '',
   companyEmailMsg: '',  
+  isContentLoading: true,
   companies:  []
 })
 
@@ -19,7 +20,11 @@ export const mutations = {
   },
   setCompanies (state,data){
     state.companies = data
-  }
+  },
+  changeLoaderStatus(state){
+    state.isContentLoading = !state.isContentLoading;
+  } 
+
 }
 export const getters = {
   getFormState: state => state.companyFormReset,
@@ -28,7 +33,10 @@ export const getters = {
 
   getErrorState: state => state.regerror,
 
-  getCompanies: state => state.companies
+  getCompanies: state => state.companies,
+
+  getLoaderStatus: state => state.isContentLoading
+
 }
 
 export const actions= {
@@ -79,7 +87,8 @@ export const actions= {
      this.$axios.$get(herokuUrl)
       .then(function (response){
        // let data = JSON.parse(response);
-        vuexContext.commit('setCompanies',response);
+        vuexContext.commit('setCompanies',response)
+        vuexContext.commit('changeLoaderStatus')
         console.log("companies:"+vuexContext.state.companies)
         //console.log("companies:"+response)
       })

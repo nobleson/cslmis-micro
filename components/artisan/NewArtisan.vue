@@ -1,556 +1,404 @@
 <template>
  <div class="animated fadeIn">
-     <b-button @click="$emit('changeComponent', 'ArtisansListView')">Back</b-button>
-  <hr>
-  <b-row class="justify-content-center" >
-  </b-row>
-<b-row class="justify-content-center">
-  <b-col md="8">
-  <div class="form-wizard"  color="red">
-    <form-wizard @on-complete="onComplete"
-                       :start-index="0"
-                       color="blue">
-     <tab-content title="Personal Details"
-                  icon="icon-user">
-          <b-alert v-if="successState" show variant="success">Artisan personal data saved successfully</b-alert>
-           <b-alert v-if="errorState" show variant="danger">Artisan personal data failed to save. Try again</b-alert>    
-       <div>
-    <b-form v-if="show">
+  <section style="background: #ededed; padding-bottom: 100px">
+    <!-- Purple Header -->
+    <mdb-edge-header  style="background-color: #2BBBAD"/>
 
-      <b-form-group id="input-group-2" label="Surname:" label-for="input-2">
-        <b-form-input
-          id="surname"
-          v-model="personaForm.surname"
-          required
-          placeholder="Enter Surname"
-        ></b-form-input>
-      </b-form-group>
+    <!-- Card Container -->
+    <mdb-container free-bird>
+      <mdb-row>
+        <mdb-col md="8" lg="7" class="mx-auto float-none">
+         <b-link @click="$emit('changeComponent',{component: 'ArtisansListView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Assesors</b-link>
+         <mdb-card class="weather-card">
+          <mdb-card-body class="pb-3">
+          <h2 class="h2-responsive"><strong>New Artisan Form</strong></h2>
+          <div class="form-wizard"  color="red">
+            <form-wizard @on-complete="onComplete"
+                              :start-index="0"
+                              color="blue">
+            <tab-content title="Personal Details"
+                          icon="icon-user">
+              <!-- Container for V-Modal dialogs <modals-container/> -->
+              <div>
+            <b-form v-if="show">        
+            <mdb-card class="border border-0">
+              <mdb-card-body>
+                <mdb-card-title tag="h5">Bio Data</mdb-card-title>
+                <mdb-input label="Surname" v-model="personaForm.surname" size="lg" required/> 
+                <mdb-input label="Middle Name" v-model="personaForm.middleName" size="lg" required/> 
+                <mdb-input label="Other Name" v-model="personaForm.otherName" size="lg" required/> 
 
-      <b-form-group id="input-group-2" label="Middle Name:" label-for="input-2">
-        <b-form-input
-          id="middleName"
-          v-model="personaForm.middleName"
-          required
-          placeholder="Middle name"
-        ></b-form-input>
-      </b-form-group>
+                <b-form-group id="input-group-2" label="Date of Birth:" label-for="input-2">
+                <date-picker v-model="personaForm.dateOfBirth" :config="{format: 'DD/MM/YYYY'}"></date-picker>
+              </b-form-group>
 
-      <b-form-group id="input-group-2" label="Other name:" label-for="input-2">
-        <b-form-input
-          id="otherName"
-          v-model="personaForm.otherName"
-          required
-          placeholder="Enter other name"                                                                                                                                                       
-        ></b-form-input>
-      </b-form-group>
+              <b-form-group id="input-group-3" label="Gender" label-for="gender">
 
+              <select class="custom-select custom-select-sm" v-model="personaForm.gender">
+                <option  value="null" selected>[ Select Gender ]</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+              </b-form-group>
 
-            <b-form-group id="input-group-2" label="Date of Birth:" label-for="input-2">
-              <date-picker v-model="personaForm.dateOfBirth" :config="{format: 'DD/MM/YYYY'}"></date-picker>
-
-      </b-form-group>
-
-       <b-form-group id="input-group-3" label="Gender" label-for="input-3">
-        <b-form-select
-          id="gender"
-          v-model="personaForm.gender"
-          :options="gender"
-          required
-        ></b-form-select>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Place Of Birth:" label-for="input-2">
-        <b-form-input
-          id="palceofbirth"
-          v-model="personaForm.palceofbirth"
-          required
-          placeholder="Enter Place Of Birth"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Permanent Address:" label-for="input-2">
-        <b-form-input
-          id="permanentaddress"
-          v-model="personaForm.permanentaddress"
-          required
-          placeholder="Enter Permanentaddress"
-        ></b-form-input>
-      </b-form-group>
+              </mdb-card-body>
+            </mdb-card>
+            <mdb-card class="border border-0">
+              <mdb-card-body>
+                <mdb-card-title tag="h5">Any physical disabilty?</mdb-card-title>
+                <mdb-input label="Specify if any" v-model="personaForm.disability" size="lg"/> 
+              </mdb-card-body>
+            </mdb-card>
 
 
-      <b-form-group
-        id="input-group-1"
-        label="Email address:"
-        label-for="input-1"
-        description="We'll never share your email with anyone else."
-      >
-        <b-form-input
-          id="email"
-          v-model="personaForm.email"
-          type="email"
-          required
-          placeholder="Enter email"
-        ></b-form-input>
-      </b-form-group>
-     <b-form-group id="input-group-3" label="State Of Origin" label-for="input-3">
-        <b-form-select
-          id="state_origin"
-          @change="changedValue"
-          v-model="personaForm.state_origin"
-          :options="stateoforign"
-          required
-        ></b-form-select>
-      </b-form-group>
+            <hr>
+            <mdb-card class="border border-0">
+              <mdb-card-body>
+                <mdb-card-title tag="h5">Personal Contact</mdb-card-title>
+                <mdb-input label="Place Of Birth" v-model="personaForm.placeOfBirth" size="lg" required/> 
+                <mdb-input label="Permanent Address" v-model="personaForm.permanentAddress" size="lg" required/> 
+                <mdb-input label="Enter phone number" v-model="personaForm.phoneNumber" size="lg" required/> 
+                <mdb-input label="Enter email" v-model="personaForm.emailAddress" size="lg" required/> 
+              </mdb-card-body>
+            </mdb-card>
 
-      <b-form-group id="input-group-2" label="Local Government:" label-for="input-2">
-                <b-form-select 
-                id="local_government"
-                v-model="personaForm.local_government"
-                required
+            <hr>
+            <mdb-card class="border border-0">
+              <mdb-card-body>
+                <mdb-card-title tag="h5">State/ Province</mdb-card-title>
+            <b-form-group id="input-group-3" label="State Of Origin" label-for="input-3">
+            <select
+            class="custom-select custom-select-md"
+            v-model="personaForm.state_origin"
+            required
+            @change="changedValue"
                 >
-                <option disabled value="">[ Select Local Government ]</option>
-                <option v-for="item in localgovernment" v-bind:key ="item.id" :value="item">{{item}}</option>
-                </b-form-select>
-      </b-form-group>
+              <option value="Null" selected>[ Select State ]</option>
+              <option value="Abia">Abia</option>
+              <option value="Adamawa">Adamawa</option>
+              <option value="Akwa Ibom">Akwa Ibom</option>
+              <option value="Anambra">Anambra</option>
+              <option value="Bauchi">Bauchi</option>
+              <option value="Bayelsa">Bayelsa</option>
+              <option value="Benue">Benue</option>
+              <option value="Borno">Borno</option>
+              <option value="Cross River">Cross River</option>
+              <option value="Delta">Delta</option>
+              <option value="Ebonyi">Ebonyi</option>
+              <option value="Enugu">Enugu</option>
+              <option value="Edo">Edo</option>
+              <option value="Ekiti">Ekiti</option>
+              <option value="Gombe">Gombe</option>
+              <option value="Imo">Imo</option>
+              <option value="Jigawa">Jigawa</option>
+              <option value="Kaduna">Kaduna</option>
+              <option value="Kano">Kano</option>
+              <option value="Katsina">Katsina</option>
+              <option value="Kebbi">Kebbi</option>
+              <option value="Kogi">Kogi</option>
+              <option value="Kwara">Kwara</option>
+              <option value="Lagos">Lagos</option>
+              <option value="Nasarawa">Nasarawa</option>
+              <option value="Niger">Niger</option>
+              <option value="Ogun">Ogun</option>
+              <option value="Ondo">Ondo</option>
+              <option value="Osun">Osun</option>
+              <option value="Oyo">Oyo</option>
+              <option value="Plateau">Plateau</option>
+              <option value="Rivers">Rivers</option>
+              <option value="Sokoto">Sokoto</option>
+              <option value="Taraba">Taraba</option>
+              <option value="Yobe">Yobe</option>
+              <option value="Zamfara">Zamfara</option>
+            </select>
+          </b-form-group>
+              <b-form-group id="input-group-2" label="Local Government:" label-for="input-2">
+                        <b-form-select 
+                        id="local_government"
+                        v-model="personaForm.local_government"
+                        required
+                        >
+                        <option disabled value="">[ Select Local Government ]</option>
+                        <option v-for="item in localgovernment" v-bind:key ="item.id" :value="item">{{item}}</option>
+                        </b-form-select>
+              </b-form-group>
 
-      <b-form-group id="input-group-2" label="Nationality" label-for="input-2">
-        <b-form-input
-          id="nationality"
-          v-model="personaForm.nationality"
-          required
-          placeholder="Enter Nationality"
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group>
-        <b-card class="mt-3">
-        <div>
-            <button>
-              <clipper-upload v-model="imgURL">upload image</clipper-upload>
+              <mdb-input label="Enter Nationality" v-model="personaForm.nationality" size="lg" required/> 
+
+              </mdb-card-body>
+            </mdb-card>
+
+
+              <b-form-group style="display :none">
+                <b-card class="mt-3">
+                <div>
+                    <button type="button" variant="secondary">
+                      <clipper-upload v-model="imgURL">upload image</clipper-upload>
+                    </button>
+                    <clipper-basic class="my-clipper" ref="clipper" :src="imgURL">
+                        <div class="placeholder" slot="placeholder">No image</div>
+                    </clipper-basic>
+                </div>
+                </b-card>
+              </b-form-group>
+              <b-form-group>
+                <b-card class="mt-3">
+                <div>
+                  <button @click="onPickFile" type="button">Upload Image</button>
+                  <input 
+                  type="file" 
+                  style="display: none" 
+                  ref="fileInput"
+                  accept="image/*"
+                  @change="onFilePicked"/>
+                </div>
+                <div>
+                  <img :src="resultURL" height="150"/>
+                </div>
+                </b-card>
+              </b-form-group>
+
+              <b-button type="button" variant="primary" @click="savePersona">Submit</b-button>
+              <b-button type="reset" variant="danger" @click="onReset">Reset</b-button>
+            </b-form>
+            <b-card class="mt-3" header="Form Data Result">
+              <pre class="m-0">{{ personaForm }}</pre>
+            </b-card>   
+
+          </div>
+            </tab-content>
+            <tab-content title="Training Provider"
+                          icon="icon-pencil">
+                <div>
+            <b-form v-if="show">
+            <mdb-card class="border border-0">
+              <mdb-card-body>
+                <mdb-card-title tag="h5">Training Center</mdb-card-title>
+
+              <mdb-input label="Center Name" v-model="centerForm.centerName" size="lg" required/> 
+              <mdb-input label="Enter Center Number" v-model="centerForm.centerNumber" size="lg" required/> 
+              <mdb-input label="Enter Candidate Name" v-model="centerForm.candidateNumber" size="lg" required/> 
+              <mdb-input label="Enter Candidate Trade" v-model="centerForm.candidateTrade" size="lg" required/> 
+
+              </mdb-card-body>
+            </mdb-card>
+
+              <b-button type="button" variant="primary" @click="saveCenter">Submit</b-button>
+              <b-button type="reset" variant="danger">Reset</b-button>
+            </b-form>
+
+            <b-card class="mt-3" header="Form Data Result">
+              <pre class="m-0">{{ centerForm }}</pre>
+            </b-card>
+          </div>
+            </tab-content>
+            <tab-content title="Apprentiship Center"
+                          icon="icon-pencil">
+          <div>
+            <b-form v-if="show">
+
+            <mdb-card class="border border-0">
+                <mdb-card-title tag="h5">Apprentiship Details</mdb-card-title>
+            </mdb-card>
+          <b-button type="button" variant="success"  @click="addApptItem">Add Place of Apprentiship</b-button>
+        <!--added index to track every form with its index.-->
+          <mdb-card class="card-body" style="margin-top: 1rem;" v-for="(item, index) in apprentishipForm.apprentiship" v-bind:key="item.id">
+            <mdb-card-title>Place of Apprentiship {{index + 1}}
+              <button v-if="index != 0" @click="removeApprentiship(index)" type="button" class="close" aria-label="Close">
+              <span aria-hidden="true">×</span>
             </button>
-            <button @click="getResult">clip image</button>
-            <clipper-basic class="my-clipper" ref="clipper" :src="imgURL">
-                <div class="placeholder" slot="placeholder">No image</div>
-            </clipper-basic>
-            <div>
-                <div>result:</div>
-                <img class="result" :src="resultURL" alt="">
+            </mdb-card-title>
+        <!--made sure every form is bound to its right form object using the index-->
+            <div class="flex-row">
+              <mdb-input label="Apprentiship Place" v-model="apprentishipForm.apprentiship[index].apprentishipPlace" size="lg" required/> 
+              <mdb-input label="Apprentiship Year" v-model="apprentishipForm.apprentiship[index].apprentishipYear" size="lg" required/> 
+              <mdb-input label="Master Full Name" v-model="apprentishipForm.apprentiship[index].masterFullName" size="lg" required/> 
+              <mdb-input label="Master Phone Number" v-model="apprentishipForm.apprentiship[index].masterPhoneNumber" size="lg" required/> 
             </div>
-        </div>
-        </b-card>
-        <b-card class="mt-3" title="Asrtisan Passport" sub-title="Upload Photo">
-          <b-card-text>
+          </mdb-card>
 
-            <img v-bind:src="imagePreview" v-show="showPreview" id="imagePreview"/>
+            <label  for="completionStatus">Apprentiship Completion Status</label>
 
-          </b-card-text>
+            <select class="browser-default custom-select" id="completionStatus"  v-model="apprentishipForm.apprentishipCompletionStatus" title="Apprentiship Completion Status" required>
+              <option selected> [ Select Apprentiship Completion Status ]</option>
+              <option value="Completed">Completed</option>
+              <option value="Partially Completed">Partially completed</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Abandoned">Abandoned</option>
+              <option value="Other">Other</option>
+            </select>
+            <mdb-input label="Reason for Leaving" v-model="apprentishipForm.reasonForLeaving" size="lg"/> 
 
-          <button v-on:click="submitFile()">Submit</button>
-            <label>
-              <input type="file" id="file" ref="file" accept="image/*" v-on:change="handleFileUpload()"/>
-            </label>
-        </b-card>
-      </b-form-group>
+            <mdb-card class="border border-0">
+              <mdb-card-body>
+                <mdb-card-title tag="h5">Testimonial Details</mdb-card-title>
+                <mdb-card-text>
+                  Where you issued any certificate or testimonial?
+            <div>
+                  <!-- Group of default radios - option 1 -->
+                  <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" v-model="condition" id="defaultGroupExample1" name="groupOfDefaultRadios" value="one" checked>
+                    <label class="custom-control-label" for="defaultGroupExample1">No</label>
+                  </div>
 
+                  <!-- Group of default radios - option 2 -->
+                  <div class="custom-control custom-radio">
+                    <input type="radio" class="custom-control-input" v-model="condition" id="defaultGroupExample2" name="groupOfDefaultRadios"  value="two">
+                    <label class="custom-control-label" for="defaultGroupExample2">Yes</label>
+                  </div>
+              </div>
+              <mdb-card v-show="condition === 'two'">
+                <mdb-card-body>
+                  <div class="large-12 medium-12 small-12 cell">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Upload Testimonial</span>
+                  </div>
+                  <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="file" ref="file" accept="image/*" aria-describedby="inputGroupFileAddon01" v-on:change="handleFileUpload()">
+                    <label class="custom-file-label" for="file">Choose file</label>
+                  </div>
+                </div>
 
-      <b-button type="submit" variant="primary" @click="savePersona">Submit</b-button>
-      <b-button type="reset" variant="danger" @click="onReset">Reset</b-button>
-    </b-form>
+                    <img v-bind:src="imagePreview" v-show="showPreview"/>
+                    <button v-on:click="submitFile()">Submit</button>
+                  </div>
 
-    <b-card class="mt-3" header="Form Data Result">
-      <pre class="m-0">{{ personaForm }}</pre>
-    </b-card>
-    
-  </div>
-     </tab-content>
-     <tab-content title="Artisan NVQ Center"
-                  icon="icon-pencil">
-        <div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+                </mdb-card-body>
+              </mdb-card>
 
-      
+                </mdb-card-text>
+              <div  v-show="condition === 'one'">
+              <mdb-input label="Reason for not Issued" v-model="apprentishipForm.reasonForNotIssued" size="lg"/>     
+              </div>
+            <label class="custom-control-label" for="defaultGroupExample2">Trade Learnt</label>
+            <b-form-select v-model="apprentishipForm.tradeLearnt" :options="options" multiple :select-size="4"></b-form-select>
+              </mdb-card-body>
+            </mdb-card>
 
-      <b-form-group id="input-group-2" label="Center Name:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="centerForm.center_name"
-          required
-          placeholder="Enter Center Name"
-        ></b-form-input>
-      </b-form-group>
+              <b-button type="button" variant="primary" @click="saveApprentiship">Submit</b-button>
+              <b-button type="reset" variant="danger">Reset</b-button>
 
-      <b-form-group id="input-group-2" label="Center Number:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="centerForm.center_number"
-          required
-          placeholder="Enter Center Number"
-        ></b-form-input>
-      </b-form-group>
+            <b-card class="mt-3" header="Form Data Result">
+              <pre class="m-0">{{ apprentishipForm }}</pre>
+            </b-card>
 
-<b-form-group id="input-group-2" label="Candidate Name:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="centerForm.candidate_name"
-          required
-          placeholder="Enter Candidate Name"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Candidate Trade:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.candidate_trade"
-          required
-          placeholder="Enter Candidate Trade"
-        ></b-form-input>
-      </b-form-group>
-
-
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
-    </b-form>
-    
-  </div>
-     </tab-content>
-     <tab-content title="Apprentiship Center"
-                  icon="icon-pencil">
-   <div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-
-      <b-form-group id="input-group-2" label="Artsan ID:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.artsanid"
-          required
-          placeholder="Enter ID"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Apprentiship Place:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.apprentiship_place"
-          required
-          placeholder="Enter Apprentiship Place"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Apprentiship Year:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.apprentiship_year"
-          required
-          placeholder="Enter Apprentiship Year"
-        ></b-form-input>
-      </b-form-group>
-
-<b-form-group id="input-group-2" label="Master Full Name:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.master_full_name"
-          required
-          placeholder="Enter Master Full Name"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Master Phone Number:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.master_phone_number"
-          required
-          placeholder="Enter Master Phone Number"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Apprentiship Completion Status:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.apprentiship_completion_status"
-          required
-          placeholder="Enter Apprentiship Completion Status"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Reason for Leaving:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.reason_for_leaving"
-          required
-          placeholder="Enter Reason for Leaving"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Certificate Testimonial:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.certificate_testimonia"
-          required
-          placeholder="Enter Certificate Testimonial"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Reason for not Issued:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.reason_for_not_issued"
-          required
-          placeholder="Enter Reason_for_not_Issued"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Trade Learnt:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.trade_learnt"
-          required
-          placeholder="Enter Trade Learnt"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Record Date:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.record_date"
-          required
-          placeholder="Enter Record Date"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
-    </b-form>
-    
-  </div>
-     </tab-content>
-     <tab-content title="Artsan Education"
-                  icon="icon-pencil">
-      <div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-
-      <b-form-group id="input-group-2" label="Artsan ID:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.artsanid"
-          required
-          placeholder="Enter ID"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="School Name:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.school_name"
-          required
-          placeholder="Enter School Name"
-        ></b-form-input>
-      </b-form-group>
-
-<b-form-group id="input-group-2" label="Year Start:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.year_start"
-          required
-          placeholder="Enter Year Start"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Year End:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.year_end"
-          required
-          placeholder="Enter Year End"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Qualification Earned:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.qualification_earned"
-          required
-          placeholder="Enter Qualification Earned"
-        ></b-form-input>
-      </b-form-group>
-
-
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
-    </b-form>
-    
-  </div>
-     
-     </tab-content>
-     <tab-content title="Artisan Employment History"
-                  icon="icon-pencil">
-       <div>
-    <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-
-      <b-form-group id="input-group-2" label="Artsan ID:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.artsanid"
-          required
-          placeholder="Enter ID"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="trade:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.trade"
-          required
-          placeholder="Enter Trade"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-form-group id="input-group-2" label="Years Practice:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.years_practice"
-          required
-          placeholder="Enter Years  Practice"
-        ></b-form-input>
-      </b-form-group>
-
-<b-form-group id="input-group-2" label="Employment Companies:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.employment_companies"
-          required
-          placeholder="Enter Employment Companies"
-        ></b-form-input>
-      </b-form-group>
-
-
-      <b-form-group id="input-group-2" label="Years of Employment:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.years_of_employment"
-          required
-          placeholder="Enter Years of Employment"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Job Roles:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.job_roles"
-          required
-          placeholder="Enter Job Roles"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Superviors Phone Numbers:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.superviors_phone_numbers"
-          required
-          placeholder="Enter Superviors Phone Numbers"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Current Work Project:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.current_work_project"
-          required
-          placeholder="Enter Current Work Project"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Site Address:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.site_address"
-          required
-          placeholder="Enter Site Address"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Current Employment Status:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.current_employment_status"
-          required
-          placeholder="Enter Current Employment Status"
-        ></b-form-input>
-      </b-form-group>
-
- <b-form-group id="input-group-2" label="Record Date:" label-for="input-2">
-        <b-form-input
-          id="input-2"
-          v-model="form.record_date"
-          required
-          placeholder="Enter Record Date"
-        ></b-form-input>
-      </b-form-group>
-
-      <b-button type="submit" variant="primary">Submit</b-button>
-      <b-button type="reset" variant="danger">Reset</b-button>
-    </b-form>
-    
-  </div>
-    </tab-content>
- </form-wizard>
-  </div>
-  </b-col>
-  </b-row>
+            </b-form>
+            
+          </div>
+          </tab-content>
+        </form-wizard>
+          </div>
+          </mdb-card-body>
+          </mdb-card>
+        </mdb-col>
+      </mdb-row>
+    </mdb-container>
+    <!-- /.Card Container -->
+  </section>
   </div>
 </template>
-
 <script> 
+import * as firebase from 'firebase/app'
+import 'firebase/storage'
+import  uuidv4 from 'uuid/v4';
 import datepicker from 'vue-date-picker'
 import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
 import { clipperBasic } from 'vuejs-clipper'
+import { mdbEdgeHeader, mdbContainer, mdbRow, mdbCol, mdbCardBody, mdbInput, mdbBtn,mdbCard,mdbIcon,mdbCardGroup,mdbCardText,mdbCardTitle } from 'mdbvue';
+import { URL } from 'url';
+const firebaseConfig = {
+    apiKey: "AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM",
+    authDomain: "cslmis-admin.firebaseapp.com",
+    databaseURL: "https://cslmis-admin.firebaseio.com",
+    projectId: "cslmis-admin",
+    storageBucket: "gs://cslmis-admin-bucket",
+    messagingSenderId: "263391859932",
+    appId: "1:263391859932:web:4a6a7871600a3acd"
+  };
+  
+!firebase.apps.length ? firebase.initializeApp(firebaseConfig) : '' 
+
   export default {
     
     name: 'new-artisan',
      components: {
+       mdbRow,
+       mdbCol,
+       mdbCardBody,
+       mdbEdgeHeader,
+       mdbContainer,
       datepicker,
-      clipperBasic
+      clipperBasic,
+      mdbCard,
+      mdbBtn,
+      mdbIcon,
+      mdbCardBody,
+      mdbCardGroup,
+      mdbCardTitle,
+      mdbCardText,
+      mdbInput    
      },
     data() {
 
       return {
+        options: [
+          { value: 'Electrical Installation', text: 'Electrical Installation' },
+          { value: 'Painting and Decoration', text: 'Painting and Decoration' },
+          { value: 'Welding and Fabrication', text: 'Welding and Fabrication' },
+          { value: 'Carpentry and Joinery', text: 'Carpentry and Joinery'},
+          { value: 'Masonary', text: 'Masonary' },
+          { value: 'Plumbing and Pipefiting', text: 'Plumbing and Pipefiting' }
+        ],
         employmentForm: {
+          _id: '',
           trade: '',
           yearsPractice: '',
-          employmentCompanies: '',
-          yearsOfEmployment: '',
-          jobRoles: '',
+          workExpirience: [{
+             companyName: '',
+             dateStart: '',
+             dateEnd: '',
+             jobRole: '',
+             supervisorName: '',
+             supervisorPhoneNumber: ''
+          }],
+          engagedOnProject: '',
+          addressOfProjectSite: '',
+          employmentStatus: '',
           superviorsPhone_numbers: '',
-          currentWorkProject: '',
-          siteAddress: '',
-          currentEmploymentStatus: '',
-          recordDate: '',
-          artisanId: ''
+          recordDate: ''
         },
         educationForm: {
+          _id: '',
+          education: [{
           schoolName: '',
           yearStart: '',
           yearEnd: '',
-          qualificationEarned: '',
-          artisanId: ''
+          qualificationEarned: ''
+          }]
+
         },
         apprentishipForm: {
+          _id: '',
+          apprentiship: [{
           apprentishipPlace: '',
           apprentishipYear: '',
-          masterFullName: '',
           masterPhoneNumber: '',
+          masterFullName: ''
+          }],
           apprentishipCompletionStatus: '',
           reasonForLeaving: '',
           certificateTestimonial: '',
           reasonForNotIssued: '',
           tradeLearnt: '',
-          recordDate: '',
-          artisanId: ''
-        },
+          recordDate: ''
+          },
         centerForm: {
+          _id: '',
           centerName: '',
           centerNumber: '',
           candidateNumber: '',
-          candidateTrade: '',
-          artisanId: ''
+          candidateTrade: ''
         },
         personaForm: {
           surname: '',
@@ -567,12 +415,16 @@ import { clipperBasic } from 'vuejs-clipper'
           nationality: '',
           photo: ''
         },
+        image: null,
+        testimonialImage: null,
+        condition: 'one',
         imgURL: '',
         resultURL: '',
+        isImageCliped: false,
         form: {
 
         },
-        stateoforign: [{ text: 'Select One', value: null },
+        stateoforign: [{ selectedOption: '[ Select State ]'},
 'Abia', 
 'Adamawa',
 'Akwa Ibom',
@@ -610,40 +462,146 @@ import { clipperBasic } from 'vuejs-clipper'
 'Yobe',
 'Zamfara',
 ], 
-gender: [{ text: 'Select One', value: null },'Male','Female',],
+gender: [{ text: '[ Select Gender ]', selectedOption: 'Select Gender', value: null },'Male','Female',],
         show: true,
         showPreview: false,
         imagePreview: '',
         file: '',
       }
     },
-    watch: {
-        defaultImage: function(value) {
-            if (value) {
-              console.log(value);
-              // do whatever you want with image value,(upload ..)
-            }
-        }
-    },
     computed: {
-        ...mapGetters({successState: 'artisan/getSuccessState',errorState: 'artisan/getErrorState',localgovernment: 'artisan/getLocalGovernment'}),
-    },
+        ...mapGetters({successState: 'artisan/getSuccessState',errorState: 'artisan/getErrorState',localgovernment: 'artisan/getLocalGovernment',personaId: 'artisan/getArtisanId'}),
+  
+     },
     methods: {
-      ...mapActions({addPersona: 'artisan/addPersona',fetchLocalGovernment: 'artisan/loadLocalGovernment'}),
+      ...mapActions({addPersona: 'artisan/addPersona',fetchLocalGovernment: 'artisan/loadLocalGovernment',addCenter: 'artisan/addCenter',addEmployment: 'artisan/addEmployment',addEducation: 'artisan/addEducation',addApprentiship: 'artisan/addApprentiship'}),
       getResult: function () {
+          let imageUrl;
+          let uuid = uuidv4();
           const canvas = this.$refs.clipper.clip();//call component's clip method
           this.resultURL = canvas.toDataURL("image/jpg", 1);//canvas->image
+          this.isImageCliped = true;
+
+          let filename = this.image.name
+          const metadata = { contentType: this.image.type };
+          let ext = filename.slice(filename.lastIndexOf('.'))
+          const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
+          task.then(snapshot => snapshot.ref.getDownloadURL())
+         .then(function(url){this.personaForm.photo = url; console.log("testimonialImage:"+url)})
+         .catch(console.error);
+
+      },
+      storePhoto: function () {
+          let uuid = uuidv4();
+          let filename = this.image.name
+          const metadata = { contentType: this.image.type };
+          let ext = filename.slice(filename.lastIndexOf('.'))
+          const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
+          task.then(snapshot => snapshot.ref.getDownloadURL())
+         .then(function(url){this.personaForm.photo = url; console.log("testimonialImage:"+url)})
+         .catch(console.error);
+
+      },
+
+      storeTestimonial: function () {
+          let uuid = uuidv4();
+
+          let filename = this.testimonialImage.name
+          const metadata = { contentType: this.testimonialImage.type };
+          let ext = filename.slice(filename.lastIndexOf('.'))
+          const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.testimonialImage, metadata);
+          task.then(snapshot => snapshot.ref.getDownloadURL())
+         .then(function(url){this.apprentishipForm.certificateTestimonial = url; console.log("testimonialImage:"+url)}
+         )
+         .catch(console.error);
+      },
+
+      onPickFile(){
+        this.$refs.fileInput.click()
+      },
+      onFilePicked(event){
+
+        let files = event.target.files
+        let filename = files[0].name;
+        if(filename.lastIndexOf('.') <= 0){
+          alert('please enter a valid file')
+        }
+        const fileReader =  new FileReader()
+        fileReader.addEventListener('load',() =>{
+          this.resultURL = fileReader.result
+        })
+        fileReader.readAsDataURL(files[0])
+        this.image = files[0]
       },
       savePersona() { 
-        //let artisan = JSON.stringify(this.personaForm);
+        this.storePhoto()
         this.addPersona(this.personaForm).then(e => { 
-          console.log('Artisan Added Successfully'); 
-          this.onReset();
+         this.$bvModal.msgBoxOk('Artisan Profile Submited. Click the Next Button to proceed')
         });  
       },
-      onSubmit() {
-       // alert(JSON.stringify(this.personaForm))
+      saveCenter() { 
+        console.log('artisan id:'+this.personaId);
+        this.centerForm._id = this.personaId
+        this.addCenter(this.centerForm).then(e => { 
+          this.$bvModal.msgBoxOk('Artisan Profile Center Submited. Click the Next Button to proceed')
+        });  
       },
+      saveApprentiship() { 
+        this.storeTestimonial() 
+        this.apprentishipForm._id = this.personaId;
+        this.apprentishipForm.recordDate = new Date();
+        this.addApprentiship(this.apprentishipForm).then(e => { 
+          this.$bvModal.msgBoxOk('Artisan Profile Apprentiship Submited. Click the Next Button to proceed')
+        });  
+      },
+      saveEducation() { 
+        this.educationForm._id = this.personaId;
+        this.addEducation(this.educationForm).then(e => { 
+          this.$bvModal.msgBoxOk('Artisan Profile Education Submited. Click the Next Button to proceed')
+        });  
+      },
+      saveEmployment() { 
+        this.employmentForm._id = this.personaId;
+        this.employmentForm.recordDate = new Date();
+        this.addEmployment(this.employmentForm).then(e => { 
+          this.$bvModal.msgBoxOk('Artisan Profile Employment Submited')
+        });  
+      }, 
+       addWorkItem() {
+        this.employmentForm.workExpirience.push({
+          companyName: this.employmentForm.workExpirience.companyName,
+          dateStart: this.employmentForm.workExpirience.dateStart,
+          dateEnd: this.employmentForm.workExpirience.dateEnd,
+          jobRole: this.employmentForm.workExpirience.jobRole,
+          supervisorName: this.employmentForm.workExpirience.supervisorName,
+          supervisorPhoneNumber: this.employmentForm.workExpirience.supervisorPhoneNumber
+        });
+      },
+       addEducationItem() {
+        this.educationForm.education.push({
+          schoolName: this.educationForm.education.schoolName,
+          yearStart: this.educationForm.education.yearStart,
+          yearEnd: this.educationForm.education.yearEnd,
+          qualificationEarned: this.educationForm.education.qualificationEarned
+        });
+      },
+      addApptItem() {
+        this.apprentishipForm.apprentiship.push({
+          apprentishipPlace: this.apprentishipForm.apprentiship.apprentishipPlace,
+          apprentishipYear: this.apprentishipForm.apprentiship.apprentishipYear,
+          masterPhoneNumber: this.apprentishipForm.apprentiship.masterPhoneNumber,
+          masterFullName: this.apprentishipForm.apprentiship.masterFullName
+        });
+      },
+      removeEducation(index) {
+        //you can warn the user before remove the education qualification
+        this.educationForm.education.splice(index,1)
+      },
+      removeApprentiship(index) {
+        //you can warn the user before remove the education qualification
+        this.apprentishipForm.apprentiship.splice(index,1)
+      },
+
       onReset() {
           this.personaForm.surname = '',
           this.personaForm.middleName ='',
@@ -741,6 +699,7 @@ gender: [{ text: 'Select One', value: null },'Male','Female',],
               display the image in the preview.
             */
             reader.readAsDataURL( this.file );
+            this.testimonialImage = this.file 
          // var base64 = this.getBase64Image(document.getElementById("imagePreview"));
           }
         }

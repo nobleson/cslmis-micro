@@ -15,6 +15,8 @@ module.exports = {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '~/assets/images/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
+      { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' }
 
     ]
   },
@@ -37,9 +39,10 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-      "~plugins/bootstrapvue.js"
+      "~plugins/bootstrapvue.js",
+      "~plugins/googlemap.js",
+      {src: '~plugins/leaflet.js', ssr: false}
   ],
-
   /*
   ** Nuxt.js modules
   */
@@ -62,7 +65,7 @@ module.exports = {
     /*
     ** You can extend webpack config here
     */
-    extend(config, ctx) {
+    extend(ctx) {
       transpile: [
         'mdbvue'
       ]

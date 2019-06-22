@@ -7,7 +7,14 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
 import VuejsClipper from 'vuejs-clipper';
 import 'bootstrap-css-only/css/bootstrap.min.css'; 
+import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import 'mdbvue/build/css/mdb.css';
+import 'nuxt-dropzone/dropzone.css'
+import VueTimeago from 'vue-timeago';
+import {Tabs, Tab} from 'vue-tabs-component';
+
+Vue.component('tabs', Tabs);
+Vue.component('tab', Tab);
 // install
 Vue.use(VuejsClipper ,{
     components: {
@@ -16,6 +23,17 @@ Vue.use(VuejsClipper ,{
         clipperUpload: 'clipper-upload'
     }
 })
+Vue.use(VueTimeago, {
+    name: 'Timeago', // Component name, `Timeago` by default
+    locale: 'en', // Default locale
+    // We use `date-fns` under the hood
+    // So you can use all locales from it
+    locales: {
+      'zh-CN': require('date-fns/locale/zh_cn'),
+      ja: require('date-fns/locale/ja')
+    }
+  })
+
 Vue.use(datePicker); 
 Vue.use(VueFormWizard)
 Vue.use(BootstrapVue)

@@ -11,9 +11,11 @@ import { createStore } from './store.js'
 
 /* Plugins */
 
-import nuxt_plugin_buefy_237ab3fb from 'nuxt_plugin_buefy_237ab3fb' // Source: .\\buefy.js (mode: 'all')
-import nuxt_plugin_axios_619bb4aa from 'nuxt_plugin_axios_619bb4aa' // Source: .\\axios.js (mode: 'all')
+import nuxt_plugin_buefy_77011801 from 'nuxt_plugin_buefy_77011801' // Source: .\\buefy.js (mode: 'all')
+import nuxt_plugin_axios_95bbcea0 from 'nuxt_plugin_axios_95bbcea0' // Source: .\\axios.js (mode: 'all')
 import nuxt_plugin_bootstrapvue_872a6430 from 'nuxt_plugin_bootstrapvue_872a6430' // Source: ..\\plugins\\bootstrapvue.js (mode: 'all')
+import nuxt_plugin_googlemap_9fcb182a from 'nuxt_plugin_googlemap_9fcb182a' // Source: ..\\plugins\\googlemap.js (mode: 'all')
+import nuxt_plugin_leaflet_02f645f1 from 'nuxt_plugin_leaflet_02f645f1' // Source: ..\\plugins\\leaflet.js (mode: 'client')
 
 // Component: <NoSsr>
 Vue.component(NoSsr.name, NoSsr)
@@ -149,16 +151,24 @@ async function createApp(ssrContext) {
 
   // Plugin execution
 
-  if (typeof nuxt_plugin_buefy_237ab3fb === 'function') {
-    await nuxt_plugin_buefy_237ab3fb(app.context, inject)
+  if (typeof nuxt_plugin_buefy_77011801 === 'function') {
+    await nuxt_plugin_buefy_77011801(app.context, inject)
   }
 
-  if (typeof nuxt_plugin_axios_619bb4aa === 'function') {
-    await nuxt_plugin_axios_619bb4aa(app.context, inject)
+  if (typeof nuxt_plugin_axios_95bbcea0 === 'function') {
+    await nuxt_plugin_axios_95bbcea0(app.context, inject)
   }
 
   if (typeof nuxt_plugin_bootstrapvue_872a6430 === 'function') {
     await nuxt_plugin_bootstrapvue_872a6430(app.context, inject)
+  }
+
+  if (typeof nuxt_plugin_googlemap_9fcb182a === 'function') {
+    await nuxt_plugin_googlemap_9fcb182a(app.context, inject)
+  }
+
+  if (process.client && typeof nuxt_plugin_leaflet_02f645f1 === 'function') {
+    await nuxt_plugin_leaflet_02f645f1(app.context, inject)
   }
 
   // If server-side, wait for async component to be resolved first

@@ -6,6 +6,7 @@ export const state = () => ({
     apprentiship: {},
     education: {},
     employment: {},
+    isContentLoading: true,
     localgovernment: {},
     _id: null,
     artisan:  []
@@ -21,6 +22,9 @@ export const state = () => ({
     setPersona (state,data){
       state.persona = data
     },
+    setArtisanId (state,id){
+      state._id = id
+    },
     setCenter(state,data){
         state.center = data
     },
@@ -35,7 +39,10 @@ export const state = () => ({
     },
     setLocalGovernment(state,localgovernment){
       state.localgovernment = localgovernment;
-    }
+    },
+    changeLoaderStatus(state){
+      state.isContentLoading = !state.isContentLoading;
+    }    
 
   }
   export const getters = {  
@@ -47,13 +54,17 @@ export const state = () => ({
 
     getCenter: state => state.center,
 
+    getArtisanId: state => state._id,
+
     getApprentiship: state => state.apprentiship,
 
     getEducation: state => state.education,
 
     getEmployment: state => state.employment,
 
-    getLocalGovernment: state => state.localgovernment
+    getLocalGovernment: state => state.localgovernment,
+
+    getLoaderStatus: state => state.isContentLoading
   }
   
 
@@ -63,30 +74,161 @@ export const state = () => ({
 
         this.$axios.$post(herokuUrl,persona)
          .then(function (response) {   
-          console.log('artisan registered'+JSON.stringify(response)) 
-          vuexContext.commit('setPersona',JSON.stringify(response))    
-          vuexContext.commit('successToggle')
-          vuexContext.dispatch('resetSuccess')
+          vuexContext.commit('setPersona',response);
+         vuexContext.dispatch('setIds');
        })
          .catch(function (error) {
-          vuexContext.commit('errorToggle')
-          vuexContext.dispatch('resetError')
-         })
+        })
          .finally(function () {
-          vuexContext.commit('changeFormState')
+          this.$bvModal.hide() 
          });
         },
-        toggleSucessAlert(vuexContext){
-            vuexContext.commit('successToggle')
+      addCenter(vuexContext,center) {
+          let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/artisan/nvq/center/create';
+  
+          this.$axios.$post(herokuUrl,center)
+           .then(function (response) {   
+            console.log('artisan center'+JSON.stringify(response));
+            vuexContext.commit('setCenter',response);
+         })
+           .catch(function (error) {
+           })
+           .finally(function () {
+            //vuexContext.commit('changeFormState')
+           });
           },
-          toggleErrorAlert(vuexContext){
-            vuexContext.commit('errorToggle')
+          addApprentiship(vuexContext,center) {
+            let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/artisan/apprentiship/create';
+    
+            this.$axios.$post(herokuUrl,center)
+             .then(function (response) {   
+              console.log('artisan apprentiship'+JSON.stringify(response));
+              vuexContext.commit('setApprentiship',response);
+  
+             // vuexContext.commit('successToggle')
+              //vuexContext.dispatch('resetSuccess')
+           })
+             .catch(function (error) {
+             })
+             .finally(function () {
+              //vuexContext.commit('changeFormState')
+             });
+            },
+            addEducation(vuexContext,center) {
+              let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/artisan/education/create';
+      
+              this.$axios.$post(herokuUrl,center)
+               .then(function (response) {   
+                console.log('artisan education'+JSON.stringify(response));
+                vuexContext.commit('setEducation',response);
+    
+               // vuexContext.commit('successToggle')
+                //vuexContext.dispatch('resetSuccess')
+             })
+               .catch(function (error) {
+               })
+               .finally(function () {
+                //vuexContext.commit('changeFormState')
+               });
+              },
+              addEmployment(vuexContext,center) {
+                let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/artisan/employement/history/create';
+        
+                this.$axios.$post(herokuUrl,center)
+                 .then(function (response) {   
+                  console.log('artisan employment history'+JSON.stringify(response));
+                  vuexContext.commit('setEmployment',response);
+      
+                 // vuexContext.commit('successToggle')
+                  //vuexContext.dispatch('resetSuccess')
+               })
+                 .catch(function (error) {
+                 })
+                 .finally(function () {
+                  //vuexContext.commit('changeFormState')
+                 });
+                },
+                loadArtisans(vuexContext){
+                  let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/artisan/getall';
+                  return this.$axios.$get(herokuUrl)
+                  .then(function (response){
+                    vuexContext.commit('setPersona',response)
+                    vuexContext.commit('changeLoaderStatus')
+                    console.log("LoaderStatus:"+vuexContext.state.isContentLoading)
+
+                  })
+                  .catch(function (error) {
+                    console.log("artisans data fails to load")
+                    console.log("Loader fail Status:"+vuexContext.state.isContentLoading)
+                  })
+                  .finally(function () {
+                  });
+            
+                },
+                loadProviders(vuexContext,_id){
+                  let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/artisan/nvq/center/'+_id;
+                 this.$axios.$get(herokuUrl)
+                  .then(function (response){
+                    vuexContext.commit('setCenter',response);
+                  })
+                  .catch(function (error) {
+                    console.log("artisan center fails to load")
+                  })
+                  .finally(function () {
+                  });
+                },
+                loadApprentiship(vuexContext,_id){
+                  let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/artisan/apprentiship/'+_id;
+                 this.$axios.$get(herokuUrl)
+                  .then(function (response){
+                    vuexContext.commit('setApprentiship',response);
+                  })
+                  .catch(function (error) {
+                    console.log("artisan apprentiship fails to load")
+                  })
+                  .finally(function () {
+                  });
+                },
+                loadEducation(vuexContext,_id){
+                  let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/artisan/education/'+_id;
+                 this.$axios.$get(herokuUrl)
+                  .then(function (response){
+                    vuexContext.commit('setEducation',response);
+                  })
+                  .catch(function (error) {
+                    console.log("artisan education fails to load")
+                  })
+                  .finally(function () {
+                  });
+                },
+                loadEmployment(vuexContext,_id){
+                  let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/artisan/employement/history/'+_id;
+                 this.$axios.$get(herokuUrl)
+                  .then(function (response){
+                    vuexContext.commit('setEmployment',response);
+                  })
+                  .catch(function (error) {
+                    console.log("artisan employment fails to load")
+                  })
+                  .finally(function () {
+                  });
+                },
+          setIds(vuexContext) {
+              let obj = JSON.parse(JSON.stringify(vuexContext.state.persona));
+              vuexContext.commit('setArtisanId',obj._id);
+              console.log('artisan id:'+obj._id);
+            },
+          popSucessAlert(vuexContext){
+            this.$modal.$show('successState');
+          },
+          popErrorAlert(vuexContext){
+            this.$modal.$show('errorState');
           },
           resetSuccess(vuexContext) { 
-            setTimeout(function () {vuexContext.commit('successToggle');}, 5000);
+            setTimeout(function () {this.$modal.$hide('successState');}, 5000);
         },
         resetError(vuexContext) { 
-          setTimeout(function () {vuexContext.commit('errorToggle');}, 5000);
+          setTimeout(function () {this.$modal.$hide('errorState');}, 5000);
         },
         loadLocalGovernment(vuexContext,value){
           let baseUrl = "https://shielded-savannah-72922.herokuapp.com/state_lg/";

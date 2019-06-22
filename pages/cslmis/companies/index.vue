@@ -1,27 +1,28 @@
 <template>
  <div class="animated fadeIn">
-        <component @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
+        <component :companyData="currentCompanyData" @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
+
   </div>
 </template>
 
 <script>
 import CompanyListView from '~/components/company/CompanyListView.vue';
-import NewCompany from '~/components/company/NewCompany.vue';
 import CompanyDetails from '~/components/company/CompanyDetails.vue';
   export default {
     components: {
       CompanyListView,
-      NewCompany,
       CompanyDetails
     },
     data(){
       return{
-       currentComponent: 'CompanyListView'
+       currentComponent: 'CompanyListView',
+       currentCompanyData: null
       }
     },
     methods: {
-      changeCurrentComponent(newComponent){
-        this.currentComponent = newComponent;
+      changeCurrentComponent(event){
+      this.currentCompanyData = event.data;
+      this.currentComponent = event.component;        
       }
     }
 

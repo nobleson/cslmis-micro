@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{1165:function(t,e,n){"use strict";n.r(e);n(61);var l={name:"Login",layout:"auth"},c=n(7),component=Object(c.a)(l,function(){var t=this.$createElement;return(this._self._c||t)("div",{staticClass:"app flex-row align-items-center"})},[],!1,null,null,null);e.default=component.exports}}]);
