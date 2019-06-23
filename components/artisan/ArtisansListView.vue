@@ -51,7 +51,7 @@
       </mdb-container>
     </template>
     <template :slot="'Table View'">
-      <mdb-container>
+      <mdb-container style="visibility-y: auto">
           <mdb-row>
             <mdb-col md="12">
               <mdb-datatable

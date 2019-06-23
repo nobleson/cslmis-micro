@@ -45,7 +45,7 @@ export default {
       icon: 'icon-pencil'
     },
     {
-      name: 'Assesors & Varifiers',
+      name: 'Assesors & Verifiers',
       url: '/cslmis/assesors',
       icon: 'icon-pencil'
     },

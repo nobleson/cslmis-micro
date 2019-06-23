@@ -50,8 +50,6 @@ export const state = () => ({
           vuexContext.dispatch('resetError')
         })
         .finally(function () {
-
-            
           vuexContext.commit('changeFormState')
         });
       },

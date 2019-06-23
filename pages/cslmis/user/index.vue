@@ -6,9 +6,11 @@
 
 <script>
 import UserView from '~/components/user/UserView.vue';
+import UserProfile from '~/components/user/UserProfile.vue';
   export default {
     components: {
-      UserView
+      UserView,
+      UserProfile
           },
     data(){
       return{

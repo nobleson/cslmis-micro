@@ -2,16 +2,35 @@
 <div>
     <b-row>
             <b-col align-self="end"  class="pb-3 pl-auto" cols="12">
-                <mdb-btn size="lg" color="primary"  @click="$emit('changeComponent',{component: 'NewTrade', id: null})" class="text-white primary-color-dark">Create New</mdb-btn>
+                <mdb-btn size="lg"  color="primary" @click.native="info = true"> New User <mdb-icon icon="user" class="text-white primary-color-dark"/></mdb-btn>
              <hr>
             </b-col>
-            <hr>
+              <mdb-modal removeBackdrop :show="info" @close="info = false" info style="margin-top: 100px">
+                <mdb-modal-header>
+                  <mdb-modal-title>Register</mdb-modal-title>
+                </mdb-modal-header>
+                <mdb-modal-body>
+              <b-alert v-if="successState" show variant="success">User Registered Successfully</b-alert>
+              <b-alert v-if="errorState" show variant="danger">User Fail to Register. Try again</b-alert>     
+                </mdb-modal-body>
+                  <mdb-modal-body class="mx-3 grey-text">
+                    <mdb-input v-model="form.displayName" label="Username" icon="user" class="mb-5"/>
+                    <mdb-input v-model="form.email" label="Email Address" icon="envelope" type="email" class="mb-5"/>
+                    <mdb-input v-model="form.phoneNumber" label="Phone Number" icon="phone" type="text"/>
+                  </mdb-modal-body>
+                <mdb-modal-footer center>
+                <mdb-btn color="primary" @click.native.prevent="register()" :disabled='userFormReset'>Submit
+                  <b-spinner small v-if="userFormReset === true"></b-spinner>
+                  <span class="sr-only" v-if="userFormReset === true">Wait...</span>
+                </mdb-btn>
+                </mdb-modal-footer>
+              </mdb-modal>
       </b-row>
+
  <div class="classic-tabs">      
  <mdb-tabs
     :active="0"
     tabs
-    card
     color="primary"
     class="mb-5"
     :links="[
@@ -22,12 +41,30 @@
   >
     <template :slot="'Card View'">
       <mdb-container>
-          <div class="text-center" v-if="isContentLoading">
+
+      <b-row>
+         <b-col v-for="user in processUsers" :key="user.id" cols="4">
+         <div>
+              <div class="card card-cascade">
+                <div class="view view-cascade gradient-card-header blue-gradient">
+
+                  <h4 class="card-header-title mb-3">{{user.displayName}}</h4>
+                
+                  <p class="card-header-subtitle mb-0"></p>
+
+                </div>
+                <div class="card-body card-body-cascade text-center">
+
+                  <p class="card-text">{{user.email}}</p>
+                      <b-button variant="primary"  @click="$emit('changeComponent',{component:'UserProfile',data: user})" >Manage</b-button>
+                </div>
+              </div>
+          </div>
+          </b-col>       
+        </b-row>
+           <div class="text-center" v-if="isContentLoading">
             <b-spinner variant="primary" label="Text Centered"></b-spinner>
           </div>
-      <b-row>
-        {{adminUser}}
-        </b-row>
       </mdb-container>
     </template>
     <template :slot="'Table View'">
@@ -53,7 +90,7 @@
 
 <script>
 import Tabs from 'vue-tabs-component';
-import  {mdbTab,mdbSelect, mdbTabItem, mdbTabContent, mdbTabPane, mdbLineChart,  mdbDatatable, mdbTabs, mdbJumbotron, mdbCarousel, mdbCarouselItem, mdbEdgeHeader, mdbGoogleMap,mdbContainer,mdbTbl,mdbChip,mdbProgress,mdbTooltip,mdbStretchedLink, mdbRow, mdbCol, mdbCard,  mdbCardImage, mdbCardHeader, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardFooter, mdbCardUp, mdbCardAvatar, mdbCardGroup, mdbBtn, mdbView, mdbMask, mdbIcon, mdbFlippingCard, mdbAvatar } from 'mdbvue';
+import  {mdbTab,mdbSelect, mdbTabItem, mdbTabContent, mdbTabPane, mdbLineChart,  mdbDatatable, mdbTabs, mdbJumbotron, mdbCarousel, mdbCarouselItem, mdbEdgeHeader, mdbGoogleMap,mdbContainer,mdbTbl,mdbChip,mdbProgress,mdbTooltip,mdbStretchedLink, mdbRow, mdbCol, mdbCard,  mdbCardImage, mdbCardHeader, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardFooter, mdbCardUp, mdbCardAvatar, mdbCardGroup, mdbBtn, mdbView, mdbMask, mdbIcon, mdbFlippingCard, mdbAvatar, mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter, mdbInput, mdbTextarea } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
 export default {
      components: {
@@ -93,53 +130,57 @@ export default {
     mdbJumbotron, 
     mdbCarousel, 
     mdbCarouselItem,
-    mdbProgress
+    mdbProgress,
+    mdbModal,
+    mdbModalHeader,
+    mdbModalTitle,
+    mdbModalBody,
+    mdbModalFooter,
+    mdbInput,
+    mdbTextarea
   },
    data() {
       return {
-      user: {
+      form: {
           email: '',
           emailVerified: false,
           phoneNumber: '',
-          password: '',
+          password: 'c-lmis',
           displayName: '',
-          photoURL: '',
+          photoURL: 'https://firebasestorage.googleapis.com/v0/b/cslmis-admin-bucket/o/profile%2FAdmin%201.png?alt=media&token=76b1edbe-4aee-4074-bb79-0ffd84dac37e',
           disabled: false
         },        
         tabIndex: 0,
         dataSet: {
           columns: [
             {
-              label: 'Trade Name',
-              field: 'tradeName',
+              label: 'Username',
+              field: 'displayName',
               sort: 'asc'
             },
             {
-              label: 'Description',
-              field: 'tradeDecsription',
+              label: 'Email Address',
+              field: 'email',
               sort: 'asc'
             }
+            
           ],     
           rows: []
         },
-        users: []
+        users: [],
+        info: false,
+        userFormReset: false
 
       }
     }, 
     mounted(){
       this.create();
-      this.loadUser('noblesityav@yahoo.com');
     },
     computed: {
-          ...mapGetters({listUsersResult: 'user/getUsers', isContentLoading: 'user/getLoaderStatus', adminUser: 'user/getUser'}),
+          ...mapGetters({listUsersResult: 'user/getUsers', isContentLoading: 'user/getLoaderStatus', adminUser: 'user/getUser',successState: 'user/getSuccessState',errorState: 'user/getErrorState'}),
           processUsers: function(){
-                       // var users = [];
-            //this.listUsersResult.users.forEach(function(userRecord) {
-             //   var userObj = {user : userRecord.toJSON}
-             //   users.push(userObj);
-               // console.log('user', userRecord.toJSON());
-            //  }); 
                 let json  = JSON.parse(JSON.stringify(this.listUsersResult.users));
+               // console.log("Json:"+json);
                 return  json;
 
               },
@@ -151,10 +192,11 @@ export default {
     },
     methods: {
       ...mapActions({createUser: 'user/createUser', loadUsers: 'user/loadUsers',fetchUserDataByEmail: 'user/fetchUserDataByEmail' }),
-      addUser() {
-        this.createUser(this.user).then(e => {
-        console.log('User created');
-        });
+      register() {
+        this.userFormReset = !this.userFormReset
+        this.createUser(this.form).then(e => {
+        console.log('User registered');
+        }).catch(console.error).finally(reset => this.resetForm());
       },
       create() {
         this.loadUsers().then(e => {
@@ -165,6 +207,9 @@ export default {
         this.fetchUserDataByEmail(email).then(e => {
         console.log('User loaded');
         });
+      },
+      resetForm(){
+         this.userFormReset = !this.userFormReset
       },
       linkClass(idx) {
         if (this.tabIndex === idx) {
