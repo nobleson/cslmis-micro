@@ -8,10 +8,12 @@
 <script>
 import CompanyListView from '~/components/company/CompanyListView.vue';
 import CompanyDetails from '~/components/company/CompanyDetails.vue';
+import NewCompany from '~/components/company/NewCompany.vue';
   export default {
     components: {
       CompanyListView,
-      CompanyDetails
+      CompanyDetails,
+      NewCompany
     },
     data(){
       return{

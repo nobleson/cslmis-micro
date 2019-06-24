@@ -44,25 +44,34 @@ export const actions= {
   registerCompany(vuexContext,companyData) {
     let firebaseUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM';
     let companyAccount = {
-      displayName: companyData.name,
-      email: companyData.email,
-      password: 'cslmis',
+      email: companyData.companyEmail,
+      emailVerified: false,
+      phoneNumber: companyData.companyTelephone,
+      password: 'c-lmis',
+      displayName: companyData.companyName,
+      photoUrl: companyData.logo,
+      disabled: false,
       returnSecureToken: true
       }    
      vuexContext.commit('changeFormState')
       return this.$axios.$post(firebaseUrl, 
       companyAccount ).then(e => {
-        let date = new Date();
+        let date = new Date()
         let company = {
           _id: e.localId,
-          companyAcronym: e.displayName,
+          companyName: companyData.companyName,
+          companyAcronym: companyData.companyAcronym,
+          companyTelephone: companyData.companyTelephone,
+          companyEmail: companyData.companyEmail,
+          companyAddress: companyData.companyAddress,
           dateRegistered: date
         };
         let emailInfo ={
           requestType: 'VERIFY_EMAIL',
           idToken: e.idToken
         }
-        vuexContext.dispatch('save',company);
+        vuexContext.dispatch('save',company); 
+        vuexContext.dispatch('addCustomClaims',e.localId);
         vuexContext.dispatch('sendCompanyAccountEmail',emailInfo)
       });
     },
@@ -86,11 +95,9 @@ export const actions= {
       let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/getall';
      this.$axios.$get(herokuUrl)
       .then(function (response){
-       // let data = JSON.parse(response);
         vuexContext.commit('setCompanies',response)
         vuexContext.commit('changeLoaderStatus')
-        console.log("companies:"+vuexContext.state.companies)
-        //console.log("companies:"+response)
+        console.log("loading status:"+vuexContext.state.isContentLoading)
       })
       .catch(function (error) {
         console.log("companies fails to load")
@@ -114,6 +121,29 @@ export const actions= {
       });
 
     },
+    addCustomClaims(vuexContext,uid) {  
+      let claims = {
+        portal: 'Construction Company Admin',
+        microService: 'Company',
+        coporate: true,
+        loginStatus: '0',
+        admin: true,
+        dataClerk: false
+      }       
+      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/admin/user/updateCustomClaims/'+uid;
+      this.$axios.$put(herokuUrl,claims)
+       .then(function (userRecord) {        
+       vuexContext.commit('successToggle')
+       vuexContext.dispatch('resetSuccess')
+      })
+       .catch(function (error) {
+         vuexContext.commit('errorToggle')
+         vuexContext.dispatch('resetError')
+       })
+       .finally(function () {
+         vuexContext.commit('changeFormState')
+       });
+      },
     toggleFormState(vuexContext) {
       vuexContext.commit('changeFormState')
     },

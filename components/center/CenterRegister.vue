@@ -16,32 +16,85 @@
                         <div>
                             <b-form>
                             <b-form-group
-                                label="Provider Name:"
+                                label="Provider Full Legal Name:"
                                 label-for="providername"
-                                description="The full name of training provider"
+                                description="The full name of the company"
                             >
                                 <b-form-input
                                 id="providername"
-                                v-model="form.name"
+                                v-model="form.companyName"
                                 type="text"
                                 v-focus
-                                placeholder="Enter training provider"
+                                placeholder="Enter full legal name"
+                                ></b-form-input>
+                            </b-form-group>
+                            <b-form-group
+                                label="Provider Accronym:"
+                                label-for="provideraccronym"
+                                description="The short name of the provider if any"
+                            >
+                                <b-form-input
+                                id="provideraccronym"
+                                v-model="form.companyAcronym"
+                                type="text"
+                                v-focus
+                                placeholder="Enter accronym / display name"
                                 ></b-form-input>
                             </b-form-group>
 
-
                             <b-form-group
-                                label="Provider email address:"
-                                label-for="provideremil"
+                                label="Official Email Address:"
+                                label-for="provideremail"
                             >
                                 <b-form-input
-                                id="provideremil"
-                                v-model="form.email"
+                                id="provideremail"
+                                v-model="form.companyEmail"
                                 type="email"
                                 required
                                 placeholder="Enter provider email"
                                 ></b-form-input>
                             </b-form-group>
+
+                            <b-form-group
+                                label="Official Phone Number:"
+                                label-for="phonenumber"
+                            >
+                                <b-form-input
+                                id="phonenumber"
+                                v-model="form.companyTelephone"
+                                type="number"
+                                required
+                                placeholder="Enter provider phone number"
+                                ></b-form-input>
+                            </b-form-group>
+                            <b-form-group
+                                label="Provider Contact Address:"
+                                label-for="address"
+                            >
+                                <b-form-input
+                                id="address"
+                                v-model="form.companyAddress"
+                                type="text"
+                                required
+                                placeholder="Enter provider Address"
+                                ></b-form-input>
+                            </b-form-group>
+                              <b-card class="mt-3">
+                              <h4>Profile Photo </h4>
+                              <div>
+                                <mdb-btn type="button" color="default" @click="onPickFile">Upload Provider Logo<mdb-icon icon="image" class="ml-1"/></mdb-btn>
+                              <input 
+                              type="file" 
+                              style="display: none" 
+                              ref="fileInput"
+                              accept="image/*"
+                              @change="onFilePicked"/>
+                              </div>
+                              <div>
+                              <img :src="resultURL" height="150"/>
+                              </div>
+                              </b-card>    
+
                             <b-button @click="create"  type="button" variant="primary"  :disabled='providerFormReset'>Submit
                                 <b-spinner small v-if="providerFormReset === true"></b-spinner>
                                 <span class="sr-only" v-if="providerFormReset === true">Wait...</span>                                
@@ -97,8 +150,13 @@ const firebaseConfig = {
     data() {
       return {
             form: {
-            email: null,
-            name: null
+            companyName: null,
+            companyAcronym: null,
+            companyAddress: null,
+            companyEmail: null,
+            companyTelephone: null, 
+            dateRegistered: null,
+            logo: ''
             },
             items: [{
             value: ''
@@ -119,26 +177,64 @@ const firebaseConfig = {
       return re.test(email);
       },
       create() { 
-      if(!this.form.name) {
-        this.$bvModal.msgBoxOk('Name required.')
+      if(!this.form.companyName) {
+        this.$bvModal.msgBoxOk('Company name required.')
         return false;
       }
-      else if(!this.form.email) {
-        this.$bvModal.msgBoxOk('Email required.')
+      else if(!this.form.companyEmail) {
+        this.$bvModal.msgBoxOk('Company email required.')
         return false;
 
-            } else if(!this.validEmail(this.form.email)) {
-                this.$bvModal.msgBoxOk('Valid email required.')
-            }else{ 
-                this.providerFormReset = !this.providerFormReset        
-                this.registerProvider(this.form).then(e => { 
-                console.log('Training Provider Registered Successfully'); 
-                }).catch(error => this.toggleFormState()).finally(reset => this.resetForm());
-            }
-     },
+      } else if(!this.form.companyTelephone) {
+        this.$bvModal.msgBoxOk('Company phone number is required.')
+        
+      } else if(!this.form.companyAddress) {
+        this.$bvModal.msgBoxOk('Company address is required.')
+
+      }else{
+        this.providerFormReset = !this.providerFormReset
+          let uuid = uuidv4();
+          let logoURL = ''
+          let filename = this.image.name || ''
+          
+          const metadata = { contentType: this.image.type };
+          let ext = filename.slice(filename.lastIndexOf('.'))
+          const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
+          task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => this.saveProfile(url))
+         .catch(console.error).finally(reset => this.resetForm());
+       } 
+      },
      resetForm(){
-          this.form.name = this.form.email = '';
+          this.form.companyName = this.form.companyAcronym = this.form.companyAddress = this.form.companyEmail = this.form.companyTelephone = '';
           this.providerFormReset = !this.providerFormReset        
+      },
+      onPickFile(){
+        this.$refs.fileInput.click()
+      },
+      onFilePicked(event){
+
+        let files = event.target.files
+        let filename = files[0].name;
+        if(filename.lastIndexOf('.') <= 0){
+          alert('please enter a valid file')
+        }
+        const fileReader =  new FileReader()
+        fileReader.addEventListener('load',() =>{
+          this.resultURL = fileReader.result
+        })
+        fileReader.readAsDataURL(files[0])
+        this.image = files[0]
+      },
+       saveProfile(url) {
+         let date = new Date()
+         this.form.logo = url
+         this.form.dateRegistered = date
+         this.form.companyTelephone = "+234"+this.form.companyTelephone.replace(/^0+/, '');
+         console.log('Photo URL:'+url);  
+         console.log('Provider form:'+JSON.stringify(this.form))
+          return this.registerProvider(this.form).then(e => { 
+            console.log('Provider Registered Successfully'); 
+          }); 
       }
     }
   }

@@ -43,19 +43,27 @@ export const state = () => ({
   
     registerProvider(vuexContext,providerData) {
       let firebaseUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM';
-      let providerAccount = {
-        displayName: providerData.name,
-        email: providerData.email,
-        password: 'cslmis',
-        returnSecureToken: true
-        }    
+        let providerAccount = {
+          email: providerData.companyEmail,
+          emailVerified: false,
+          phoneNumber: providerData.companyTelephone,
+          password: 'c-lmis',
+          displayName: providerData.companyName,
+          photoUrl: providerData.logo,
+          disabled: false,
+          returnSecureToken: true
+          }  
        vuexContext.commit('changeFormState')
         return this.$axios.$post(firebaseUrl, 
             providerAccount ).then(e => {
           let date = new Date();
           let provider = {
             _id: e.localId,
-            fullLegalName: e.displayName,
+            fullLegalName: providerData.companyName,
+            acronym: providerData.companyAcronym,
+            officialAddress: providerData.companyAddress,
+            email: providerData.companyEmail,
+            telephone: providerData.companyTelephone, 
             dateRegistered: date
           };
           let emailInfo ={
@@ -63,6 +71,7 @@ export const state = () => ({
             idToken: e.idToken
           }
           vuexContext.dispatch('save',provider);
+          vuexContext.dispatch('addCustomClaims',e.localId);
           vuexContext.dispatch('sendProviderAccountEmail',emailInfo)
         });
       },
@@ -82,6 +91,29 @@ export const state = () => ({
           vuexContext.commit('changeFormState')
         });
       },
+      addCustomClaims(vuexContext,uid) {  
+        let claims = {
+          portal: 'Training Provider Admin',
+          microService: 'Provider',
+          coporate: true,
+          loginStatus: '0',
+          admin: true,
+          dataClerk: false
+        }       
+        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/admin/user/updateCustomClaims/'+uid;
+        this.$axios.$put(herokuUrl,claims)
+         .then(function (userRecord) {        
+         vuexContext.commit('successToggle')
+         vuexContext.dispatch('resetSuccess')
+        })
+         .catch(function (error) {
+           vuexContext.commit('errorToggle')
+           vuexContext.dispatch('resetError')
+         })
+         .finally(function () {
+           vuexContext.commit('changeFormState')
+         });
+        },
       loadprovider(vuexContext){
         let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/getall';
        this.$axios.$get(herokuUrl)

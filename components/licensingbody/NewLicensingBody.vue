@@ -17,7 +17,7 @@
             <p class="pb-4">Create Licensing Body Profile</p>
             <!--Body-->
             <form>
-              <mdb-input label="Full Name"  v-model="licensingProfileForm.fullname" />
+              <mdb-input label="Full Name"  v-model="licensingProfileForm.fullname"/>
               <mdb-input label="Accronym"   v-model="licensingProfileForm.accronym"/>
               <mdb-input label="Telephone Number"  v-model="licensingProfileForm.telephoneNumber"/>
               <mdb-input label="Email Address"  v-model="licensingProfileForm.emailAddress"/>

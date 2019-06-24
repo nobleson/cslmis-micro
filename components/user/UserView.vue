@@ -19,9 +19,9 @@
                     <mdb-input v-model="form.phoneNumber" label="Phone Number" icon="phone" type="text"/>
                   </mdb-modal-body>
                 <mdb-modal-footer center>
-                <mdb-btn color="primary" @click.native.prevent="register()" :disabled='userFormReset'>Submit
-                  <b-spinner small v-if="userFormReset === true"></b-spinner>
-                  <span class="sr-only" v-if="userFormReset === true">Wait...</span>
+                <mdb-btn color="primary" @click.native.prevent="register()" :disabled='formReset'>Submit
+                  <b-spinner small v-if="formReset === true"></b-spinner>
+                  <span class="sr-only" v-if="formReset === true">Wait...</span>
                 </mdb-btn>
                 </mdb-modal-footer>
               </mdb-modal>
@@ -169,7 +169,7 @@ export default {
         },
         users: [],
         info: false,
-        userFormReset: false
+        formReset: false
 
       }
     }, 
@@ -178,25 +178,36 @@ export default {
     },
     computed: {
           ...mapGetters({listUsersResult: 'user/getUsers', isContentLoading: 'user/getLoaderStatus', adminUser: 'user/getUser',successState: 'user/getSuccessState',errorState: 'user/getErrorState'}),
-          processUsers: function(){
-                let json  = JSON.parse(JSON.stringify(this.listUsersResult.users));
-               // console.log("Json:"+json);
-                return  json;
-
-              },
-              processTableData: function(){
-              this.dataSet.rows = JSON.parse(JSON.stringify(this.listUsersResult.users));
-              //console.log("Json:"+json);
-              return  this.dataSet;
-          }
+        processUsers: function(){
+              return this.listUsersResult.users;
+            },
+            processTableData: function(){
+              //this.dataSet.rows =  JSON.parse(JSON.stringify(this.listUsersResult.users));
+              this.dataSet.rows =  this.listUsersResult.users;
+              return this.dataSet;
+        }
     },
     methods: {
       ...mapActions({createUser: 'user/createUser', loadUsers: 'user/loadUsers',fetchUserDataByEmail: 'user/fetchUserDataByEmail' }),
       register() {
-        this.userFormReset = !this.userFormReset
-        this.createUser(this.form).then(e => {
-        console.log('User registered');
-        }).catch(console.error).finally(reset => this.resetForm());
+        if(!this.form.displayName) {
+          this.$bvModal.msgBoxOk('Username or Display name is required.')
+          return false;
+        }
+        else if(!this.form.email) {
+          this.$bvModal.msgBoxOk('A valid email address is required.')
+          return false;
+        }
+        else if(!this.form.phoneNumber) {
+          this.$bvModal.msgBoxOk('A valid phone number is required.')
+          return false;
+        }else{ 
+          this.formReset = !this.formReset
+          this.form.phoneNumber = "+234"+this.form.phoneNumber.replace(/^0+/, '');
+         this.createUser(this.form).then(e => {
+          console.log('User registered');
+          }).catch(console.error).finally(reset => this.resetForm()); 
+        }
       },
       create() {
         this.loadUsers().then(e => {
@@ -209,7 +220,7 @@ export default {
         });
       },
       resetForm(){
-         this.userFormReset = !this.userFormReset
+         this.formReset = !this.formReset
       },
       linkClass(idx) {
         if (this.tabIndex === idx) {

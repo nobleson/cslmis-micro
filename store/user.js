@@ -61,7 +61,7 @@ export const state = () => ({
       });
     },
     createUser(vuexContext,user) {         
-        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/admin/user/create';
+        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/admin/user/addUser';
        this.$axios.$post(herokuUrl,user)
         .then(function (userRecord) {        
           vuexContext.dispatch('addCustomClaims',userRecord.uid);

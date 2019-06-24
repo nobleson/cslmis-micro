@@ -1,6 +1,6 @@
 <template>
  <div class="animated fadeIn">
-        <component @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
+           <component :userData="currentUserData" @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
   </div>
 </template>
 
@@ -15,12 +15,12 @@ import UserProfile from '~/components/user/UserProfile.vue';
     data(){
       return{
        currentComponent: 'UserView',
-       currentProgramData: null
+       currentUserData: null
       }
     },
     methods: {
       changeCurrentComponent(event){
-      this.currentProgramData = event.data;
+      this.currentUserData = event.data;
       console.log(event.data)
       this.currentComponent = event.component;        
       }

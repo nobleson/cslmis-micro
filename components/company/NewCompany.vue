@@ -22,13 +22,25 @@
                             >
                                 <b-form-input
                                 id="companyname"
-                                v-model="form.name"
+                                v-model="form.companyName"
                                 type="text"
                                 v-focus
-                                placeholder="Enter training provider"
+                                placeholder="Enter company"
                                 ></b-form-input>
                             </b-form-group>
-
+                            <b-form-group
+                                label="Company Accronym:"
+                                label-for="companyaccronym"
+                                description="The short name of the company"
+                            >
+                                <b-form-input
+                                id="companyaccronym"
+                                v-model="form.companyAcronym"
+                                type="text"
+                                v-focus
+                                placeholder="Enter accronym / display name"
+                                ></b-form-input>
+                            </b-form-group>
 
                             <b-form-group
                                 label="Compay Email Address:"
@@ -36,12 +48,53 @@
                             >
                                 <b-form-input
                                 id="companyemail"
-                                v-model="form.email"
+                                v-model="form.companyEmail"
                                 type="email"
                                 required
-                                placeholder="Enter Company email"
+                                placeholder="Enter company email"
                                 ></b-form-input>
                             </b-form-group>
+
+                            <b-form-group
+                                label="Company Phone Number:"
+                                label-for="phonenumber"
+                            >
+                                <b-form-input
+                                id="phonenumber"
+                                v-model="form.companyTelephone"
+                                type="number"
+                                required
+                                placeholder="Enter company phone number"
+                                ></b-form-input>
+                            </b-form-group>
+                            <b-form-group
+                                label="Company Address:"
+                                label-for="address"
+                            >
+                                <b-form-input
+                                id="phonenumber"
+                                v-model="form.companyAddress"
+                                type="text"
+                                required
+                                placeholder="Enter Company Address"
+                                ></b-form-input>
+                            </b-form-group>
+                              <b-card class="mt-3">
+                              <h4>Profile Photo </h4>
+                              <div>
+                                <mdb-btn type="button" color="default" @click="onPickFile">Upload Company Logo<mdb-icon icon="image" class="ml-1"/></mdb-btn>
+                              <input 
+                              type="file" 
+                              style="display: none" 
+                              ref="fileInput"
+                              accept="image/*"
+                              @change="onFilePicked"/>
+                              </div>
+                              <div>
+                              <img :src="resultURL" height="150"/>
+                              </div>
+                              </b-card>    
+
                             <b-button @click="create"  type="button" variant="primary"  :disabled='companyFormReset'>Submit
                                 <b-spinner small v-if="companyFormReset === true"></b-spinner>
                                 <span class="sr-only" v-if="companyFormReset === true">Wait...</span>                                
@@ -97,14 +150,20 @@ const firebaseConfig = {
     data() {
       return {
             form: {
-            email: null,
-            name: null
+            companyName: null,
+            companyAcronym: null,
+            companyAddress: null,
+            companyEmail: null,
+            companyTelephone: null, 
+            dateRegistered: null,
+            logo: ''
             },
             items: [{
             value: ''
             }],
             image: null,
             resultURL: '',
+            photoURL: '',
             companyFormReset: false,
             spinner: '0'        
           }
@@ -119,28 +178,67 @@ const firebaseConfig = {
       return re.test(email);
       },
       create() { 
-      if(!this.form.name) {
-        this.$bvModal.msgBoxOk('Name required.')
+
+      if(!this.form.companyName) {
+        this.$bvModal.msgBoxOk('Company name required.')
         return false;
       }
-      else if(!this.form.email) {
-        this.$bvModal.msgBoxOk('Email required.')
+      else if(!this.form.companyEmail) {
+        this.$bvModal.msgBoxOk('Company email required.')
         return false;
 
-      } else if(!this.validEmail(this.form.email)) {
-        this.$bvModal.msgBoxOk('Valid email required.')
-      }else{ 
+      } else if(!this.form.companyTelephone) {
+        this.$bvModal.msgBoxOk('Company phone number is required.')
+        
+      } else if(!this.form.companyAddress) {
+        this.$bvModal.msgBoxOk('Company address is required.')
 
-        this.companyFormReset = !this.companyFormReset        
-        this.registerCompany(this.form).then(e => { 
-          console.log('Company Registered Successfully'); 
-         }).catch(console.error).finally(reset => this.resetForm());
+      }else{
+        this.companyFormReset = !this.companyFormReset
+          let uuid = uuidv4();
+          let logoURL = ''
+          let filename = this.image.name || ''
+          
+          const metadata = { contentType: this.image.type };
+          let ext = filename.slice(filename.lastIndexOf('.'))
+          const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
+          task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => this.saveProfile(url))
+         .catch(console.error).finally(reset => this.resetForm());
        } 
       },
      resetForm(){
-          this.form.name = this.form.email = '';
+          this.form.companyName = this.form.companyAcronym = this.form.companyAddress = this.form.companyEmail = this.form.companyTelephone = '';
           this.companyFormReset = !this.companyFormReset        
+      },
+      onPickFile(){
+        this.$refs.fileInput.click()
+      },
+      onFilePicked(event){
+
+        let files = event.target.files
+        let filename = files[0].name;
+        if(filename.lastIndexOf('.') <= 0){
+          alert('please enter a valid file')
+        }
+        const fileReader =  new FileReader()
+        fileReader.addEventListener('load',() =>{
+          this.resultURL = fileReader.result
+        })
+        fileReader.readAsDataURL(files[0])
+        this.image = files[0]
+      },
+       saveProfile(url) {
+         let date = new Date()
+         this.form.logo = url
+         this.form.dateRegistered = date
+         this.form.companyTelephone = "+234"+this.form.companyTelephone.replace(/^0+/, '');
+         console.log('Photo URL:'+url);  
+         console.log('Company form:'+JSON.stringify(this.form))
+          return this.registerCompany(this.form).then(e => { 
+            console.log('Company Registered Successfully'); 
+          }); 
       }
+
     }
   }
 
