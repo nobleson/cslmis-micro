@@ -1,6 +1,6 @@
 <template>
   <div class="animated fadeIn">
-        <component @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
+       <component :retrenchementData="currentRetrenchementData" @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
   </div>
 </template>
 
@@ -16,16 +16,19 @@ export default {
   },
   data() {
     return {
-      currentComponent: 'RetrenchementView'
+      currentComponent: 'RetrenchementView',
+      currentRetrenchementData: null
     }
   },
   methods: {
-    changeCurrentComponent(newComponent) {
-      this.currentComponent = newComponent;
+    changeCurrentComponent(event){
+      this.currentRetrenchementData = event.data;
+      console.log(event.data)
+      this.currentComponent = event.component;  
     }
   }
 }
 </script>
-<style <style lang="scss" scoped>
+<style>
 
 </style>

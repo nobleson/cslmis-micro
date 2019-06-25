@@ -45,6 +45,8 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     'nuxt-buefy',
+    
+    
     [
       'nuxt-fontawesome', {
         imports: [
@@ -57,8 +59,8 @@ module.exports = {
            icons: ['fab']
          }
        ]
-      }
-]
+      },   
+    ]
   ],
   /*
   ** Axios module configuration
@@ -70,7 +72,6 @@ module.exports = {
   ** Build configuration
   */
   build: {
-
     /*
     ** You can extend webpack config here
     */

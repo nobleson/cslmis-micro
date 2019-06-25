@@ -13,8 +13,23 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { faSpinner, faAlignLeft } from '@fortawesome/free-solid-svg-icons'
 import 'bootstrap-css-only/css/bootstrap.min.css'; 
 import 'mdbvue/build/css/mdb.css';
+import "vue-wysiwyg/dist/vueWysiwyg.css";
+import wysiwyg from "vue-wysiwyg";
+import FlashMessage from '@smartweb/vue-flash-message';
 
 
+Vue.use(FlashMessage);
+Vue.use(wysiwyg, {
+    hideModules: { "link":true,
+                   "code":true,
+                   "table":true,
+                   "image":true,
+                   "bold":true,
+                   "italic":true,
+                   "underline":true,
+                   "removeFormat":true
+                 },
+});
 library.add(faSpinner, faAlignLeft)
 Vue.config.productionTip = false
 library.add(faUserSecret)

@@ -22,9 +22,10 @@ void (function updateModules() {
   resolveStoreModules(require('@/store/application.js'), 'application.js')
   resolveStoreModules(require('@/store/authentication.js'), 'authentication.js')
   resolveStoreModules(require('@/store/company.js'), 'company.js')
-  resolveStoreModules(require('@/store/jobadvert.vert.js'), 'jobadvert.vert.js')
+  resolveStoreModules(require('@/store/jobadvert.js'), 'jobadvert.js')
   resolveStoreModules(require('@/store/labourstatistic.js'), 'labourstatistic.js')
   resolveStoreModules(require('@/store/newJobApplication.js'), 'newJobApplication.js')
+  resolveStoreModules(require('@/store/retrenchement.js'), 'retrenchement.js')
 
   // If the environment supports hot reloading...
 
@@ -35,9 +36,10 @@ void (function updateModules() {
       '@/store/authentication.js',
       '@/store/company.js',
       '@/store/index.js',
-      '@/store/jobadvert.vert.js',
+      '@/store/jobadvert.js',
       '@/store/labourstatistic.js',
       '@/store/newJobApplication.js',
+      '@/store/retrenchement.js',
     ], () => {
       // Update `root.modules` with the latest definitions.
       updateModules()

@@ -1,6 +1,6 @@
 <template>
   <div class="animated fadeIn">
-        <component @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
+       <component :advertData="currentAdvertData" @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
   </div>
 </template>
 
@@ -13,22 +13,25 @@ export default {
   components: {
     JobAdvertView,
     JobAdvertDetail,
-    NewAdvert
+    NewAdvert,
   },
   data() {
     return {
-      currentComponent: 'JobAdvertView'
+      currentComponent: 'JobAdvertView',
+      currentAdvertData: null
     }
   },
   methods: {
-    changeCurrentComponent(newComponent) {
-      this.currentComponent = newComponent;
-    }
+      changeCurrentComponent(event){
+      this.currentAdvertData = event.data;
+      console.log(event.data)
+      this.currentComponent = event.component;        
+      }
   },
   
   
 }
 </script>
-<style <style lang="scss" scoped>
+<style>
 
 </style>

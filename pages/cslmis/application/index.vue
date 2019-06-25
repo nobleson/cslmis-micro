@@ -4,7 +4,9 @@
         <div class="container">
         <b-navbar-brand href="#">CSLMIS COMPANIES</b-navbar-brand>
 
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+        <b-navbar-toggle target="nav-collapse">
+          
+        </b-navbar-toggle>
 
         <b-collapse id="nav-collapse" is-nav>
 
@@ -18,7 +20,7 @@
     </b-navbar>
 
 <div class="code">
-           
+
 <div class="app flex-row align-items-center">
     <div class="container">
       <b-row class="justify-content-center">
@@ -42,21 +44,21 @@
                     <b-form-group id="input-group-2 " label="Date Applied" label-for="inputs">
                           <date-picker v-model="form.dateApplied" :config="{format: 'DD/MM/YYYY'}"></date-picker>
                     </b-form-group>
-                
+
                  <mdb-btn color="secondary" type="button" @click="submitApplication">Submit</mdb-btn>
-              </form>         
-            
+              </form>
+
              </mdb-card-body>
              </mdb-card>
           </b-col>
       </b-row>
     </div>
-  </div>       
+  </div>
 </div>
- 
+
 
 <footer id="sticky-footer" class="py-4 bg-dark text-white-50">
-    <div class="cont text-center">  
+    <div class="cont text-center">
     <small>Copyright &copy; CSLMIS</small>
     </div>
 </footer>
@@ -65,7 +67,7 @@
 <script>
 
 import { mdbInput } from 'mdbvue';
-import { mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn } from 'mdbvue';
+import { mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbDatePicker, mdbCardText, mdbBtn } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
 import datepicker from 'vue-date-picker'
 import { clipperBasic } from 'vuejs-clipper'
@@ -75,16 +77,18 @@ export default {
   name: 'Register',
   layout: "defualt",
   components: {
+     mdbDatePicker,
       datepicker,
       clipperBasic,
 			mdbCard,
 			mdbCardBody,
       mdbBtn,
        mdbInput
-      
+
 		},
     data() {
       return {
+         date: '',
         form: {
           companyName:'',
           companyAcronym:'',
@@ -98,10 +102,10 @@ export default {
           companyFounded:'',
           companyActivities:'',
           companyState:'',
-          dateApplied:''          
+          dateApplied:''
         },
-       
-        companyState: [{ text: 'Select One', value: null },'Abia', 
+
+        companyState: [{ text: 'Select One', value: null },'Abia',
 'Adamawa',
 'Akwa Ibom',
 'Anambra',
@@ -146,16 +150,16 @@ gender: [{ text: 'Select One', value: null },'Male','Female',],
       },
     /* computed: {
         ...mapGetters({getCompany: 'company/getCompany'})
-    }, */ 
+    }, */
     methods: {
       ...mapActions({apply: 'application/sendApplication'}),
       submitApplication(){
-        this.apply(this.form).then(e => { 
+        this.apply(this.form).then(e => {
            this.$bvModal.msgBoxOk('Application Submitted. You will be contacted via the email you used in the form ')
         });
         this.reset();
       },
-     
+
       register() {
 
         this.$router.push('/cslmis/dashboard');
@@ -173,9 +177,9 @@ gender: [{ text: 'Select One', value: null },'Male','Female',],
           this.form.companyFounded ='',
           this.form.companyActivities ='',
           this.form.companyState ='',
-          this.form.dateApplied ='' 
+          this.form.dateApplied =''
         }
-     
+
       }
 }
 
@@ -188,6 +192,6 @@ gender: [{ text: 'Select One', value: null },'Male','Female',],
 .code{
     margin-top: 10%;
 }
- 
+
 </style>
 

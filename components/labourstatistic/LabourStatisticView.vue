@@ -1,5 +1,12 @@
 <template>
-<div class="container">
+<div class="">
+  <b-row>
+            <b-col align-self="end"  class="pb-3 pl-auto" cols="12">
+                <b-button color=""  @click="$emit('changeComponent',{component: 'NewLabourStatistic', id: null})" class="">Create New</b-button>
+             <hr>
+            </b-col>
+            <hr>
+      </b-row>
   <mdb-card class="card-body">
     <div class="d-flex justify-content-end" style="background:lightgray">
       <h2><span class="badge badge-info">21,400</span></h2>

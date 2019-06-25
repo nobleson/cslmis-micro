@@ -1,28 +1,35 @@
 <template>
   <div class="animated fadeIn">
-        <component @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
+       <component :statData="currentStatData" @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
   </div>
 </template>
 
 <script>
 import LabourStatisticView from '~/components/labourstatistic/LabourStatisticView.vue'
+import LabourStatisticDetail from '~/components/labourstatistic/LabourStatisticDetail.vue'
+import NewLabourStatistic from '~/components/labourstatistic/NewLabourStatistic.vue'
 export default {
   components:{
-    LabourStatisticView
+    LabourStatisticView,
+    NewLabourStatistic,
+    LabourStatisticDetail
   },
   data() {
     return {
     
-      currentComponent: 'LabourStatisticView'
+      currentComponent: 'LabourStatisticView',
+      currentStatData: null
     }
   },
   methods: {
-    changeCurrentComponent(newComponent) {
-      this.currentComponent = newComponent;
+    changeCurrentComponent(event){
+      this.currentStatData = event.data;
+      console.log(event.data)
+      this.currentComponent = event.component; 
     }
   }
 }
 </script>
-<style <style lang="scss" scoped>
+<style>
 
 </style>

@@ -70,13 +70,31 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters({session: 'authentication/getSession', userData: 'authentication/getUser'}),
+  },
   methods: {
-    ...mapActions({authenticateUser: 'authentication/authenticateUser'}),
+    ...mapActions({setupUser: 'authentication/initSetup',authenticateUser: 'authentication/authenticateUser',fetchUserDataById: 'authentication/fetchUserDataById'}),
     logIn() {
-      this.authenticateUser(this.user).then(e => {
-       console.log(JSON.stringify("Login:"+e));
+      this.authenticateUser(this.user).then(e => this.getUserClaims());
+    },
+    getUserClaims(){
+      console.log("Logged UID:"+this.session.localId)
+      this.fetchUserDataById(this.session.localId).then(e => this.validate());
+    },
+    validate(){
+     // var loggedUser = this.userData
+      console.log("Logged User Claims:"+JSON.stringify(this.userData.customClaims))
+
+      if(this.userData.customClaims.portal == 'Construction Company Admin'){
+        this.init()
         this.$router.push('/cslmis/dashboard');
-      });
+      }else{
+        this.$bvModal.msgBoxOk('Unauthorized Access, please contact your administrator')
+      }
+    },
+    init(){
+      this.setupUser();
     },
     resetPassword() {
       //reset password code. probably dispatch to an action.

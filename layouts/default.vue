@@ -16,9 +16,9 @@
       </b-navbar-nav>
     </AppHeader>
     <div class="app-body">
-      <AppSidebar :navItems="nav" class="primary"></AppSidebar>
+      <AppSidebar :navItems="nav" style="background-color:#ff6d00"></AppSidebar>
      <main class="main">
-        <Breadcrumb :list="list"/>
+        <Breadcrumb :list="list" style="background-color: #ff9100; color: #ffffff;"/>
         <div class="container-fluid">
           <router-view></router-view>
         </div>
