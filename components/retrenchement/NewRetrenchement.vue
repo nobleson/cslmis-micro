@@ -181,24 +181,24 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
       },
 
       create() { 
-      if(!this.retrenchementForm.totalRetrenchedTittle) {
-        this.$bvModal.msgBoxOk('Retrenchement is required.')
+      if(!this.retrenchementForm.retrenchementTittle) {
+        this.$bvModal.msgBoxOk('Retrenchement Tittle is required.')
         return false;
       }
       else if(!this.retrenchementForm.totalRetrenchedStaffs) {
-        this.$bvModal.msgBoxOk('Total Number Retrenched is required.')
+        this.$bvModal.msgBoxOk('Total Number Retrenched State is required.')
         return false;
       }
     else if(!this.retrenchementForm.totalArtisansCertified) {
-        this.$bvModal.msgBoxOk('Total Number Certified is required.')
+        this.$bvModal.msgBoxOk('Total Number of Certified Artisans is required.')
         return false;
     }
     else if(!this.retrenchementForm.totalArtisansLicensed) {
-        this.$bvModal.msgBoxOk('Total Number Licensed required.')
+        this.$bvModal.msgBoxOk('Total Number of Licensed Artisans is required.')
         return false;
     }
      else if(!this.retrenchementForm.textArea) {
-        this.$bvModal.msgBoxOk('Year is required.')
+        this.$bvModal.msgBoxOk('Reason for Retrenchement is required.')
         return false;
     }
      else if(!this.retrenchementForm.year) {
@@ -240,7 +240,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
       watchErrorState(){
           this.flashMessage.error({title: 'Oops!', message: 'Your advert fail to  submit. Try again',icon: true});
       },
-      
+
       onPickFile(){
         this.$refs.fileInput.click()
       },
