@@ -3,7 +3,7 @@
     <div class="container">
        <b-row>
            <b-col md="8">
-           <h4 class="text-center">CSLMIS Portal</h4>
+           <h4 class="text-center">Construction Companies Portal</h4>
            </b-col>
        </b-row>
       <b-row class="justify-content-center">
@@ -14,7 +14,8 @@
                 <div>
                   <img src="~/assets/images/new.png" alt="Logo">
                 </div>
-                <h1>CSLMIS</h1>
+                <h6 class="text-white">Brand by</h6>
+                <h1>CORBON</h1>
               </b-card-body>
             </b-card>
             <b-card no-body class="p-4">
@@ -32,7 +33,14 @@
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
-                      <b-button @click="logIn" variant="primary" class="px-4">Login</b-button>
+                     <!--  <b-button @click="logIn" variant="primary" class="px-4">Login</b-button> -->
+                     <div class="text-xs-left">
+                       <button type="button" @click="logIn" class="btn btn-primary btn-lg" id="load" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing ">login</button>
+                     <!-- <b-button @click="logIn"  type="button" variant="primary"  :disabled='userFormReset'>Login
+                        <b-spinner small v-if="userFormReset === true"></b-spinner>
+                        <span class="sr-only" v-if="userFormReset === true">Wait...</span>                                
+                      </b-button> -->
+                    </div>
                     </b-col>
                   </b-row>
                   <b-row>
@@ -57,9 +65,19 @@
 </template>
 <script>
   import {mapGetters, mapActions} from 'vuex'
+  import { mdbBtn, } from 'mdbvue';
+const focus = {
+    inserted(el) {
+      el.focus()
+    },
+  }
 export default {
+  directives: { focus },
   name: 'Login',
   layout: "empty",
+   components: {
+      mdbBtn
+     },
 
   data() {
     return {
@@ -67,9 +85,15 @@ export default {
         email: '',
         password: '',
         isSignIn: true
-      }
+      },
+      userFormReset: false,
+      spinner: '0'
     }
   },
+   resetForm(){
+         this.user.email = this.user.password = '';
+          this.userFormReset = !this.userFormReset    
+      },
   computed: {
     ...mapGetters({session: 'authentication/getSession', userData: 'authentication/getUser'}),
   },

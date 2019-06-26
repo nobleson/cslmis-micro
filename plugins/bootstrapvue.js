@@ -17,7 +17,7 @@ import "vue-wysiwyg/dist/vueWysiwyg.css";
 import wysiwyg from "vue-wysiwyg";
 import FlashMessage from '@smartweb/vue-flash-message';
 
-
+Vue.use(require('vue-moment'));
 Vue.use(FlashMessage);
 Vue.use(wysiwyg, {
     hideModules: { "link":true,

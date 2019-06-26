@@ -19,28 +19,54 @@
             <form>
               <mdb-input label="Job Title"  v-model="jobAdvertForm.jobTitle" />
               <mdb-input label="Job Description"   v-model="jobAdvertForm.jobDescription"/>
-              <p>Job Requirement<p/>
-              <wysiwyg v-model="jobAdvertForm.jobRequirement" />
+              <p>Message<p/>
+              <wysiwyg v-model="jobAdvertForm.jobRequirement" placeholder="Write details about your adverts..." />
+              <hr/>
+              <div>
+                <b-card title="Duration" sub-title="Start and End Date">
+                  <b-card-text>
+                     <date-picker v-model="jobAdvertForm.adsStartDate"  placeholder="Start date"></date-picker>
+                   <br/>
+                   <date-picker v-model="jobAdvertForm.deadLineDate"  placeholder="End date"></date-picker>
+                  </b-card-text>
+                  <div class="text-center">
+                      <mdb-list-group>
+                        <mdb-list-group-item >Advert Days <h5><mdb-badge  color="primary" pill >{{duration}}</mdb-badge></h5>
+                        </mdb-list-group-item>
+                        <mdb-list-group-item>Billing<h5><mdb-badge color="danger" pill> <b>&#x20A6;</b> {{price}} </mdb-badge></h5>
+                        </mdb-list-group-item>
+                      </mdb-list-group>
+                  </div>
+                  <hr/>
+                   <b-button variant="outline-primary" @click="adsDuration()">Checkout Days</b-button>
+               
+                      <b-button id="show-btn" @click="$bvModal.show('bv-modal-example') " variant="success">Checkout <i class="fas fa-cart-plus ml-1"></i></b-button>
 
-              <b-form>
-                <b-form-group label="Job Advert Start" >
-                <date-picker  v-model="jobAdvertForm.adsStartDate" ></date-picker>
-                </b-form-group>
-              </b-form>
-              <b-form>
-                <b-form-group label="Job Advert End" >
-                <date-picker  v-model="jobAdvertForm.deadLineDate" ></date-picker>
-                </b-form-group>
-              </b-form>
-              <mdb-input label="Job Status"  v-model="jobAdvertForm.jobStatus"/>
-              <p>{{adsDuration}}</p>
-              <mdb-input label="Job Location"  v-model="jobAdvertForm.jobLocation"/>
-              <p>Job Qualification<p/>
-              <wysiwyg v-model="jobAdvertForm.jobQualification"/>
-              <mdb-input label="Subscription Id"  v-model="jobAdvertForm.subscriptionId"/>
-              
-              
+                      <b-modal id="bv-modal-example" hide-footer>
+                        <template slot="modal-title">
+                          Payment Getway
+                        </template>
+                        <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                          <span class="sr-only">Loading...</span>
+                        </div>
+                      </div>
+                        <p class="my-4">Loading...</p>
+                
+                        <hr/>
+                        
+                      </b-modal>
+                </b-card>
+              </div>
+              <hr/>
+              <div>
+                <b-card title="Payment History" sub-title="Advert Payment History">
+                  <b-card-text>
+                  </b-card-text>
+                </b-card>
+              </div>
                <div class="text-xs-left">
+                 
                 <mdb-btn color="primary" @click.native.prevent="create()" :disabled='formReset'>Submit
                   <b-spinner small v-if="formReset === true"></b-spinner>
                   <span class="sr-only" v-if="formReset === true">Wait...</span>
@@ -61,18 +87,12 @@
 </template>
 <script>
 //import  uuidv4 from 'uuid/v4';
-import datepicker from 'vue-bootstrap-datetimepicker'
-import { mdbEdgeHeader, mdbContainer, mdbRow, mdbCol, mdbCardBody,mdbCard,  mdbInput, mdbBtn,mdbIcon } from 'mdbvue';
+import datepicker from 'vue-date-picker'
+import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter,  mdbListGroup, mdbListGroupItem, mdbBadge,  mdbEdgeHeader, mdbContainer, mdbRow, mdbCol, mdbCardBody,mdbCard,  mdbInput, mdbBtn,mdbIcon } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
- const focus = {
-    inserted(el) {
-      el.focus()
-    },
-  }
 
   export default {
-   directives: { focus },
-   components: {
+      components: {
       mdbEdgeHeader,
       mdbContainer,
       mdbRow,
@@ -83,9 +103,18 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
       mdbIcon,
       mdbCard,
       datepicker,
+      mdbListGroup,
+      mdbListGroupItem,
+      mdbBadge,
+      mdbModal,
+      mdbModalHeader,
+      mdbModalTitle,
+      mdbModalBody,
+      mdbModalFooter,
      },
     data() {
       return {
+        login: false,
             successIcon: `${require('~/assets/images/success.svg')}`,
             warningIcon: `${require('~/assets/images/light-bulb.svg')}`,
             errorIcon: `${require('~/assets/images/warning.svg')}`,
@@ -94,10 +123,10 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
         jobAdvertForm: {
                 _id: '',//companyid
                 jobTitle: '', 
-                jobDescription: '',
-                jobRequirement: '',
-                adsStartDate: '',
-                deadLineDate: '',
+                jobDescription:'',
+                jobRequirement:  '',
+                adsStartDate: null,
+                deadLineDate: null,
                 jobStatus: '',
                 jobLocation: '',
                 subcriptionId: '',
@@ -105,10 +134,13 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
                 textEditor:'' 
             },
             duration: null,
+            price:null,
             image: null,
             resultURL: '',
             formReset: false,
-            spinner: '0'        
+            spinner: '0',
+            modal: false
+                
           }
     },
 /*     ...mapMutations({
@@ -126,16 +158,24 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
          */
       },
     computed: {
-        ...mapGetters({successState: 'jobadvert/getSuccessState',errorState: 'jobadvert/getErrorState'}),
-        adsDuration(){
-          var days = "";
-          return days
-        }
+        ...mapGetters({successState: 'jobadvert/getSuccessState',errorState: 'jobadvert/getErrorState'})
 
     }, 
     methods: {
       ...mapActions({registerJobAdverts: 'jobadvert/registerJobAdverts'}),
-
+        adsDuration(){
+          if(Date.parse(this.jobAdvertForm.adsStartDate) < Date.parse(this.jobAdvertForm.deadLineDate )){
+              this.duration =  Math.round((Date.parse(this.jobAdvertForm.deadLineDate ) - Date.parse(this.jobAdvertForm.adsStartDate))/(1000*60*60*24));
+          }else{
+             this.$bvModal.msgBoxOk('The start date is higher than the end')
+            
+          }
+           if(Date.parse(this.jobAdvertForm.adsStartDate) < Date.parse(this.jobAdvertForm.deadLineDate )){
+              this.price =  Math.round((Date.parse(this.jobAdvertForm.deadLineDate ) - Date.parse(this.jobAdvertForm.adsStartDate))/(1000*60*60*24)*(200));
+          }
+        },
+       
+         
       create() { 
      if(!this.jobAdvertForm.jobTitle) {
         this.$bvModal.msgBoxOk('Job Title is required.')

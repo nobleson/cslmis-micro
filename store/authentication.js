@@ -37,7 +37,8 @@ export const mutations = {
 
 export const actions= {
   authenticateUser(vuexContext,userData) {
-    let myUrl;
+    
+     let myUrl;
     let user;
     if(userData.isSignIn) {
       user = {
@@ -53,7 +54,7 @@ export const actions= {
         vuexContext.commit('setSession',e )
     }).catch(function (error) { 
       console.log(error);
-    });
+    }); 
   },
 fetchUserDataById(vuexContext, uid){ 
    let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/admin/user/getuserbyId/'+uid;
