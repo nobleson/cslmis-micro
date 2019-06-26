@@ -18,9 +18,9 @@
             <!--Body-->
             <form>
               <mdb-input label="Labour Statistic "  v-model="labourStatisticForm.labourStatistic" />
-              <mdb-input label="Total Number of Artisans"   v-model="labourStatisticForm.totalNumberArtsan"/>
-              <mdb-input label="Total Number of Certified Artisans"  v-model="labourStatisticForm.totalCerifiedArtisan"/>
-              <mdb-input label="Total Number of Licensed Artisans"  v-model="labourStatisticForm.totalLicenseArtisan"/>
+              <mdb-input label="Total Number of Artisans"   v-model="labourStatisticForm.totalNumberArtisan"/>
+              <mdb-input label="Total Number of Certified Artisans"  v-model="labourStatisticForm.totalCertifiedArtisan"/>
+              <mdb-input label="Total Number of Licensed Artisans"  v-model="labourStatisticForm.totalLicensedArtisan"/>
               <mdb-input label="Casual Staff"  v-model="labourStatisticForm.casualStaff"/>
               <mdb-input label="Permanent Staff"  v-model="labourStatisticForm.permanentStaff"/>
               <mdb-input label="Month"  v-model="labourStatisticForm.month"/>
@@ -73,7 +73,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
                 labourStatistic: '',
                 totalNumberArtisan: '',
                 totalCertifiedArtisan: '',
-                totalLicenseArtisan: '',
+                totalLicensedArtisan: '',
                 casualStaff: '',
                 permanentStaff: '',
                 month: '',
@@ -99,11 +99,12 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
          */
       },
     computed: {
-        ...mapGetters({licensingProfileFormState: 'licensingbody/getFormState',successState: 'licensingbody/getSuccessState',errorState: 'licensingbody/getErrorState'}),
+         ...mapGetters({successState: 'labourStatistic/getSuccessState',errorState: 'labourStatistic/getErrorState'})
+
 
     }, 
     methods: {
-      ...mapActions({registerLicensingBody: 'licensingbody/registerLicensingBody'}),
+      ...mapActions({Statistic: 'labourStatistic/registerLabourStatistic'}),
 
       create() { 
       if(!this.labourStatisticForm.labourStatistic) {
@@ -118,7 +119,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
         this.$bvModal.msgBoxOk('Total Number of Certified Artisan is required.')
         return false;
     }
-    else if(!this.labourStatisticForm.totalLicenseArtisan) {
+    else if(!this.labourStatisticForm.totalLicensedArtisan) {
         this.$bvModal.msgBoxOk('Total Number of Licensed Artisan is required.')
         return false;
     }
@@ -134,10 +135,9 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
         this.$bvModal.msgBoxOk('Month is required.')
         return false;
      }
-    else if(this.image == null) {
-        this.$bvModal.msgBoxOk('Logo is required. Use avatar instead.')
-        return false;
-      }else{
+   else{
+             console.log("Form Data"+JSON.stringify(this.labourStatisticForm))
+
 /*         this.licensingProfileFormReset = !this.licensingProfileFormReset
           let uuid = uuidv4();
           let logoURL = ''

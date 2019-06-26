@@ -16,6 +16,7 @@ export const getters = {
   isAuthenticated: state => state.token !== null
 }
 export const mutations = {
+  
   setUser(state, user) {
     state.user = user;
   },
@@ -103,7 +104,8 @@ initSetup(vuexContext){
       token = localStorage.getItem("user-token");
     }
     vuexContext.commit("setToken", token);
-  }
+  },
+  
 }
 
  

@@ -32,16 +32,14 @@
                     <b-form-input type="password" v-model="user.password" class="form-control" placeholder="Password" autocomplete="current-password" />
                   </b-input-group>
                   <b-row>
-                    <b-col cols="6">
-                     <!--  <b-button @click="logIn" variant="primary" class="px-4">Login</b-button> -->
+                    
                      <div class="text-xs-left">
-                       <button type="button" @click="logIn" class="btn btn-primary btn-lg" id="load" data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing ">login</button>
-                     <!-- <b-button @click="logIn"  type="button" variant="primary"  :disabled='userFormReset'>Login
-                        <b-spinner small v-if="userFormReset === true"></b-spinner>
-                        <span class="sr-only" v-if="userFormReset === true">Wait...</span>                                
-                      </b-button> -->
+                     <mdb-btn color="primary" @click.native.prevent="logIn()" :disabled='formReset'>Login
+                      <b-spinner small v-if="formReset === true"></b-spinner>
+                      <span class="sr-only" v-if="formReset === true">Wait...</span>
+                    </mdb-btn>
                     </div>
-                    </b-col>
+                  
                   </b-row>
                   <b-row>
                       <b-col class="signup">
@@ -86,21 +84,35 @@ export default {
         password: '',
         isSignIn: true
       },
-      userFormReset: false,
+      formReset: false,
       spinner: '0'
     }
   },
-   resetForm(){
-         this.user.email = this.user.password = '';
-          this.userFormReset = !this.userFormReset    
-      },
+   
   computed: {
     ...mapGetters({session: 'authentication/getSession', userData: 'authentication/getUser'}),
   },
   methods: {
     ...mapActions({setupUser: 'authentication/initSetup',authenticateUser: 'authentication/authenticateUser',fetchUserDataById: 'authentication/fetchUserDataById'}),
     logIn() {
-      this.authenticateUser(this.user).then(e => this.getUserClaims());
+      if(!this.user.email){
+      this.$bvModal.msgBoxOk('Email or Username is required')
+      return false;
+      }else if(!this.user.password){
+        this.$bvModal.msgBoxOk('Password is required')
+        return false;
+      }else{
+        this.formReset =!this.formReset
+        this.authenticateUser(this.user).then(e => this.getUserClaims())
+        .catch(error => this.getUserClaims(error));
+      }
+    },
+    getStatus(e){
+      if(this.loginStatus == 400){
+         this.formReset =!this.formReset
+         this.$bvModal.msgBoxOk('Error: The password or email is invalid')
+      }
+      console.log("Error:"+e)
     },
     getUserClaims(){
       console.log("Logged UID:"+this.session.localId)
@@ -109,23 +121,19 @@ export default {
     validate(){
      // var loggedUser = this.userData
       console.log("Logged User Claims:"+JSON.stringify(this.userData.customClaims))
-
       if(this.userData.customClaims.portal == 'Construction Company Admin'){
+        this.formReset =!this.formReset
         this.init()
         this.$router.push('/cslmis/dashboard');
       }else{
-        this.$bvModal.msgBoxOk('Unauthorized Access, please contact your administrator')
+        this.formReset =!this.formReset
+        this.$bvModal.msgBoxOk('Unauthorized access, please contact your administrator')
       }
     },
     init(){
       this.setupUser();
     },
-    resetPassword() {
-      //reset password code. probably dispatch to an action.
-    },
-    checkEmailVerificationStstus(){
-      return
-    }
+    
   }
 }
 </script>

@@ -66,10 +66,9 @@
                 </b-card>
               </div>
                <div class="text-xs-left">
-                 
-                <mdb-btn color="primary" @click.native.prevent="create()" :disabled='formReset'>Submit
-                  <b-spinner small v-if="formReset === true"></b-spinner>
-                  <span class="sr-only" v-if="formReset === true">Wait...</span>
+                <mdb-btn color="primary" @click.native.prevent="create()" :disabled='jobAdvertFormReset'>Submit
+                  <b-spinner small v-if="jobAdvertFormReset === true"></b-spinner>
+                  <span class="sr-only" v-if="jobAdvertFormReset === true">Wait...</span>
                 </mdb-btn>
               </div>
              
@@ -127,17 +126,17 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
                 jobRequirement:  '',
                 adsStartDate: null,
                 deadLineDate: null,
-                jobStatus: '',
-                jobLocation: '',
-                subcriptionId: '',
-                jobQualification: '',
-                textEditor:'' 
+                //jobStatus: '',
+                //jobLocation: '',
+                //subcriptionId: '',
+                //jobQualification: '',
+              
             },
             duration: null,
             price:null,
             image: null,
             resultURL: '',
-            formReset: false,
+            jobAdvertFormReset: false,
             spinner: '0',
             modal: false
                 
@@ -197,24 +196,24 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
         this.$bvModal.msgBoxOk('End Date is required.')
         return false;
      }
-    else if(!this.jobAdvertForm.jobStatus) {
+   /*  else if(!this.jobAdvertForm.jobStatus) {
         this.$bvModal.msgBoxOk('Job Status required.')
         return false;
-    }
-     else if(!this.jobAdvertForm.jobLocation) {
+    } */
+     /* else if(!this.jobAdvertForm.jobLocation) {
         this.$bvModal.msgBoxOk('Job Location is required.')
         return false;
-    }
-      else if(!this.jobAdvertForm.jobQualification) {
+    } */
+     /*  else if(!this.jobAdvertForm.jobQualification) {
         this.$bvModal.msgBoxOk('Job Qualification is required.')
         return false;
-     }
-     else if(!this.jobAdvertForm.subscriptionId) {
+     } */
+     /* else if(!this.jobAdvertForm.subscriptionId) {
         this.$bvModal.msgBoxOk('Subscription Id is required.')
         return false;
-     } 
+     }  */
    else{
-         this.formReset = !this.formReset
+         this.jobAdvertFormReset = !this.jobAdvertFormReset
           this.flashMessage.success({title: 'GOT IT', message: 'Your advert is submitted successfully',icon: successIcon});
          //this.flashMessage.error({title: 'Error Message Title', message: 'Oh, you broke my heart! Shame on you!',icon: true});
         //jobAdvertForm._id = localStorage.getItem('companyId')
@@ -232,8 +231,8 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
 
       },
      resetForm(){
-          this.resultURL = this.licensingProfileForm.fullname = this.licensingProfileForm.middleName = this.licensingProfileForm.accronym = this.licensingProfileForm.telephoneNumber = this.licensingProfileForm.websiteAddress = this.licensingProfileForm.contactAddress = this.licensingProfileForm.emailAddress =  this.licensingProfileForm.city = this.logo =  this.licensingProfileForm.postalCode =  this.licensingProfileForm.missionStatment = '';         
-          this.formReset = !this.formReset  
+          this.jobAdvertForm.jobTitle = this.jobAdvertForm.jobDescription = this.jobAdvertForm.jobRequirement = this.jobAdvertForm.adsStartDate =  this.jobAdvertForm.deadLineDate = '';         
+          this.jobAdvertFormReset = !this.jobAdvertFormReset  
           this.watchSuccessState();   
           this.watchErrorState();   
       },
