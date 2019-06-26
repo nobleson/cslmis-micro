@@ -1,6 +1,7 @@
 
 <template>
  <div class="animated fadeIn">
+  <FlashMessage></FlashMessage>
   <section style="background: #ededed; padding-bottom: 100px">
     <!-- Purple Header -->
     <mdb-edge-header style="background-color: #2BBBAD"/>
@@ -12,9 +13,6 @@
          <b-link @click="$emit('changeComponent',{component: 'TradeView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Trades</b-link>
          <mdb-card class="weather-card">
           <mdb-card-body  class="pb-3">
-
-          <b-alert v-if="successState" show variant="success">Trade created Successfully</b-alert>
-           <b-alert v-if="errorState" show variant="danger">Trade  Fail to Create. Try again</b-alert>   
             <h2 class="h2-responsive"><strong>New Trade Form</strong></h2>
               <p class="pb-4">Create  Trade</p>     
                         <div>
@@ -120,16 +118,28 @@ import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
         return false;
       }else{ 
          this.formReset = !this.formReset 
-        this.registerTrade(this.form).then(e => { 
-          console.log('Trade Registered Successfully'); 
-        }).catch(console.error).finally(reset => this.resetForm());
+        this.registerTrade(this.form).then(e =>this.resetForm()).catch(console.error);
       }
 
       },
      resetForm(){
-          this.form.tradeName = this.form.tradeDecsription = '';
-          this.formReset = !this.formReset    
+          this.formReset = !this.formReset   
+          this.watchSuccessState();
+          this.watchErrorState();
+          
       },
+      watchSuccessState(){
+          if(this.successState){
+            this.flashMessage.success({title: 'GOT IT', message: 'Trade Created Successfully',icon: true});
+            this.form.tradeName = this.form.tradeDecsription = '';
+          }
+        },
+        watchErrorState(){ 
+          if(this.errorState){
+            this.flashMessage.error({title: 'Oops!: ', message: 'Trade  Fail to Create. Try again',icon: true});
+          }
+        },
+
     }
   }
 

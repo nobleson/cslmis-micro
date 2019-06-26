@@ -7,69 +7,63 @@
             </b-col>
             <hr>
       </b-row>
-
- <div class="classic-tabs">      
- <mdb-tabs
-    :active="0"
-    tabs
-    card
-    color="primary"
-    class="mb-5"
-    :links="[
-      { text: 'Card View', icon: 'square', bigIcon: true  },
-      { text: 'Table View', icon: 'table', bigIcon: true  }]"
-    :transition-duration="0.5"
-    transition-style="linear"
-  >
-    <template :slot="'Card View'">
-      <mdb-container>
-              <b-row>
-                <b-col v-for="body in processProvider" :key="body.id" cols="4">
-                <div>
-                  <mdb-card wide>
-                    <mdb-card-up style="background-color: #2BBBAD">
-                      <img src="../../assets/images/Asssces.png" width="100%" max-height="150px" />
-                    </mdb-card-up>
-                    <mdb-card-avatar color="white" class="mx-auto"><img :src="body.logo" class="rounded-circle mr-3" height=170px width=150px/></mdb-card-avatar>
-                    <mdb-card-body class="text-center pb-0" cascade>
-                      <mdb-card-title><strong>{{body.fullLegalName}}</strong></mdb-card-title>
-                      <h5 class="blue-text"><timeago :datetime="body.dateRegistered"></timeago></h5>
-                      <mdb-card-text></mdb-card-text>
-                      <mdb-card-footer class="text-muted mt-4"><mdb-btn outline="default" darkWaves size="lg" @click="$emit('changeComponent',{component:'CenterDetails',data: body})" >Manage</mdb-btn></mdb-card-footer>
-                    </mdb-card-body>
-                  </mdb-card>
-                  </div>
-                </b-col>
-                </b-row>
-          <div class="text-center" v-if="isContentLoading">
+  <mdb-row>
+  <mdb-col class="m-5" cols="12">
+    <mdb-tab tabs color="primary" justify>
+      <mdb-tab-item icon="square" :active="pillsActive==0" @click.native.prevent="pillsActive=0">Card View</mdb-tab-item>
+      <mdb-tab-item icon="table" :active="pillsActive==1" @click.native.prevent="pillsActive=1">Table View</mdb-tab-item>
+    </mdb-tab>
+    <mdb-tab-content>
+      <mdb-tab-pane class="fade" key="show1" v-if="pillsActive==0">
+        <mdb-row>
+            <b-col v-for="body in processProvider" :key="body.id" cols="4">
+            <div>
+              <mdb-card wide>
+                <mdb-card-up style="background-color: #2BBBAD">
+                  <img src="../../assets/images/Asssces.png" width="100%" max-height="150px" />
+                </mdb-card-up>
+                <mdb-card-avatar color="white" class="mx-auto"><img :src="body.logo" class="rounded-circle mr-3" height=170px width=150px/></mdb-card-avatar>
+                <mdb-card-body class="text-center pb-0" cascade>
+                  <mdb-card-title><strong>{{body.fullLegalName}}</strong></mdb-card-title>
+                  <h5 class="blue-text"><timeago :datetime="body.dateRegistered"></timeago></h5>
+                  <mdb-card-text></mdb-card-text>
+                  <mdb-card-footer class="text-muted mt-4"><mdb-btn outline="default" darkWaves size="lg" @click="$emit('changeComponent',{component:'CenterDetails',data: body})" >Manage</mdb-btn></mdb-card-footer>
+                </mdb-card-body>
+              </mdb-card>
+              </div>
+            </b-col>
+        </mdb-row>
+        <div class="text-center" v-if="isContentLoading">
             <b-spinner variant="primary" label="Text Centered"></b-spinner>
           </div>
-      </mdb-container>
-    </template>
-    <template :slot="'Table View'">
-      <mdb-container>
-          <mdb-row>
-            <mdb-col md="12">
-              <mdb-datatable
-                :data="processTableData"
-                striped
-                bordered
-                materialInputs
-              />
-          </mdb-col>
-          </mdb-row>
-      </mdb-container>
-    </template>
-  </mdb-tabs>
-  </div>
+      </mdb-tab-pane>
+      <mdb-tab-pane class="fade" key="show2" v-if="pillsActive==1" style="min-height: 700px; overflow-y: auto;">
+        <mdb-card>
+              <mdb-tbl style="overflow-y: auto; overflow-x: hidden">
+                <mdb-datatable
+                  :data="processTableData"
+                  striped
+                  bordered
+                  materialInputs
+                  /> 
+            </mdb-tbl>  
+        </mdb-card>
+        </mdb-tab-pane>
+    </mdb-tab-content>
+  </mdb-col>
+ </mdb-row>
  </section>
 </template>
 <script>
 import Tabs from 'vue-tabs-component';
-import {mdbDatatable, mdbTabs, mdbJumbotron, mdbCarousel, mdbCarouselItem, mdbEdgeHeader, mdbGoogleMap,mdbContainer,mdbTbl,mdbChip,mdbProgress,mdbTooltip,mdbStretchedLink, mdbRow, mdbCol, mdbCard,  mdbCardImage, mdbCardHeader, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardFooter, mdbCardUp, mdbCardAvatar, mdbCardGroup, mdbBtn, mdbView, mdbMask, mdbIcon, mdbFlippingCard, mdbAvatar } from 'mdbvue';
+import {mdbTab, mdbTabItem, mdbTabContent, mdbTabPane, mdbDatatable, mdbTabs, mdbJumbotron, mdbCarousel, mdbCarouselItem, mdbEdgeHeader, mdbGoogleMap,mdbContainer,mdbTbl,mdbChip,mdbProgress,mdbTooltip,mdbStretchedLink, mdbRow, mdbCol, mdbCard,  mdbCardImage, mdbCardHeader, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardFooter, mdbCardUp, mdbCardAvatar, mdbCardGroup, mdbBtn, mdbView, mdbMask, mdbIcon, mdbFlippingCard, mdbAvatar } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
 export default {
    components: {
+    mdbTab,   
+    mdbTabItem,   
+    mdbTabContent,   
+    mdbTabPane,   
     mdbDatatable, 
     mdbTooltip,
     mdbGoogleMap,
@@ -104,6 +98,8 @@ export default {
   },
    data() {
       return {
+        pillsActive: 0,
+        verticalWithin: 0,       
         tabIndex: 0,
         dataSet: {
           columns: [

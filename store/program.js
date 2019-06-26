@@ -3,7 +3,8 @@ export const state = () => ({
     regerror: false,
     programFormReset: false,
     programs:  [],
-    programProviders: []
+    programProviders: [],
+    isContentLoading: true,
   })
   
   export const mutations = {
@@ -21,7 +22,11 @@ export const state = () => ({
     },
     setProgramProviders (state,data){
       state.programProviders = data
-    }
+    },
+    changeLoaderStatus(state){
+      state.isContentLoading = !state.isContentLoading;
+    } 
+
   }
   export const getters = {
     getFormState: state => state.programFormReset,
@@ -32,12 +37,16 @@ export const state = () => ({
   
     getPrograms: state => state.programs,
   
-    getProgramProvider: state => state.programProviders
+    getProgramProvider: state => state.programProviders,
+
+    getLoaderStatus: state => state.isContentLoading
   }
   
   export const actions= {
   
       registerTradeProgram(vuexContext,programData){
+        vuexContext.commit('successToggle')
+
         let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/program/create';
        this.$axios.$post(herokuUrl,programData)
         .then(function (response) {        
@@ -72,7 +81,7 @@ export const state = () => ({
         let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/program/getall';
        this.$axios.$get(herokuUrl)
         .then(function (response){
-         // let data = JSON.parse(response);
+          vuexContext.commit('changeLoaderStatus')
           vuexContext.commit('setPrograms',response);
           console.log("trades:"+vuexContext.state.programs)
           //console.log("trade:"+response)

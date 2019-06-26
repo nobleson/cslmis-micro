@@ -46,7 +46,7 @@ export const state = () => ({
 
     loadUsers(vuexContext){
       let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/admin/user/getAll';
-     this.$axios.$get(herokuUrl)
+      this.$axios.$get(herokuUrl)
       .then(function (response){
        // let data = JSON.parse(response);
         vuexContext.commit('setUsers',response);
@@ -60,7 +60,7 @@ export const state = () => ({
         console.log("load process completed")
       });
     },
-    createUser(vuexContext,user) {         
+    createUser(vuexContext,user) {  
         let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/admin/user/addUser';
        this.$axios.$post(herokuUrl,user)
         .then(function (userRecord) {        

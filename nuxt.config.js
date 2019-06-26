@@ -17,7 +17,6 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '~/assets/images/favicon.ico' },
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
       { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' }
-
     ]
   },
 
@@ -32,7 +31,8 @@ module.exports = {
   css: [
     "~assets/scss/coreui.scss",
     'bootstrap-css-only/css/bootstrap.min.css',
-    'mdbvue/build/css/mdb.css'
+    'mdbvue/build/css/mdb.css',
+    'vue-slim-tabs/themes/default.css'
   ],
 
   /*

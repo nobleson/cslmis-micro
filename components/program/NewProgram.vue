@@ -1,6 +1,7 @@
 
 <template>
  <div class="animated fadeIn">
+  <FlashMessage></FlashMessage>
   <section style="background: #ededed; padding-bottom: 100px">
     <!-- Purple Header -->
     <mdb-edge-header style="background-color: #2BBBAD"/>
@@ -12,9 +13,6 @@
          <b-link @click="$emit('changeComponent',{component: 'ProgramView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Development Programs</b-link>
          <mdb-card class="weather-card">
           <mdb-card-body  class="pb-3">
-
-          <b-alert v-if="successState" show variant="success">Program created Successfully</b-alert>
-           <b-alert v-if="errorState" show variant="danger">Program  Fail to Create. Try again</b-alert>   
             <h2 class="h2-responsive"><strong>New Development Program Form</strong></h2>
               <p class="pb-4">Create Development Program</p>     
                         <div>
@@ -90,6 +88,10 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
         this.$bvModal.msgBoxOk('Program Year required.')
         return false;
      }
+     else if(!this.form.programDescription) {
+        this.$bvModal.msgBoxOk('Program Description required.')
+        return false;
+     }
       else if(!this.form.programDuration) {
         this.$bvModal.msgBoxOk('Program Duration required.')
         return false;
@@ -97,17 +99,28 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
          this.formReset = !this.formReset 
          let date = new Date()
          this.form.dateRegistered = date
-         this.registerTradeProgram(this.form).then(e => { 
-          console.log('Program Created Successfully'); 
-        }).catch(console.error).finally(reset => this.resetForm());
+         this.registerTradeProgram(this.form).then(e => this.resetForm()).catch(console.error);
 
       }
 
       },
       resetForm(){
-          this.form.programName = this.form.programDescription =  this.form.programYear =  this.form.programDuration = '';
           this.formReset = !this.formReset    
+          this.watchSuccessState();
+          this.watchErrorState();
       },
+      watchSuccessState(){
+          if(this.successState){
+            this.flashMessage.success({title: 'GOT IT', message: 'Program Created Successfully',icon: true});
+            this.form.programName = this.form.programDescription =  this.form.programYear =  this.form.programDuration = '';
+          }
+        },
+        watchErrorState(){ 
+          if(this.errorState){
+            this.flashMessage.error({title: 'Oops!: ', message: 'Program  Fail to Create. Try again',icon: true});
+          }
+        },
+
     }
   }
 

@@ -12,9 +12,13 @@ import 'mdbvue/build/css/mdb.css';
 import 'nuxt-dropzone/dropzone.css'
 import VueTimeago from 'vue-timeago';
 import {Tabs, Tab} from 'vue-tabs-component';
+import FlashMessage from '@smartweb/vue-flash-message';
+import Notifications from 'vue-notification'
 
+Vue.use(FlashMessage);
 Vue.component('tabs', Tabs);
 Vue.component('tab', Tab);
+Vue.use(Notifications)
 // install
 Vue.use(VuejsClipper ,{
     components: {

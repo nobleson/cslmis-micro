@@ -1,5 +1,6 @@
 <template>
 <div>
+  <FlashMessage></FlashMessage>
     <b-row>
             <b-col align-self="end"  class="pb-3 pl-auto" cols="12">
                 <mdb-btn size="lg"  color="primary" @click.native="info = true"> New User <mdb-icon icon="user" class="text-white primary-color-dark"/></mdb-btn>
@@ -10,8 +11,6 @@
                   <mdb-modal-title>Register</mdb-modal-title>
                 </mdb-modal-header>
                 <mdb-modal-body>
-              <b-alert v-if="successState" show variant="success">User Registered Successfully</b-alert>
-              <b-alert v-if="errorState" show variant="danger">User Fail to Register. Try again</b-alert>     
                 </mdb-modal-body>
                   <mdb-modal-body class="mx-3 grey-text">
                     <mdb-input v-model="form.displayName" label="Username" icon="user" class="mb-5"/>
@@ -26,66 +25,56 @@
                 </mdb-modal-footer>
               </mdb-modal>
       </b-row>
+      <mdb-row>
+      <mdb-col class="m-5" cols="12">
+        <mdb-tab tabs color="primary" justify>
+          <mdb-tab-item icon="square" :active="pillsActive==0" @click.native.prevent="pillsActive=0">Card View</mdb-tab-item>
+          <mdb-tab-item icon="table" :active="pillsActive==1" @click.native.prevent="pillsActive=1">Table View</mdb-tab-item>
+        </mdb-tab>
+        <mdb-tab-content>
+          <mdb-tab-pane class="fade" key="show1" v-if="pillsActive==0">
+            <mdb-row>
 
- <div class="classic-tabs">      
- <mdb-tabs
-    :active="0"
-    tabs
-    color="primary"
-    class="mb-5"
-    :links="[
-      { text: 'Card View', icon: 'square', bigIcon: true  },
-      { text: 'Table View', icon: 'table', bigIcon: true  }]"
-    :transition-duration="0.5"
-    transition-style="linear"
-  >
-    <template :slot="'Card View'">
-      <mdb-container>
 
-      <b-row>
-         <b-col v-for="user in processUsers" :key="user.id" cols="4">
-         <div>
-              <div class="card card-cascade">
-                <div class="view view-cascade gradient-card-header blue-gradient">
-
-                  <h4 class="card-header-title mb-3">{{user.displayName}}</h4>
-                
-                  <p class="card-header-subtitle mb-0"></p>
+              <b-col v-for="user in processUsers" :key="user.id" cols="4">
+              <div>
+                <mdb-card testimonial>
+                  <mdb-card-up gradient="aqua" class="lighten-1" style="height: 100px"></mdb-card-up>
+                  <mdb-card-avatar color="white" class="mx-auto">
+                    <img v-if="user.photoURL == null" src="https://firebasestorage.googleapis.com/v0/b/cslmis-admin-bucket/o/profile%2FAdmin%201.png?alt=media&token=76b1edbe-4aee-4074-bb79-0ffd84dac37e" class="rounded-circle"/>
+                   <img v-else :src="user.photoURL" class="rounded-circle"/>
+                    </mdb-card-avatar>
+                  <mdb-card-body>
+                    <mdb-card-title>{{user.displayName}}</mdb-card-title>
+                    <hr />
+                        <p class="card-text">{{user.email}}</p>
+                        <b-button variant="primary"  @click="$emit('changeComponent',{component:'UserProfile',data: user})" >Manage</b-button>
+                  </mdb-card-body>
+                </mdb-card>
 
                 </div>
-                <div class="card-body card-body-cascade text-center">
-
-                  <p class="card-text">{{user.email}}</p>
-                      <b-button variant="primary"  @click="$emit('changeComponent',{component:'UserProfile',data: user})" >Manage</b-button>
-                </div>
+                </b-col>    
+            </mdb-row>
+            <div class="text-center" v-if="isContentLoading">
+                <b-spinner variant="primary" label="Text Centered"></b-spinner>
               </div>
-          </div>
-          </b-col>       
-        </b-row>
-           <div class="text-center" v-if="isContentLoading">
-            <b-spinner variant="primary" label="Text Centered"></b-spinner>
-          </div>
-      </mdb-container>
-    </template>
-    <template :slot="'Table View'">
-      <mdb-container>
-          <mdb-row>
-            <mdb-col md="12">
-              <mdb-datatable
-                :data="processTableData"
-                striped
-                bordered
-                materialInputs
-              />
-          </mdb-col>
-          </mdb-row>
-      </mdb-container>
-    </template>
-  </mdb-tabs>
+          </mdb-tab-pane>
+          <mdb-tab-pane class="fade" key="show2" v-if="pillsActive==1" style="min-height: 700px; overflow-y: auto;">
+            <mdb-card>
+                  <mdb-tbl style="overflow-y: auto; overflow-x: hidden">
+                    <mdb-datatable
+                      :data="processTableData"
+                      striped
+                      bordered
+                      materialInputs
+                      /> 
+                </mdb-tbl>  
+            </mdb-card>
+            </mdb-tab-pane>
+        </mdb-tab-content>
+      </mdb-col>
+    </mdb-row>
   </div>
-
-
-        </div>
 </template>
 
 <script>
@@ -149,7 +138,9 @@ export default {
           displayName: '',
           photoURL: 'https://firebasestorage.googleapis.com/v0/b/cslmis-admin-bucket/o/profile%2FAdmin%201.png?alt=media&token=76b1edbe-4aee-4074-bb79-0ffd84dac37e',
           disabled: false
-        },        
+        },      
+        pillsActive: 0,
+        verticalWithin: 0,   
         tabIndex: 0,
         dataSet: {
           columns: [
@@ -186,9 +177,11 @@ export default {
               this.dataSet.rows =  this.listUsersResult.users;
               return this.dataSet;
         }
+
     },
     methods: {
       ...mapActions({createUser: 'user/createUser', loadUsers: 'user/loadUsers',fetchUserDataByEmail: 'user/fetchUserDataByEmail' }),
+
       register() {
         if(!this.form.displayName) {
           this.$bvModal.msgBoxOk('Username or Display name is required.')
@@ -209,6 +202,17 @@ export default {
           }).catch(console.error).finally(reset => this.resetForm()); 
         }
       },
+      watchSuccessState(){
+          if(this.successState){
+            this.form.displayName = this.form.email = this.form.phoneNumber = '';
+            this.flashMessage.success({title: 'GOT IT', message: 'User registered successfully',icon: true});
+          }
+        },
+        watchErrorState(){ 
+          if(this.errorState){
+            this.flashMessage.error({title: 'Oops!: ', message: 'User registration fails! Try again',icon: true});
+          }
+        },
       create() {
         this.loadUsers().then(e => {
         console.log('Users loaded');
@@ -221,6 +225,8 @@ export default {
       },
       resetForm(){
          this.formReset = !this.formReset
+         this.watchSuccessState();
+         this.watchErrorState();
       },
       linkClass(idx) {
         if (this.tabIndex === idx) {

@@ -1,5 +1,6 @@
 <template>
  <div class="animated fadeIn">
+  <FlashMessage></FlashMessage>
   <section style="background: #ededed; padding-bottom: 100px">
     <!-- Purple Header -->
     <mdb-edge-header  style="background-color: #2BBBAD"/>

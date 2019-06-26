@@ -9,8 +9,8 @@
     <mdb-card class="weather-card">
       <mdb-card-body class="pb-3">
       <div class="d-flex flex-row">
-        <img v-if="userData.photoURL == null" src="https://firebasestorage.googleapis.com/v0/b/cslmis-admin-bucket/o/profile%2FAdmin%201.png?alt=media&token=76b1edbe-4aee-4074-bb79-0ffd84dac37e" class="rounded-circle mr-3" height="120px" width="150px" alt="avatar" style="max-height: 100px; max-width: 150px"/>
-        <img v-else :src="userData.photoURL" class="rounded-circle mr-3" height="120px" width="150px" alt="avatar" style="max-height: 100px; max-width: 150px"/>
+        <img v-if="userData.photoUrl == null" src="https://firebasestorage.googleapis.com/v0/b/cslmis-admin-bucket/o/profile%2FAdmin%201.png?alt=media&token=76b1edbe-4aee-4074-bb79-0ffd84dac37e" class="rounded-circle mr-3" height="120px" width="150px" alt="avatar" style="max-height: 100px; max-width: 150px"/>
+        <img v-else :src="userData.photoUrl" class="rounded-circle mr-3" height="120px" width="150px" alt="avatar" style="max-height: 100px; max-width: 150px"/>
         <div>
           <mdb-card-title class="font-weight-bold mb-2">{{userData.displayName}}</mdb-card-title> 
           <mdb-card-text><mdb-icon icon="clock" class="pr-2" /><timeago :datetime="userData.metadata.creationTime"></timeago></mdb-card-text>

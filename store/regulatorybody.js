@@ -3,7 +3,8 @@ export const state = () => ({
     regerror: false,
     logoURL: '',
     regulatoryBodyFormReset: false,
-    regulatoryBodies:  []
+    regulatoryBodies:  [],
+    isContentLoading: true,
   })
   
   export const mutations = {
@@ -21,7 +22,10 @@ export const state = () => ({
     },
     setLogoURL(state,data){
       state.logoURL = data
-    }
+    },
+    changeLoaderStatus(state){
+      state.isContentLoading = !state.isContentLoading;
+    } 
   }
   export const getters = {
     getFormState: state => state.regulatoryBodyFormReset,
@@ -32,8 +36,9 @@ export const state = () => ({
 
     getLogoURL: state => state.logoURL,
 
-    getRegulatoryBodies: state => state.regulatoryBodies
+    getRegulatoryBodies: state => state.regulatoryBodies,
   
+    getLoaderStatus: state => state.isContentLoading
   }
   
   export const actions= {
@@ -60,7 +65,7 @@ export const state = () => ({
         let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/bodies/regulatory/getall';
        this.$axios.$get(herokuUrl)
         .then(function (response){
-         // let data = JSON.parse(response);
+          vuexContext.commit('changeLoaderStatus')
           vuexContext.commit('setRegulatoryBodies',response);
           console.log("awarding bodies:"+vuexContext.state.regulatoryBodies)
           //console.log("trade:"+response)

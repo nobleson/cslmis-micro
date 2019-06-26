@@ -63,13 +63,6 @@ export default {
       name: 'Regulatory Bodies',
       url: '/cslmis/regulatorybody',
       icon: 'icon-star'
-    },
-    {
-      name: 'Manage Users',
-      url: '/cslmis/admin',
-      icon: 'icon-star'
     }
-
-
   ]
 }

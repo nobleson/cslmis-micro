@@ -8,22 +8,15 @@
             </b-col>
             <hr>
       </b-row>
- <div class="classic-tabs">      
- <mdb-tabs
-    :active="0"
-    tabs
-    defualt
-    color="primary"
-    class="mb-5"
-    :links="[
-      { text: 'Card View', icon: 'square', bigIcon: true  },
-      { text: 'Table View', icon: 'table', bigIcon: true  }]"
-    :transition-duration="0.5"
-    transition-style="linear"
-  >
-    <template :slot="'Card View'">
-      <mdb-container>
-      <b-row>
+  <mdb-row>
+  <mdb-col class="m-5" cols="12">
+    <mdb-tab tabs color="primary" justify>
+      <mdb-tab-item icon="square" :active="pillsActive==0" @click.native.prevent="pillsActive=0">Card View</mdb-tab-item>
+      <mdb-tab-item icon="table" :active="pillsActive==1" @click.native.prevent="pillsActive=1">Table View</mdb-tab-item>
+    </mdb-tab>
+    <mdb-tab-content>
+      <mdb-tab-pane class="fade" key="show1" v-if="pillsActive==0">
+        <mdb-row>
          <b-col v-for="arti in processPersonaDetails" :key="arti.id" cols="6">
          <div>
             <ul class="list-unstyled">
@@ -44,28 +37,26 @@
             </ul>
           </div>
          </b-col>
-        </b-row>
-          <div class="text-center" v-if="isContentLoading">
+        </mdb-row>
+        <div class="text-center" v-if="isContentLoading">
             <b-spinner variant="primary" label="Text Centered"></b-spinner>
           </div>
-      </mdb-container>
-    </template>
-    <template :slot="'Table View'">
-      <mdb-container style="visibility-y: auto">
-          <mdb-row>
-            <mdb-col md="12">
-              <mdb-datatable
-                :data="processTableData"
-                striped
-                bordered
-                materialInputs
-              />
-          </mdb-col>
-          </mdb-row>
-      </mdb-container>
-    </template>
-  </mdb-tabs>
-  </div>
+      </mdb-tab-pane>
+      <mdb-tab-pane class="fade" key="show2" v-if="pillsActive==1" style="min-height: 700px; overflow-y: auto;">
+        <mdb-card>
+              <mdb-tbl style="overflow-y: auto; overflow-x: hidden">
+                <mdb-datatable
+                  :data="processTableData"
+                  striped
+                  bordered
+                  materialInputs
+                  /> 
+            </mdb-tbl>  
+        </mdb-card>
+        </mdb-tab-pane>
+    </mdb-tab-content>
+  </mdb-col>
+ </mdb-row>
  </div>
 </template>
 <script>
@@ -92,6 +83,10 @@ const firebaseConfig = {
 
 export default {
      components: {
+    mdbTab,   
+    mdbTabItem,   
+    mdbTabContent,   
+    mdbTabPane,      
     mdbModal,
     Dropzone,
     mdbModalHeader,
@@ -99,10 +94,6 @@ export default {
     mdbModalBody,
     mdbModalFooter, 
     mdbInput,  
-    mdbTab,   
-    mdbTabItem,   
-    mdbTabContent,   
-    mdbTabPane,   
     mdbLineChart,   
     mdbDatatable, 
     mdbTooltip,
@@ -149,6 +140,8 @@ export default {
             thumbnailHeight: 150,
             addRemoveLinks: true
           },
+        pillsActive: 0,
+        verticalWithin: 0,      
         tabIndex: 0,
         batchModal: false,
         dataSet: {

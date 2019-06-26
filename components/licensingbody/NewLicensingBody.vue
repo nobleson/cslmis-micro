@@ -1,5 +1,6 @@
 <template>
  <div class="animated fadeIn">
+  <FlashMessage></FlashMessage>  
   <section style="background: #ededed; padding-bottom: 100px">
     <!-- Purple Header -->
     <mdb-edge-header style="background-color: #2BBBAD"/>
@@ -10,9 +11,7 @@
         <mdb-col md="8" lg="7" class="mx-auto float-none">
          <b-link @click="$emit('changeComponent',{component: 'LicensingBodyView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Licensing Bodies</b-link>
          <mdb-card class="weather-card">
-          <mdb-card-body  class="pb-3">
-            <b-alert v-if="successState" show variant="success">Licensing body created successfully</b-alert>
-           <b-alert v-if="errorState" show variant="danger">Licensing body  Fail to Create. Try again</b-alert>         
+          <mdb-card-body  class="pb-3">      
             <h2 class="h2-responsive"><strong>New Licensing Body Form</strong></h2>
             <p class="pb-4">Create Licensing Body Profile</p>
             <!--Body-->
@@ -30,7 +29,7 @@
                 <b-card class="mt-3">
                 <h4>Profile Photo</h4>
                 <div>
-                  <mdb-btn color="default" @click="onPickFile">Upload Image<mdb-icon icon="image" class="ml-1"/></mdb-btn>
+                  <mdb-btn color="default" type="button" @click="onPickFile">Upload Image<mdb-icon icon="image" class="ml-1"/></mdb-btn>
                 <input 
                 type="file" 
                 style="display: none" 
@@ -147,6 +146,10 @@ const firebaseConfig = {
         this.$bvModal.msgBoxOk('Organization telephone number is required.')
         return false;
       }
+    else if(!this.licensingProfileForm.telephoneNumber) {
+        this.$bvModal.msgBoxOk('Phone number is required.')
+        return false;
+    }
     else if(!this.licensingProfileForm.emailAddress) {
         this.$bvModal.msgBoxOk('Email address is required.')
         return false;
@@ -176,14 +179,28 @@ const firebaseConfig = {
           let ext = filename.slice(filename.lastIndexOf('.'))
           const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
           task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => this.saveProfile(url))
-         .catch(console.error).finally(reset => this.resetForm());
+         .catch(console.error);
       }
 
       },
-     resetForm(){
-          this.resultURL = this.licensingProfileForm.fullname = this.licensingProfileForm.middleName = this.licensingProfileForm.accronym = this.licensingProfileForm.telephoneNumber = this.licensingProfileForm.websiteAddress = this.licensingProfileForm.contactAddress = this.licensingProfileForm.emailAddress =  this.licensingProfileForm.city = this.logo =  this.licensingProfileForm.postalCode =  this.licensingProfileForm.missionStatment = '';         
+      resetForm(){
           this.licensingProfileFormReset = !this.licensingProfileFormReset        
+          this.watchSuccessState();
+          this.watchErrorState();
+
       },
+      watchSuccessState(){
+          if(this.successState){
+            this.flashMessage.success({title: 'GOT IT', message: 'Licensing body registered uccessfully',icon: true});
+            this.resultURL = this.licensingProfileForm.fullname = this.licensingProfileForm.accronym = this.licensingProfileForm.telephoneNumber = this.licensingProfileForm.websiteAddress = this.licensingProfileForm.contactAddress = this.licensingProfileForm.emailAddress =  this.licensingProfileForm.city = this.logo =  this.licensingProfileForm.postalCode =  this.licensingProfileForm.missionStatment = '';         
+
+          }
+        },
+        watchErrorState(){ 
+          if(this.errorState){
+            this.flashMessage.error({title: 'Oops!: ', message: 'Licensing body  fail to register. Try again',icon: true});
+          }
+        },
       onPickFile(){
         this.$refs.fileInput.click()
       },
@@ -207,9 +224,7 @@ const firebaseConfig = {
          this.licensingProfileForm.logo = url
          console.log('Photo URL:'+this.licensingProfileForm.logo);  
          console.log('licensingProfileForm:'+JSON.stringify(this.licensingProfileForm))
-          return this.registerLicensingBody(this.licensingProfileForm).then(e => { 
-            console.log('Licensing Body Registered Successfully'); 
-          }); 
+          return this.registerLicensingBody(this.licensingProfileForm).then(e => this.resetForm()); 
       }
     }
   }

@@ -3,7 +3,8 @@ export const state = () => ({
     regerror: false,
     tradeFormReset: false,
     trades:  [],
-    tradeSkills: []
+    tradeSkills: [],
+    isContentLoading: true,
   })
   
   export const mutations = {
@@ -21,7 +22,11 @@ export const state = () => ({
     },
     setTradeSkills (state,data){
       state.tradeSkills = data
-    }
+    },
+    changeLoaderStatus(state){
+      state.isContentLoading = !state.isContentLoading;
+    } 
+
   }
   export const getters = {
     getFormState: state => state.tradeFormReset,
@@ -32,7 +37,9 @@ export const state = () => ({
   
     getTrades: state => state.trades,
   
-    getTradeSkills: state => state.tradeSkills
+    getTradeSkills: state => state.tradeSkills,
+
+    getLoaderStatus: state => state.isContentLoading
   }
   
   export const actions= {
@@ -72,7 +79,7 @@ export const state = () => ({
         let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/trade/getall';
        this.$axios.$get(herokuUrl)
         .then(function (response){
-         // let data = JSON.parse(response);
+          vuexContext.commit('changeLoaderStatus')
           vuexContext.commit('setTrades',response);
           console.log("trades:"+vuexContext.state.companies)
           //console.log("trade:"+response)

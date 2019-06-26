@@ -1,5 +1,6 @@
 <template>
  <div class="animated fadeIn">
+  <FlashMessage></FlashMessage>   
   <section style="background: #ededed; padding-bottom: 100px">
     <!-- Purple Header -->
     <mdb-edge-header style="background-color: #2BBBAD"/>
@@ -10,9 +11,7 @@
         <mdb-col md="8" lg="7" class="mx-auto float-none">
          <b-link @click="$emit('changeComponent',{component: 'AssessmentBodyView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" /> View All Assessment Bodies</b-link>
          <mdb-card class="weather-card">
-          <mdb-card-body  class="pb-3">
-          <b-alert v-if="successState" show variant="success">Assessment body created Successfully</b-alert>
-           <b-alert v-if="errorState" show variant="danger">Assessment body  Fail to Create. Try again</b-alert>        
+          <mdb-card-body  class="pb-3">   
                 <b-card title="New Assessment Body">
                     <b-card-text>
                         <div>
@@ -41,8 +40,11 @@
                                 <div>
                                 <img :src="resultURL" height="150"/>
                                 </div>
-                                </b-card>    
-                                <mdb-btn  @click="create"  type="button"  color="default" :disabled='formState'>Submit</mdb-btn>
+                                </b-card> 
+                               <mdb-btn color="primary" @click.native.prevent="create()" type="button" :disabled='formReset'>Submit
+                                <b-spinner small v-if="formReset === true"></b-spinner>
+                                <span class="sr-only" v-if="formReset === true">Wait...</span>
+                                </mdb-btn>
                             </form>                         
                         </div>
                     </b-card-text>
@@ -110,6 +112,7 @@ const firebaseConfig = {
                 dateRegistered: null
         },
         image: null,
+        formReset: false,
         resultURL: ''
         
       }
@@ -165,16 +168,22 @@ const firebaseConfig = {
         this.$bvModal.msgBoxOk('Mission statement required.')
         return false;
       }else{
-         this.storeProfilePhoto()  
-         let date = new Date()
-         this.form.dateRegistered = date
-         this.form.logo = localStorage.getItem('logoURL')
-        this.registerAssessmentBody(this.form).then(e => { 
-          console.log('Assessment Body Created Successfully'); 
-          this.form.fullname = this.form.accronym =  this.form.telephoneNumber =  this.form.emailAddress =  this.form.websiteAddress =  this.form.contactAddress =  this.form.city =  this.form.postalCode =  this.form.missionStatment = '';
-        });  
+          this.formReset = !this.formReset
+          let uuid = uuidv4();
+          let logoURL = ''
+          let filename = this.image.name
+          const metadata = { contentType: this.image.type };
+          let ext = filename.slice(filename.lastIndexOf('.'))
+          const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
+          task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => this.saveProfile(url));
+
       }
 
+      },
+      resetForm(){
+          this.formReset = !this.formReset    
+          this.watchSuccessState();
+          this.watchErrorState();
       },
       onPickFile(){
         this.$refs.fileInput.click()
@@ -193,17 +202,26 @@ const firebaseConfig = {
         fileReader.readAsDataURL(files[0])
         this.image = files[0]
       },
-       storeProfilePhoto: function () {
-          let uuid = uuidv4();
+      watchSuccessState(){
+          if(this.successState){
+            this.flashMessage.success({title: 'GOT IT', message: 'Assessment body created successfully',icon: true});
+            this.form.fullname = this.form.accronym =  this.form.telephoneNumber =  this.form.emailAddress =  this.form.websiteAddress =  this.form.contactAddress =  this.form.city =  this.form.postalCode =  this.form.missionStatment = '';
 
-          let filename = this.image.name
-          const metadata = { contentType: this.image.type };
-          let ext = filename.slice(filename.lastIndexOf('.'))
-          const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
-          task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => localStorage.setItem('logoURL', url))
-         .catch(console.error);
+          }
+        },
+        watchErrorState(){ 
+          if(this.errorState){
+            this.flashMessage.error({title: 'Oops!: ', message: 'Assessment body  fail to create. Try again',icon: true});
+          }
+        },
+       saveProfile(url) {
+         let date = new Date()
+         this.form.dateRegistered = date
+         this.form.photo = url
+         console.log('Photo URL:'+this.form.photo);  
+          this.registerAssessmentBody(this.form).then(e => this.resetForm());
+      }, 
 
-      } 
 
     }
   }

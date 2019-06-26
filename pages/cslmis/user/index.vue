@@ -1,5 +1,6 @@
 <template>
  <div class="animated fadeIn">
+          <notifications group="account" position="top right" classes="my-style"/>
            <component :userData="currentUserData" @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
   </div>
 </template>
@@ -28,3 +29,18 @@ import UserProfile from '~/components/user/UserProfile.vue';
 
   }
 </script>
+<style scoped>
+.my-style {
+  width: 200px
+}
+ .my-style.notification-title {
+   font-size: 23px;
+   background: blue;
+  }
+  .my-style.notification-content {
+   background:rgb(0, 255, 234);
+  }
+
+</style>
+
+

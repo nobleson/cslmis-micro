@@ -7,86 +7,77 @@
             </b-col>
             <hr>
       </b-row>
- <div class="classic-tabs">      
- <mdb-tabs
-    :active="0"
-    tabs
-    card
-    color="primary"
-    class="mb-5"
-    :links="[
-      { text: 'Card View', icon: 'square', bigIcon: true  },
-      { text: 'Table View', icon: 'table', bigIcon: true  }]"
-    :transition-duration="0.5"
-    transition-style="linear"
-  >
-    <template :slot="'Card View'">
-      <mdb-container>
-          <div class="text-center" v-if="isContentLoading">
-            <b-spinner variant="primary" label="Text Centered"></b-spinner>
-          </div>
-      <b-row>
-         <b-col v-for="program in processPrograms" :key="program.id" cols="6">
-         <div>
-          <mdb-card class="chart-card">
-            <mdb-card-body class="pb-0">
-              <mdb-card-title class="font-weight-bold">{{program.programName}}</mdb-card-title>
-              <p class="card-text mb-4">{{program.programDescription}}</p>
-              <div class="d-flex justify-content-between mb-4">
-                <p><mdb-icon icon="calendar" size="lg" class="text-info pr-2"/>{{program.programYear}}</p>
-                <p><mdb-icon icon="time" size="lg" class="grey-text pr-2"/>{{program.programDuration}}</p>
-              </div>
-                <hr class="my-4">
-                <p class="lead"><strong>All Trainees</strong></p>
-              <div class="d-flex justify-content-between">
-                <p class="display-4 align-self-end">887</p>
-              </div>
-              <hr class="my-4">
-                <p class="lead"><strong>All Training Providers</strong></p>
-              <div class="d-flex justify-content-between">
-                <p class="display-4 align-self-end">100</p>
-              </div>             
+      <mdb-row>
+      <mdb-col class="m-5" cols="12">
+        <mdb-tab tabs color="primary" justify>
+          <mdb-tab-item icon="square" :active="pillsActive==0" @click.native.prevent="pillsActive=0">Card View</mdb-tab-item>
+          <mdb-tab-item icon="table" :active="pillsActive==1" @click.native.prevent="pillsActive=1">Table View</mdb-tab-item>
+        </mdb-tab>
+        <mdb-tab-content>
+          <mdb-tab-pane class="fade" key="show1" v-if="pillsActive==0">
+            <mdb-row>
+              <b-col v-for="program in processPrograms" :key="program.id" cols="6">
               <div>
-                <b-form-select v-model="selected" :options="options" multiple :select-size="4"></b-form-select>
-                <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
+                <mdb-card class="chart-card">
+                  <mdb-card-body class="pb-0">
+                    <mdb-card-title class="font-weight-bold">{{program.programName}}</mdb-card-title>
+                    <p class="card-text mb-4">{{program.programDescription}}</p>
+                    <div class="d-flex justify-content-between mb-4">
+                      <p><mdb-icon icon="calendar" size="lg" class="text-info pr-2"/>{{program.programYear}}</p>
+                      <p><mdb-icon icon="time" size="lg" class="grey-text pr-2"/>{{program.programDuration}}</p>
+                    </div>
+                      <hr class="my-4">
+                      <p class="lead"><strong>All Trainees</strong></p>
+                    <div class="d-flex justify-content-between">
+                      <p class="display-4 align-self-end">887</p>
+                    </div>
+                    <hr class="my-4">
+                      <p class="lead"><strong>All Training Providers</strong></p>
+                    <div class="d-flex justify-content-between">
+                      <p class="display-4 align-self-end">100</p>
+                    </div>             
+                    <div>
+                      <b-form-select v-model="selected" :options="options" multiple :select-size="4"></b-form-select>
+                      <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
+                    </div>
+                  <mdb-btn color="success">Add Provider</mdb-btn>
+                  </mdb-card-body>
+                  <mdb-card>
+                    <mdb-card-body>
+                      <div>
+                          <mdb-datatable
+                            :data="providersData"
+                            striped
+                            bordered
+                          />
+                      </div>
+                    </mdb-card-body>
+                  </mdb-card>
+
+                </mdb-card>
+
+                </div>
+              </b-col>
+            </mdb-row>
+            <div class="text-center" v-if="isContentLoading">
+                <b-spinner variant="primary" label="Text Centered"></b-spinner>
               </div>
-            <mdb-btn color="success">Add Provider</mdb-btn>
-            </mdb-card-body>
+          </mdb-tab-pane>
+          <mdb-tab-pane class="fade" key="show2" v-if="pillsActive==1" style="min-height: 700px; overflow-y: auto;">
             <mdb-card>
-              <mdb-card-body>
-                <div>
+                  <mdb-tbl style="overflow-y: auto; overflow-x: hidden">
                     <mdb-datatable
-                      :data="providersData"
+                      :data="processTableData"
                       striped
                       bordered
-                    />
-                </div>
-              </mdb-card-body>
+                      materialInputs
+                      /> 
+                </mdb-tbl>  
             </mdb-card>
-
-          </mdb-card>
-
-          </div>
-         </b-col>
-        </b-row>
-      </mdb-container>
-    </template>
-    <template :slot="'Table View'">
-      <mdb-container>
-          <mdb-row>
-            <mdb-col md="12">
-              <mdb-datatable
-                :data="processTableData"
-                striped
-                bordered
-                materialInputs
-              />
-          </mdb-col>
-          </mdb-row>
-      </mdb-container>
-    </template>
-  </mdb-tabs>
-  </div>
+            </mdb-tab-pane>
+        </mdb-tab-content>
+      </mdb-col>
+    </mdb-row>
  </div>
 </template>
 <script>
@@ -135,7 +126,8 @@ export default {
   },
    data() {
       return {
-        isContentLoading: true,
+        pillsActive: 0,
+        verticalWithin: 0,   
         tabIndex: 0,
         selected: ['b'], // Array reference
         options: [
@@ -218,7 +210,7 @@ export default {
       this.create();
     },
     computed: {
-          ...mapGetters({program: 'program/getPrograms'}),
+          ...mapGetters({program: 'program/getPrograms',isContentLoading :'program/getLoaderStatus'}),
           processPrograms: function(){
           let json = JSON.parse(JSON.stringify(this.program));
           console.log("Json:"+json);
@@ -233,18 +225,7 @@ export default {
     methods: {
       ...mapActions({loadTradePrograms: 'program/loadTradePrograms'}),
         create() {
-          this.loadTradePrograms().then((ev) => {
-             this.successHandleLoder()
-          })
-          .catch((e) => {
-            this.errorHandleLoder() 
-          })
-        },
-       successHandleLoder(){
-            return this.isContentLoading = false;
-       },
-       errorHandleLoder(){
-         return this.isContentLoading = true;
+          this.loadTradePrograms().then((ev) => {})
        },
       linkClass(idx) {
         if (this.tabIndex === idx) {

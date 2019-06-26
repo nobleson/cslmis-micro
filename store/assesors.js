@@ -5,6 +5,7 @@ export const state = () => ({
     localGovernment: {},
     _id: null,
     firebaseURL: '',
+    isContentLoading: true,
     assesorFormReset: false,
 
   })
@@ -26,7 +27,10 @@ export const state = () => ({
     },
     setLocalGovernment(state,localGovernment){
       state.localGovernment = localGovernment;
-    }
+    },
+    changeLoaderStatus(state){
+      state.isContentLoading = !state.isContentLoading;
+    } 
 
   }
   export const getters = {  
@@ -40,7 +44,9 @@ export const state = () => ({
   
     getFirebaseURL: state => state.firebaseURL,  
   
-    getLocalGovernment: state => state.localGovernment
+    getLocalGovernment: state => state.localGovernment,
+
+    getLoaderStatus: state => state.isContentLoading
   }
   
   export const actions= {
@@ -66,6 +72,7 @@ export const state = () => ({
         .then(function (response){
          // let data = JSON.parse(response);
           vuexContext.commit('setAssesors',response);
+          vuexContext.commit('changeLoaderStatus')
           console.log("assesors:"+vuexContext.state.assesors)
           //console.log("trade:"+response)
         })

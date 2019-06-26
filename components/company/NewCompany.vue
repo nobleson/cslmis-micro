@@ -1,5 +1,6 @@
 <template>
  <div class="animated fadeIn">
+  <FlashMessage></FlashMessage>
   <section style="background: #ededed; padding-bottom: 100px">
     <!-- Purple Header -->
     <mdb-edge-header style="background-color: #2BBBAD"/>
@@ -8,9 +9,7 @@
     <mdb-container free-bird>
       <mdb-row>
         <mdb-col md="8" lg="7" class="mx-auto float-none">
-         <b-link @click="$emit('changeComponent',{component: 'CompanyListView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Companies</b-link>
-          <b-alert v-if="successState" show variant="success">Company Registered Successfully</b-alert>
-           <b-alert v-if="errorState" show variant="danger">Company Failed to Create. Try again</b-alert>                       
+         <b-link @click="$emit('changeComponent',{component: 'CompanyListView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Companies</b-link>                      
                 <b-card title="New Construction Company">
                     <b-card-text>
                         <div>
@@ -203,13 +202,27 @@ const firebaseConfig = {
           let ext = filename.slice(filename.lastIndexOf('.'))
           const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
           task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => this.saveProfile(url))
-         .catch(console.error).finally(reset => this.resetForm());
+         .catch(console.error);
        } 
       },
      resetForm(){
-          this.form.companyName = this.form.companyAcronym = this.form.companyAddress = this.form.companyEmail = this.form.companyTelephone = '';
-          this.companyFormReset = !this.companyFormReset        
+          this.companyFormReset = !this.companyFormReset    
+          this.watchSuccessState();
+          this.watchErrorState();
+          
       },
+      watchSuccessState(){
+          if(this.successState){
+            this.flashMessage.success({title: 'GOT IT', message: 'Company Registered Successfully',icon: true});
+            this.form.companyName = this.form.companyAcronym = this.form.companyAddress = this.form.companyEmail = this.form.companyTelephone = '';
+
+          }
+        },
+        watchErrorState(){ 
+          if(this.errorState){
+            this.flashMessage.error({title: 'Oops!: ', message: 'Company Failed to Create. Try again',icon: true}); 
+          }
+        },
       onPickFile(){
         this.$refs.fileInput.click()
       },
@@ -234,9 +247,7 @@ const firebaseConfig = {
          this.form.companyTelephone = "+234"+this.form.companyTelephone.replace(/^0+/, '');
          console.log('Photo URL:'+url);  
          console.log('Company form:'+JSON.stringify(this.form))
-          return this.registerCompany(this.form).then(e => { 
-            console.log('Company Registered Successfully'); 
-          }); 
+          return this.registerCompany(this.form).then(e => this.resetForm()); 
       }
 
     }

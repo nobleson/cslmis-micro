@@ -7,26 +7,16 @@
             </b-col>
             <hr>
       </b-row>
- <div class="classic-tabs">      
- <mdb-tabs
-    :active="0"
-    tabs
-    card
-    color="primary"
-    class="mb-5"
-    :links="[
-      { text: 'Card View', icon: 'square', bigIcon: true  },
-      { text: 'Table View', icon: 'table', bigIcon: true  }]"
-    :transition-duration="0.5"
-    transition-style="linear"
-  >
-    <template :slot="'Card View'">
-      <mdb-container>
-          <div class="text-center" v-if="isContentLoading">
-            <b-spinner variant="primary" label="Text Centered"></b-spinner>
-          </div>
-            <b-row>
-              <b-col v-for="assesor in processAssesors" :key="assesor.id" cols="3">
+  <mdb-row>
+  <mdb-col class="m-5" cols="12">
+    <mdb-tab tabs color="primary" justify>
+      <mdb-tab-item icon="square" :active="pillsActive==0" @click.native.prevent="pillsActive=0">Card View</mdb-tab-item>
+      <mdb-tab-item icon="table" :active="pillsActive==1" @click.native.prevent="pillsActive=1">Table View</mdb-tab-item>
+    </mdb-tab>
+    <mdb-tab-content>
+      <mdb-tab-pane class="fade" key="show1" v-if="pillsActive==0">
+        <mdb-row>
+             <b-col v-for="assesor in processAssesors" :key="assesor.id" cols="3">
               <div>
                 <mdb-card md="4">
                   <mdb-card-up>
@@ -47,30 +37,32 @@
                 </mdb-card>
                 </div>
               </b-col>
-              </b-row>
-      </mdb-container>
-    </template>
-    <template :slot="'Table View'">
-      <mdb-container>
-          <mdb-row>
-            <mdb-col md="12">
-              <mdb-datatable
-                :data="processTableData"
-                striped
-                bordered
-                materialInputs
-              />
-          </mdb-col>
-          </mdb-row>
-      </mdb-container>
-    </template>
-  </mdb-tabs>
-  </div>
+        </mdb-row>
+        <div class="text-center" v-if="isContentLoading">
+            <b-spinner variant="primary" label="Text Centered"></b-spinner>
+          </div>
+      </mdb-tab-pane>
+      <mdb-tab-pane class="fade" key="show2" v-if="pillsActive==1" style="min-height: 700px; overflow-y: auto;">
+        <mdb-card>
+              <mdb-tbl style="overflow-y: auto; overflow-x: hidden">
+                <mdb-datatable
+                  :data="processTableData"
+                  striped
+                  bordered
+                  materialInputs
+                  /> 
+            </mdb-tbl>  
+        </mdb-card>
+        </mdb-tab-pane>
+    </mdb-tab-content>
+  </mdb-col>
+ </mdb-row>
  </div>
+
 </template>
 <script>
 import VueTimeago from 'vue-timeago'
-import {mdbDatatable, mdbTabs, mdbJumbotron, mdbCarousel, mdbCarouselItem, mdbEdgeHeader, mdbGoogleMap,mdbContainer,mdbTbl,mdbProgress,mdbTooltip,mdbStretchedLink, mdbRow, mdbCol, mdbCard,  mdbCardImage, mdbCardHeader, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardFooter, mdbCardUp, mdbCardAvatar, mdbCardGroup, mdbBtn, mdbView, mdbMask, mdbIcon, mdbFlippingCard, mdbAvatar } from 'mdbvue';
+import {mdbTab, mdbTabItem, mdbTabContent, mdbTabPane,mdbDatatable, mdbTabs, mdbJumbotron, mdbCarousel, mdbCarouselItem, mdbEdgeHeader, mdbGoogleMap,mdbContainer,mdbTbl,mdbProgress,mdbTooltip,mdbStretchedLink, mdbRow, mdbCol, mdbCard,  mdbCardImage, mdbCardHeader, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardFooter, mdbCardUp, mdbCardAvatar, mdbCardGroup, mdbBtn, mdbView, mdbMask, mdbIcon, mdbFlippingCard, mdbAvatar } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
 export default {
 		components: {
@@ -103,11 +95,17 @@ export default {
     mdbJumbotron, 
     mdbCarousel, 
     mdbCarouselItem,
-    mdbProgress
+    mdbProgress,
+      mdbTab,
+      mdbTabItem,
+      mdbTabContent,
+      mdbTabPane
+
 		},
    data() {
       return {
-        isContentLoading: true,
+        pillsActive: 0,
+        verticalWithin: 0,
         tabIndex: 0,
         dataSet: {
           columns: [
@@ -157,7 +155,7 @@ export default {
       this.create();
     },
     computed: {
-          ...mapGetters({assesors: 'assesors/getAssesors'}),
+          ...mapGetters({assesors: 'assesors/getAssesors', isContentLoading: 'assesors/getLoaderStatus'}),
           processAssesors: function(){
           let json = JSON.parse(JSON.stringify(this.assesors));
           console.log("Json:"+json);
@@ -173,19 +171,8 @@ export default {
     methods: {
       ...mapActions({loadAssesors: 'assesors/loadAssesors'}),
         create() {
-          this.loadAssesors().then((ev) => {
-             this.successHandleLoder()
-          })
-          .catch((e) => {
-            this.errorHandleLoder() 
-          })
+          this.loadAssesors().then((ev) => {})
         },
-       successHandleLoder(){
-            return this.isContentLoading = false;
-       },
-       errorHandleLoder(){
-         return this.isContentLoading = true;
-       },
       linkClass(idx) {
         if (this.tabIndex === idx) {
           return ['bg-primary', 'text-light']
@@ -197,4 +184,21 @@ export default {
     }
   }
 </script>
+<style scoped>
+  .slide-toggle-enter-active {
+    transition: .3s ease-in;
+    opacity: 1;
+    max-height: 500px;
+  }
 
+  .slide-toggle-enter,
+  .slide-toggle-leave-active {
+    opacity: 0;
+    max-height: 0;
+  }
+
+  .slide-toggle-leave {
+    opacity: 1;
+    max-height: 500px;
+  }
+</style>
