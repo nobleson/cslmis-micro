@@ -8,7 +8,7 @@
     <mdb-container free-bird>
       <mdb-row>
         <mdb-col md="8" lg="7" class="mx-auto float-none">
-         <b-link @click="$emit('changeComponent',{component: 'LicensingBodyView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Labour Statistic</b-link>
+         <b-link @click="$emit('changeComponent',{component: 'LabourStatisticView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Labour Statistic</b-link>
          <mdb-card class="weather-card">
           <mdb-card-body  class="pb-3">
             <b-alert v-if="successState" show variant="success">Labour Statistic</b-alert>
@@ -17,17 +17,13 @@
             <p class="pb-4">Create Labour Statistic</p>
             <!--Body-->
             <form>
-              <b-card title="Labour Statistics">
-                <b-card-text>
-                  <mdb-input label="Labour Statistic "  v-model="labourStatisticForm.labourStatistic" />
+              
                   <mdb-input label="Total number of Artisans"   v-model="labourStatisticForm.totalNumberArtisan"/>
                   <mdb-input label="Total number of certified Artisans"  v-model="labourStatisticForm.totalCertifiedArtisan"/>
                   <mdb-input label="Total number of licensed Artisans"  v-model="labourStatisticForm.totalLicensedArtisan"/>
-                  <mdb-input label="Casual staff"  v-model="labourStatisticForm.casualStaff"/>
-                  <mdb-input label="Permanent staff"  v-model="labourStatisticForm.permanentStaff"/>
+                  <mdb-input label="Casual staffs"  v-model="labourStatisticForm.casualStaff"/>
+                  <mdb-input label="Permanent staffs"  v-model="labourStatisticForm.permanentStaff"/>
                   <mdb-input label="Month"  v-model="labourStatisticForm.month"/>
-                </b-card-text>
-              </b-card>
               
               <div class="text-xs-left">
                 <mdb-btn color="primary" @click.native.prevent="create()" :disabled='labourStatisticFormReset'>Submit
@@ -43,6 +39,7 @@
     </mdb-container>
     <!-- /.Card Container -->
   </section>
+    <FlashMessage></FlashMessage>
   </div>
 </template>
 <script>
@@ -74,7 +71,6 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
       return {
         labourStatisticForm: {
                 _id: '',//company Id
-                labourStatistic: '',
                 totalNumberArtisan: '',
                 totalCertifiedArtisan: '',
                 totalLicensedArtisan: '',
@@ -111,11 +107,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
       ...mapActions({registerLabourStatistic: 'labourstatistic/registerLabourStatistic'}),
 
       create() { 
-      if(!this.labourStatisticForm.labourStatistic) {
-        this.$bvModal.msgBoxOk('Labour Statistic is required.')
-        return false;
-      }
-      else if(!this.labourStatisticForm.totalNumberArtisan) {
+       if(!this.labourStatisticForm.totalNumberArtisan) {
         this.$bvModal.msgBoxOk('Total number of Artisan is required.')
         return false;
       }
@@ -141,6 +133,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
       }
     else{
           this.labourStatisticFormReset =!this.labourStatisticFormReset
+          this.flashMessage.success({title: 'GOT IT', message: 'Your advert is submitted successfully',});
           console.log("Form Data"+JSON.stringify(this.labourStatisticForm))
 
 /*         this.licensingProfileFormReset = !this.licensingProfileFormReset
@@ -157,7 +150,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
 
       },
      resetForm(){
-          this.labourStatisticForm.labourStatistic = this.labourStatisticForm.totalNumberArtisan = this.labourStatisticForm.totalLicensedArtisan = this.labourStatisticForm.casualStaff = this.labourStatisticForm.permanentStaff = this.labourStatisticForm.month = '';         
+          this.labourStatisticForm.totalNumberArtisan = this.labourStatisticForm.totalLicensedArtisan = this.labourStatisticForm.casualStaff = this.labourStatisticForm.permanentStaff = this.labourStatisticForm.month = '';         
           this.labourStatisticFormReset = !this.labourStatisticForm
           this.watchSuccessState();   
           this.watchErrorState();         

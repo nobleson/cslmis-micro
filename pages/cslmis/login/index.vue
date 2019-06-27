@@ -12,7 +12,7 @@
             <b-card no-body class="text-white primary py-5 d-md-down-none" style="width:44%">
               <b-card-body class="text-center">
                 <div>
-                  <img src="~/assets/images/new.png" alt="Logo">
+                  <img src="~/assets/images/new.png" alt="Logo" width="150" height="150">
                 </div>
                 <h6 class="text-white">Brand by</h6>
                 <h1>CORBON</h1>
@@ -107,7 +107,7 @@ export default {
         .catch(error => this.getUserClaims(error));
       }
     },
-    getStatus(e){
+    getUserStatus(e){
       if(this.loginStatus == 400){
          this.formReset =!this.formReset
          this.$bvModal.msgBoxOk('Error: The password or email is invalid')

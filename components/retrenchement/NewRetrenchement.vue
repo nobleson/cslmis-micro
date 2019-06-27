@@ -8,7 +8,7 @@
     <mdb-container free-bird>
       <mdb-row>
         <mdb-col md="8" lg="7" class="mx-auto float-none">
-         <b-link @click="$emit('changeComponent',{component: 'LicensingBodyView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Licensing Bodies</b-link>
+         <b-link @click="$emit('changeComponent',{component: 'RetrenchementView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Retrenchement Details</b-link>
          <mdb-card class="weather-card">
           <mdb-card-body  class="pb-3">
             <b-alert v-if="successState" show variant="success">Retrenchement created successfully</b-alert>
@@ -28,40 +28,40 @@
                 </b-card>
                  <b-card title="Retrenchement Period" sub-title="Year and Month of Retrenchement">
                 <b-card-text>
-                    <b-form-group id="input-group-3"  placeholder="[ Select Month ]" label="Select Year" label-for="input-3">
+              <b-form-group id="input-group-3"   label="Select Year" >
             <select
             class="custom-select custom-select-md"
             v-model="retrenchementForm.year"
             required
             >
               <option value="Null" selected>[ Select Year ]</option>
-              <option value="1">2019</option>
-              <option value="2">2018</option>
-              <option value="3">2017</option>
-              <option value="4">2016</option>
-              <option value="5">2015</option>
-              <option value="6">2014</option>
-              <option value="7">2013</option>
-              <option value="8">2012</option>
-              <option value="9">2011</option>
-              <option value="10">2010</option>
-              <option value="11">2009</option>
-              <option value="12">2008</option>
-              <option value="13">2007</option>
-              <option value="14">2006</option>
-              <option value="15">2005</option>
-              <option value="16">2004</option>
-              <option value="17">2003</option>
+              <option value="2019">2019</option>
+              <option value="2018">2018</option>
+              <option value="2017">2017</option>
+              <option value="2016">2016</option>
+              <option value="2015">2015</option>
+              <option value="2014">2014</option>
+              <option value="2013">2013</option>
+              <option value="2012">2012</option>
+              <option value="2011">2011</option>
+              <option value="2010">2010</option>
+              <option value="2009">2009</option>
+              <option value="2008">2008</option>
+              <option value="2007">2007</option>
+              <option value="2006">2006</option>
+              <option value="2005">2005</option>
+              <option value="2004">2004</option>
+              <option value="2003">2003</option>
               <option value="18">2002</option>
-              <option value="19">2001</option>
-              <option value="20">2000</option>
-              <option value="21">1999</option>
-              <option value="22">1998</option>
-              <option value="23">1997</option>
-              <option value="24">1996</option>
-              <option value="25">1995</option>
-              <option value="26">1994</option>
-              <option value="27">1993</option>
+              <option value="2001">2001</option>
+              <option value="200">2000</option>
+              <option value="1999">1999</option>
+              <option value="1998">1998</option>
+              <option value="1997">1997</option>
+              <option value="1996">1996</option>
+              <option value="1995">1995</option>
+              <option value="1994">1994</option>
+              <option value="1993">1993</option>
             </select>
           </b-form-group>
                     
@@ -70,8 +70,9 @@
             class="custom-select custom-select-md"
             v-model="retrenchementForm.month"
             required
+            placeholder="[ Select Month ]"
             >
-              <option value="Null" selected>[ Select Year ]</option>
+              <option value="Null" selected>[ Select Month ]</option>
               <option value="1">January</option>
               <option value="2">Febuary</option>
               <option value="3">March</option>
@@ -105,6 +106,7 @@
     </mdb-container>
     <!-- /.Card Container -->
   </section>
+    <FlashMessage></FlashMessage>
   </div>
 </template>
 <script>
@@ -170,7 +172,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
          */
       },
     computed: {
-        ...mapGetters({retrenchementFormState: 'retrenchement/getFormState',successState: 'retrenchement/getSuccessState',errorState: 'retrenchement/getErrorState'}),
+        ...mapGetters({successState: 'retrenchement/getFormState',successState: 'retrenchement/getSuccessState',errorState: 'retrenchement/getErrorState'}),
 
     }, 
     methods: {
@@ -212,6 +214,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
    
    else{
         this.retrenchementFormReset = !this.retrenchementFormReset
+        this.flashMessage.success({title: 'GOT IT', message: 'Your advert is submitted successfully',});
         console.log(JSON.stringify(this.retrenchementForm))
     /*    this.licensingProfileFormReset = !this.licensingProfileFormReset
           let uuid = uuidv4();
@@ -234,7 +237,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
       },
       watchSuccessState(){
         if(this.successState){
-          this.flashMessage.success({title: 'GOT IT', message: 'Your advert is submitted successfully',icon: successIcon});
+          this.flashMessage.success({title: 'GOT IT', message: 'Your advert is submitted successfully',});
         }
       },
       watchErrorState(){

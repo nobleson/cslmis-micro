@@ -8,7 +8,7 @@
     <mdb-container free-bird>
       <mdb-row>
         <mdb-col md="8" lg="7" class="mx-auto float-none">
-         <b-link @click="$emit('changeComponent',{component: 'LicensingBodyView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Job Advert</b-link>
+         <b-link @click="$emit('changeComponent',{component: 'JobAdvertView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Job Advert</b-link>
          <mdb-card class="weather-card">
           <mdb-card-body  class="pb-3">
             <b-alert v-if="successState" show variant="success">Job Advert created successfully</b-alert>
@@ -196,25 +196,10 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
         this.$bvModal.msgBoxOk('End Date is required.')
         return false;
      }
-   /*  else if(!this.jobAdvertForm.jobStatus) {
-        this.$bvModal.msgBoxOk('Job Status required.')
-        return false;
-    } */
-     /* else if(!this.jobAdvertForm.jobLocation) {
-        this.$bvModal.msgBoxOk('Job Location is required.')
-        return false;
-    } */
-     /*  else if(!this.jobAdvertForm.jobQualification) {
-        this.$bvModal.msgBoxOk('Job Qualification is required.')
-        return false;
-     } */
-     /* else if(!this.jobAdvertForm.subscriptionId) {
-        this.$bvModal.msgBoxOk('Subscription Id is required.')
-        return false;
-     }  */
+
    else{
          this.jobAdvertFormReset = !this.jobAdvertFormReset
-          this.flashMessage.success({title: 'GOT IT', message: 'Your advert is submitted successfully',icon: successIcon});
+          this.flashMessage.success({title: 'GOT IT', message: 'Your advert is submitted successfully',});
          //this.flashMessage.error({title: 'Error Message Title', message: 'Oh, you broke my heart! Shame on you!',icon: true});
         //jobAdvertForm._id = localStorage.getItem('companyId')
         console.log("Form Data"+JSON.stringify(this.jobAdvertForm))
@@ -238,7 +223,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
       },
       watchSuccessState(){
         if(this.successState){
-          this.flashMessage.success({title: 'GOT IT', message: 'Your advert is submitted successfully',icon: successIcon});
+          this.flashMessage.success({title: 'GOT IT', message: 'Your advert is submitted successfully',});
         }
       },
       watchErrorState(){
