@@ -9,26 +9,25 @@ export default {
         text: 'NEW'
       }
     },
-    
     {
-      name: 'Centers',
-      url: '/cslmis/centers',
-      icon: 'icon-pencil'
-    },
-    {
-      name: 'Artisans',
-      url: '/cslmis/artisans',
+      name: 'Trainees',
+      url: '/cslmis/trainees',
       icon: 'icon-star'
     },
     {
-      name: 'Trades',
-      url: '/cslmis/trades',
-      icon: 'icon-pencil'
+      name: 'APR Centers',
+      url: '/cslmis/aprCenters',
+      icon: 'icon-building'
+    },
+    {
+      name: 'Trainers',
+      url: '/cslmis/trainers',
+      icon: 'icon-star'
     },
     {
       name: 'Facilities',
-      url: '/cslmis/facility',
-      icon: 'icon-pencil'
+      url: '/cslmis/facilities',
+      icon: 'icon-building'
     },
     
     
