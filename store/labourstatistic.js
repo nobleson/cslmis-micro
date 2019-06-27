@@ -36,7 +36,8 @@ export const actions= {
     let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/advert/create';
    this.$axios.$post(herokuUrl,labourStatisticData)
     .then(function (response) {        
-    vjobAdvertDatauexContext.commit('successToggle')
+      vuexContext.commit('successToggle',response)
+      console.log("Labour Statistic:"+vuexContext.state.labourStatistic)
   })
     .catch(function (error) {
       vuexContext.commit('errorToggle')
@@ -53,7 +54,7 @@ export const actions= {
     .then(function (response){
      // let data = JSON.parse(response);
       vuexContext.commit('setlabourStatistic',response);
-      console.log("awarding bodies:"+vuexContext.state.licensingBodies)
+      console.log("Labour Statistic:"+vuexContext.state.labourStatistic)
       //console.log("trade:"+response)
     })
     .catch(function (error) {

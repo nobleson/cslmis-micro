@@ -27,7 +27,7 @@
                 </b-card-text>
                 </b-card>
                  <b-card title="Retrenchement Period" sub-title="Year and Month of Retrenchement">
-                  <b-card-text>
+                <b-card-text>
                     <b-form-group id="input-group-3"  placeholder="[ Select Month ]" label="Select Year" label-for="input-3">
             <select
             class="custom-select custom-select-md"

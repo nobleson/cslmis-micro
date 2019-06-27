@@ -17,18 +17,22 @@
             <p class="pb-4">Create Labour Statistic</p>
             <!--Body-->
             <form>
-              <mdb-input label="Labour Statistic "  v-model="labourStatisticForm.labourStatistic" />
-              <mdb-input label="Total Number of Artisans"   v-model="labourStatisticForm.totalNumberArtisan"/>
-              <mdb-input label="Total Number of Certified Artisans"  v-model="labourStatisticForm.totalCertifiedArtisan"/>
-              <mdb-input label="Total Number of Licensed Artisans"  v-model="labourStatisticForm.totalLicensedArtisan"/>
-              <mdb-input label="Casual Staff"  v-model="labourStatisticForm.casualStaff"/>
-              <mdb-input label="Permanent Staff"  v-model="labourStatisticForm.permanentStaff"/>
-              <mdb-input label="Month"  v-model="labourStatisticForm.month"/>
+              <b-card title="Labour Statistics">
+                <b-card-text>
+                  <mdb-input label="Labour Statistic "  v-model="labourStatisticForm.labourStatistic" />
+                  <mdb-input label="Total number of Artisans"   v-model="labourStatisticForm.totalNumberArtisan"/>
+                  <mdb-input label="Total number of certified Artisans"  v-model="labourStatisticForm.totalCertifiedArtisan"/>
+                  <mdb-input label="Total number of licensed Artisans"  v-model="labourStatisticForm.totalLicensedArtisan"/>
+                  <mdb-input label="Casual staff"  v-model="labourStatisticForm.casualStaff"/>
+                  <mdb-input label="Permanent staff"  v-model="labourStatisticForm.permanentStaff"/>
+                  <mdb-input label="Month"  v-model="labourStatisticForm.month"/>
+                </b-card-text>
+              </b-card>
               
               <div class="text-xs-left">
-                <mdb-btn color="primary" @click.native.prevent="create()" :disabled='licensingProfileFormReset'>Submit
-                  <b-spinner small v-if="licensingProfileFormReset === true"></b-spinner>
-                  <span class="sr-only" v-if="licensingProfileFormReset === true">Wait...</span>
+                <mdb-btn color="primary" @click.native.prevent="create()" :disabled='labourStatisticFormReset'>Submit
+                  <b-spinner small v-if="labourStatisticFormReset === true"></b-spinner>
+                  <span class="sr-only" v-if="labourStatisticFormReset === true">Wait...</span>
                 </mdb-btn>
               </div>
             </form>
@@ -80,7 +84,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
             },
             image: null,
             resultURL: '',
-            licensingProfileFormReset: false,
+            labourStatisticFormReset: false,
             spinner: '0'        
           }
     },
@@ -99,12 +103,12 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
          */
       },
     computed: {
-         ...mapGetters({successState: 'labourStatistic/getSuccessState',errorState: 'labourStatistic/getErrorState'})
+         ...mapGetters({successState: 'labourstatistic/getSuccessState',errorState: 'labourstatistic/getErrorState'})
 
 
     }, 
     methods: {
-      ...mapActions({Statistic: 'labourStatistic/registerLabourStatistic'}),
+      ...mapActions({registerLabourStatistic: 'labourstatistic/registerLabourStatistic'}),
 
       create() { 
       if(!this.labourStatisticForm.labourStatistic) {
@@ -115,28 +119,29 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
         this.$bvModal.msgBoxOk('Total number of Artisan is required.')
         return false;
       }
-    else if(!this.labourStatisticForm.totalCertifiedArtisan) {
-        this.$bvModal.msgBoxOk('Total Number of Certified Artisan is required.')
-        return false;
-    }
-    else if(!this.labourStatisticForm.totalLicensedArtisan) {
-        this.$bvModal.msgBoxOk('Total Number of Licensed Artisan is required.')
-        return false;
-    }
-     else if(!this.labourStatisticForm.casualStaff) {
-        this.$bvModal.msgBoxOk(' Number of Casual Staff is required.')
-        return false;
-    }
-     else if(!this.labourStatisticForm.permanentStaff) {
-        this.$bvModal.msgBoxOk('Number of Permanent is required.')
-        return false;
-     }
-     else if(!this.labourStatisticForm.month) {
-        this.$bvModal.msgBoxOk('Month is required.')
-        return false;
-     }
-   else{
-             console.log("Form Data"+JSON.stringify(this.labourStatisticForm))
+      else if(!this.labourStatisticForm.totalCertifiedArtisan) {
+          this.$bvModal.msgBoxOk('Total number of certified Artisan is required.')
+          return false;
+      }
+      else if(!this.labourStatisticForm.totalLicensedArtisan) {
+          this.$bvModal.msgBoxOk('Total number of licensed Artisan is required.')
+          return false;
+      }
+      else if(!this.labourStatisticForm.casualStaff) {
+          this.$bvModal.msgBoxOk(' Number of casual staff is required.')
+          return false;
+      }
+      else if(!this.labourStatisticForm.permanentStaff) {
+          this.$bvModal.msgBoxOk('Number of permanent is required.')
+          return false;
+      }
+      else if(!this.labourStatisticForm.month) {
+          this.$bvModal.msgBoxOk('Month is required.')
+          return false;
+      }
+    else{
+          this.labourStatisticFormReset =!this.labourStatisticFormReset
+          console.log("Form Data"+JSON.stringify(this.labourStatisticForm))
 
 /*         this.licensingProfileFormReset = !this.licensingProfileFormReset
           let uuid = uuidv4();
@@ -152,9 +157,20 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
 
       },
      resetForm(){
-          this.resultURL = this.licensingProfileForm.fullname = this.licensingProfileForm.middleName = this.licensingProfileForm.accronym = this.licensingProfileForm.telephoneNumber = this.licensingProfileForm.websiteAddress = this.licensingProfileForm.contactAddress = this.licensingProfileForm.emailAddress =  this.licensingProfileForm.city = this.logo =  this.licensingProfileForm.postalCode =  this.licensingProfileForm.missionStatment = '';         
-          this.licensingProfileFormReset = !this.licensingProfileFormReset        
+          this.labourStatisticForm.labourStatistic = this.labourStatisticForm.totalNumberArtisan = this.labourStatisticForm.totalLicensedArtisan = this.labourStatisticForm.casualStaff = this.labourStatisticForm.permanentStaff = this.labourStatisticForm.month = '';         
+          this.labourStatisticFormReset = !this.labourStatisticForm
+          this.watchSuccessState();   
+          this.watchErrorState();         
       },
+      watchSuccessState(){
+        if(this.successState){
+          this.flashMessage.success({title: 'GOT IT', message: 'Your advert is submitted successfully',icon: successIcon});
+        }
+      },
+      watchErrorState(){
+          this.flashMessage.error({title: 'Oops!', message: 'Your advert fail to  submit. Try again',icon: true});
+      },
+
       onPickFile(){
         this.$refs.fileInput.click()
       },

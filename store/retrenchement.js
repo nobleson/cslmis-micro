@@ -53,7 +53,7 @@ export const state = () => ({
       .then(function (response){
        // let data = JSON.parse(response);
         vuexContext.commit('setLicensingBodies',response);
-        console.log("awarding bodies:"+vuexContext.state.licensingBodies)
+        console.log("Retrenchement:"+vuexContext.state.retrenchement)
         //console.log("trade:"+response)
       })
       .catch(function (error) {

@@ -36,7 +36,7 @@ export const state = () => ({
       let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/advert/create';
      this.$axios.$post(herokuUrl,jobAdvertData)
       .then(function (response) {        
-      vjobAdvertDatauexContext.commit('successToggle')
+      vuexContext.commit('successToggle')
     })
       .catch(function (error) {
         vuexContext.commit('errorToggle')
@@ -53,7 +53,7 @@ export const state = () => ({
       .then(function (response){
        // let data = JSON.parse(response);
         vuexContext.commit('setLicensingBodies',response);
-        console.log("awarding bodies:"+vuexContext.state.licensingBodies)
+        console.log("Job Advert:"+vuexContext.state.jobAdverts)
         //console.log("trade:"+response)
       })
       .catch(function (error) {

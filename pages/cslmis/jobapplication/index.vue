@@ -1,6 +1,6 @@
 <template>
   <div class="animated fadeIn">
-        <component @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
+       <component :applicationData="currentApplicationData" @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
   </div>
 </template>
 
@@ -17,12 +17,15 @@ export default {
   },
   data() {
     return {
-      currentComponent: 'JobApplicationView'
+      currentComponent: 'JobApplicationView',
+      currentApplicationData: null
     }
   },
   methods: {
-    changeCurrentComponent(newComponent) {
-      this.currentComponent = newComponent;
+    changeCurrentComponent(event){
+    this.currentApplicationData = event.data;
+    console.log(event.data)
+    this.currentComponent = event.component; 
     }
   },
   

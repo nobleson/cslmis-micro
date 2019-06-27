@@ -25,9 +25,9 @@
               <div>
                 <b-card title="Duration" sub-title="Start and End Date">
                   <b-card-text>
-                     <date-picker v-model="jobAdvertForm.adsStartDate"  placeholder="Start date"></date-picker>
-                   <br/>
-                   <date-picker v-model="jobAdvertForm.deadLineDate"  placeholder="End date"></date-picker>
+                    <date-picker v-model="jobAdvertForm.adsStartDate" :config="{format: 'MM/DD/YYYY'}" placeholder="Start date"></date-picker>
+                     <br/>
+                    <date-picker v-model="jobAdvertForm.deadLineDate" :config="{format: 'MM/DD/YYYY'}" placeholder="End date"></date-picker>
                   </b-card-text>
                   <div class="text-center">
                       <mdb-list-group>
