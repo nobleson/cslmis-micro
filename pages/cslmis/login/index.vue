@@ -3,7 +3,7 @@
     <div class="container">
        <b-row>
            <b-col md="8">
-           <h4 class="text-center">CSLMIS Portal</h4>
+           <h4 class="text-center">C-LMIS Centers Portal</h4>
            </b-col>
        </b-row>
       <b-row class="justify-content-center">
@@ -12,9 +12,10 @@
             <b-card no-body class="text-white primary py-5 d-md-down-none" style="width:44%">
               <b-card-body class="text-center">
                 <div>
-                  <img src="~/assets/images/new.png" alt="Logo">
+                  <img src="~/assets/images/new.png" alt="Logo" width="150" height="150">
                 </div>
-                <h1>CSLMIS</h1>
+                <h6 class="text-white">Brand by</h6>
+                <h1>CORBON</h1>
               </b-card-body>
             </b-card>
             <b-card no-body class="p-4">
@@ -31,9 +32,14 @@
                     <b-form-input type="password" v-model="user.password" class="form-control" placeholder="Password" autocomplete="current-password" />
                   </b-input-group>
                   <b-row>
-                    <b-col cols="6">
-                      <b-button @click="logIn" variant="primary" class="px-4">Login</b-button>
-                    </b-col>
+                    
+                     <div class="text-xs-left">
+                     <mdb-btn color="primary" @click.native.prevent="logIn()" :disabled='formReset'>Login
+                      <b-spinner small v-if="formReset === true"></b-spinner>
+                      <span class="sr-only" v-if="formReset === true">Wait...</span>
+                    </mdb-btn>
+                    </div>
+                  
                   </b-row>
                   <b-row>
                       <b-col class="signup">
@@ -57,9 +63,19 @@
 </template>
 <script>
   import {mapGetters, mapActions} from 'vuex'
+  import { mdbBtn, } from 'mdbvue';
+const focus = {
+    inserted(el) {
+      el.focus()
+    },
+  }
 export default {
+  directives: { focus },
   name: 'Login',
   layout: "empty",
+   components: {
+      mdbBtn
+     },
 
   data() {
     return {
@@ -67,23 +83,57 @@ export default {
         email: '',
         password: '',
         isSignIn: true
-      }
+      },
+      formReset: false,
+      spinner: '0'
     }
   },
+   
+  computed: {
+    ...mapGetters({session: 'authentication/getSession', userData: 'authentication/getUser'}),
+  },
   methods: {
-    ...mapActions({authenticateUser: 'authentication/authenticateUser'}),
+    ...mapActions({setupUser: 'authentication/initSetup',authenticateUser: 'authentication/authenticateUser',fetchUserDataById: 'authentication/fetchUserDataById'}),
     logIn() {
-      this.authenticateUser(this.user).then(e => {
-       console.log(JSON.stringify("Login:"+e));
-        this.$router.push('/cslmis/Dashboard');
-      });
+      if(!this.user.email){
+      this.$bvModal.msgBoxOk('Email or Username is required')
+      return false;
+      }else if(!this.user.password){
+        this.$bvModal.msgBoxOk('Password is required')
+        return false;
+      }else{
+        this.formReset =!this.formReset
+        this.authenticateUser(this.user).then(e => this.getUserClaims())
+        .catch(error => this.getUserClaims(error));
+      }
     },
-    resetPassword() {
-      //reset password code. probably dispatch to an action.
+    getUserStatus(e){
+      if(this.loginStatus == 400){
+         this.formReset =!this.formReset
+         this.$bvModal.msgBoxOk('Error: The password or email is invalid')
+      }
+      console.log("Error:"+e)
     },
-    checkEmailVerificationStstus(){
-      return
-    }
+    getUserClaims(){
+      console.log("Logged UID:"+this.session.localId)
+      this.fetchUserDataById(this.session.localId).then(e => this.validate());
+    },
+    validate(){
+     // var loggedUser = this.userData
+      console.log("Logged User Claims:"+JSON.stringify(this.userData.customClaims))
+      if(this.userData.customClaims.portal == 'Construction Center Admin'){
+        this.formReset =!this.formReset
+        this.init()
+        this.$router.push('/cslmis/dashboard');
+      }else{
+        this.formReset =!this.formReset
+        this.$bvModal.msgBoxOk('Unauthorized access, please contact your administrator')
+      }
+    },
+    init(){
+      this.setupUser();
+    },
+    
   }
 }
 </script>

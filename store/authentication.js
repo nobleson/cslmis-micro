@@ -2,16 +2,33 @@ import Cookie from 'js-cookie'
 
 export const state = () => ({
   user: null,
+  isValidUser: false,
   token: null,
-  _id:  null
+  _id:  null,
+  session: null
 })
-
+export const getters = {
+  getUser: state => state.user,
+  getSession: state => state.session,
+  getUserStatus: state => state.isValidUser,
+  getToken: state => state.token,
+  getCenterId: state => state._id,
+  isAuthenticated: state => state.token !== null
+}
 export const mutations = {
+  
   setUser(state, user) {
     state.user = user;
   },
+  setSession(state, session) {
+    state.session = session;
+  },
+
   setToken(state, tok) {
     state.token = tok;
+  },
+  setUserStatus(state) {
+    state.isValidUser = !state.isValidUser;
   },
   setCenterId(state, id) {
     state._id = id;
@@ -21,7 +38,8 @@ export const mutations = {
 
 export const actions= {
   authenticateUser(vuexContext,userData) {
-    let myUrl;
+    
+     let myUrl;
     let user;
     if(userData.isSignIn) {
       user = {
@@ -32,24 +50,36 @@ export const actions= {
       myUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM';
      }
 
-
     return this.$axios.$post(myUrl, 
       user ).then(e => {
-      vuexContext.commit('setCenterId',e.localId )
-      vuexContext.commit('setUser', {email: e.email})
-      let token = e.idToken;
-      vuexContext.commit('setToken', token);
-      Cookie.set('jwt', token);
-      localStorage.setItem('user-token', token);
-      localStorage.setItem('centerId', e.localId);
-
-/*       return this.$axios.$post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM',
-          {idToken: token} ).then(e => {
-        }); */
+        vuexContext.commit('setSession',e )
     }).catch(function (error) { 
       console.log(error);
-    });
+    }); 
   },
+fetchUserDataById(vuexContext, uid){ 
+   let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/admin/user/getuserbyId/'+uid;
+   return this.$axios.$get(herokuUrl)
+      .then(function (userRecord){
+        vuexContext.commit('setUser',JSON.parse(JSON.stringify(userRecord)))
+      })
+      .catch(function (error) {
+        console.log("user record fails to load")
+      })
+      .finally(function () {
+        console.log("load process completed")
+      });
+
+},
+initSetup(vuexContext){
+  vuexContext.commit('setCenterId',vuexContext.state.session.localId )
+  let token = vuexContext.state.session.idToken;
+  vuexContext.commit('setToken', token );
+  Cookie.set('jwt', token);
+  localStorage.setItem('user-token', token);
+  localStorage.setItem('centerId', vuexContext.state.session.localId);
+},
+
   signOut(vuexContext) {
     localStorage.removeItem('user-token');
     localStorage.removeItem('centerId');
@@ -74,12 +104,8 @@ export const actions= {
       token = localStorage.getItem("user-token");
     }
     vuexContext.commit("setToken", token);
-  }
+  },
+  
 }
 
-export const getters = {
-  getUser: state => state.user,
-  getToken: state => state.token,
-  getCenterId: state => state._id,
-  isAuthenticated: state => state.token !== null
-}
+ 
