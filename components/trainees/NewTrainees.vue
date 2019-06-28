@@ -2,7 +2,7 @@
  <div class="animated fadeIn">
   <section style="background: #ededed; padding-bottom: 100px">
     <!-- Purple Header -->
-    <mdb-edge-header style="background-color: #ff4444"/>
+    <mdb-edge-header style="background-color: #00c851"/>
 
     <!-- Card Container -->
     <mdb-container free-bird>

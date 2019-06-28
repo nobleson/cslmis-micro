@@ -2,7 +2,7 @@
 <section>
     <b-row>
             <b-col align-self="end"  class="pb-3 pl-auto" cols="12">
-                <b-button color="#0099CC"  @click="$emit('changeComponent',{component: 'NewDevProgram', id: null})" class="">Create New</b-button>
+                <mdb-btn color="primary"  @click="$emit('changeComponent',{component: 'NewDevProgram', id: null})" class="">Create New</mdb-btn>
              <hr>
             </b-col>
             <hr>
