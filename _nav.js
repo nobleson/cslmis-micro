@@ -11,17 +11,17 @@ export default {
       }
     },
     {
-      name: 'Trainees',
+      name: 'Trainee',
       url: '/cslmis/trainees',
       icon: 'icon-star'
     },
     {
-      name: 'APR Centers',
+      name: 'Apr Centers',
       url: '/cslmis/aprCenters',
       icon: 'icon-pencil'
     },
     {
-      name: 'Apprentiship',
+      name: 'Apprentice',
       url: '/cslmis/apprentiship',
       icon: 'icon-star'
     },
