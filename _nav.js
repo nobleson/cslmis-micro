@@ -4,9 +4,10 @@ export default {
     {
       name: 'Dashboard',
       icon: 'icon-speedometer',
+      url: '/cslmis/dashboard',
       badge: {
         variant: 'secondary',
-        text: 'NEW'
+        text: 'C-LMIS'
       }
     },
     {
@@ -17,7 +18,12 @@ export default {
     {
       name: 'APR Centers',
       url: '/cslmis/aprCenters',
-      icon: 'icon-building'
+      icon: 'icon-pencil'
+    },
+    {
+      name: 'Apprentiship',
+      url: '/cslmis/apprentiship',
+      icon: 'icon-star'
     },
     {
       name: 'Trainers',
@@ -27,9 +33,18 @@ export default {
     {
       name: 'Facilities',
       url: '/cslmis/facilities',
-      icon: 'icon-building'
+      icon: 'icon-pencil'
     },
-    
+    {
+      name: 'Report',
+      url: '/cslmis/report',
+      icon: 'icon-pencil'
+    },
+    {
+      name: 'Dev Program',
+      url: '/cslmis/devProgram',
+      icon: 'icon-pencil'
+    },
     
   ]
 }

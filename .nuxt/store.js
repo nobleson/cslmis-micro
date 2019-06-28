@@ -19,17 +19,29 @@ void (function updateModules() {
   // Enforce store modules
   store.modules = store.modules || {}
 
+  resolveStoreModules(require('..\\store\\apprentiship.js'), 'apprentiship.js')
+  resolveStoreModules(require('..\\store\\aprcenters.js'), 'aprcenters.js')
   resolveStoreModules(require('..\\store\\authentication.js'), 'authentication.js')
-  resolveStoreModules(require('..\\store\\center.js'), 'center.js')
+  resolveStoreModules(require('..\\store\\devprogram.js'), 'devprogram.js')
+  resolveStoreModules(require('..\\store\\facilities.js'), 'facilities.js')
+  resolveStoreModules(require('..\\store\\report.js'), 'report.js')
+  resolveStoreModules(require('..\\store\\trainees.js'), 'trainees.js')
+  resolveStoreModules(require('..\\store\\trainers.js'), 'trainers.js')
 
   // If the environment supports hot reloading...
 
   if (process.client && module.hot) {
     // Whenever any Vuex module is updated...
     module.hot.accept([
+      '..\\store\\apprentiship.js',
+      '..\\store\\aprcenters.js',
       '..\\store\\authentication.js',
-      '..\\store\\center.js',
+      '..\\store\\devprogram.js',
+      '..\\store\\facilities.js',
       '..\\store\\index.js',
+      '..\\store\\report.js',
+      '..\\store\\trainees.js',
+      '..\\store\\trainers.js',
     ], () => {
       // Update `root.modules` with the latest definitions.
       updateModules()
