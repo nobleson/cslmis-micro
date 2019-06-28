@@ -45,7 +45,7 @@
                    <img v-else :src="user.photoURL" class="rounded-circle"/>
                     </mdb-card-avatar>
                   <mdb-card-body>
-                    <mdb-card-title>{{user.displayName}}</mdb-card-title>
+                    <h5 class="blue-text"><strong>{{user.displayName}}</strong></h5>
                     <hr />
                         <p class="card-text">{{user.email}}</p>
                         <b-button variant="primary"  @click="$emit('changeComponent',{component:'UserProfile',data: user})" >Manage</b-button>
@@ -197,15 +197,15 @@ export default {
         }else{ 
           this.formReset = !this.formReset
           this.form.phoneNumber = "+234"+this.form.phoneNumber.replace(/^0+/, '');
-         this.createUser(this.form).then(e => {
-          console.log('User registered');
-          }).catch(console.error).finally(reset => this.resetForm()); 
+         this.createUser(this.form).then(e =>this.resetForm()).catch(function (error) {{
+          console.log('User registration fail '+error);
+          }}); 
         }
       },
       watchSuccessState(){
           if(this.successState){
-            this.form.displayName = this.form.email = this.form.phoneNumber = '';
             this.flashMessage.success({title: 'GOT IT', message: 'User registered successfully',icon: true});
+            this.form.displayName = this.form.email = this.form.phoneNumber = '';
           }
         },
         watchErrorState(){ 

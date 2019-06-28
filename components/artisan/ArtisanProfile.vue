@@ -11,17 +11,31 @@
      <b-link @click="$emit('changeComponent',{component: 'ArtisansListView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" /> View All Artisans</b-link>
         <mdb-card class="chart-card">
           <mdb-card-body class="d-flex flex-row">
-            <img :src="artiData.photo" class="rounded-circle mr-3" height="50px" width="50px" alt="avatar" />
+             <img v-if="artiData.photo == null" src="https://firebasestorage.googleapis.com/v0/b/cslmis-admin-bucket/o/profile%2FAdmin%201.png?alt=media&token=76b1edbe-4aee-4074-bb79-0ffd84dac37e" class="rounded-circle mr-3" height="120px" width="150px" alt="avatar" style="max-height: 100px; max-width: 150px"/>
+             <img v-else :src="artiData.photo" class="rounded-circle mr-3" height="120px" width="150px" alt="avatar" style="max-height: 100px; max-width: 150px" />
             <div>
-              <mdb-card-title class="font-weight-bold mb-2">{{artiData.surname}}  {{artiData.middleName}}  {{artiData.otherName}}</mdb-card-title>
-               <mdb-card-text><mdb-icon icon="clock" class="pr-2" /><timeago :datetime="artiData.dateOfBirth"></timeago></mdb-card-text>
+              <mdb-card-title class="font-weight-bold mb-2">{{artiData.firstName}}  {{artiData.middleName}}  {{artiData.lastName}}</mdb-card-title>
+               <mdb-card-text><mdb-icon icon="clock" class="pr-2" /><timeago :datetime="artiData.dateRegistered"></timeago></mdb-card-text>
+               <h2 v-if="artiData.registrationStatus == '1'"><i class="fas fa-check-circle green-text"> Verified Artisan</i></h2> 
+               <h2 v-else><i class="fas fa-exclamation-triangle red-text"> Not Verified Artisan</i></h2> 
+            </div>
+            <div>
+              <mdb-dropdown class="pull-right">
+                <mdb-dropdown-toggle color="primary" slot="toggle">More Actions</mdb-dropdown-toggle>
+                <mdb-dropdown-menu color="primary">
+                  <mdb-dropdown-item>Mark as Verified Artisan</mdb-dropdown-item>
+                  <mdb-dropdown-item>Block Artisan Access</mdb-dropdown-item>
+                  <div class="dropdown-divider"></div>
+                  <mdb-dropdown-item>Report Abuse</mdb-dropdown-item>
+                </mdb-dropdown-menu>
+              </mdb-dropdown>
             </div>
           </mdb-card-body>
           <div class="classic-tabs">
             <mdb-tab class="tabs-white nav-fill" justify>
-              <mdb-tab-item class="ml-0" :active="tab==0" @click.native.prevent="tab=0">Profile</mdb-tab-item>
-              <mdb-tab-item :active="tab==1" @click.native.prevent="tab=1">Provider</mdb-tab-item>
-              <mdb-tab-item :active="tab==2" @click.native.prevent="tab=2">Apprentiship</mdb-tab-item>
+              <mdb-tab-item class="ml-0" :active="tab==0" @click.native.prevent="tab=0">Personal</mdb-tab-item>
+              <mdb-tab-item :active="tab==1" @click.native.prevent="tab=1">Skill</mdb-tab-item>
+              <mdb-tab-item :active="tab==2" @click.native.prevent="tab=2">Originality</mdb-tab-item>
             </mdb-tab>
             <mdb-tab-content>
               <mdb-tab-pane class="fade" key="show1" v-if="tab==0">
@@ -31,7 +45,7 @@
                   <tr>
                     <td class="font-weight-normal align-middle">Surname</td>
                     <td class="float-right font-weight-normal">
-                      <p class="mb-1">{{artiData.surname}}</p>
+                      <p class="mb-1">{{artiData.firstName}}</p>
                     </td>
                     <td class="float-right mr-3">
                       <mdb-icon icon="user" size="lg" class="amber-text" />
@@ -47,9 +61,9 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="font-weight-normal align-middle">Other Name</td>
+                    <td class="font-weight-normal align-middle">Last Name</td>
                     <td class="float-right font-weight-normal">
-                      <p class="mb-1">{{artiData.otherName}}</p>
+                      <p class="mb-1">{{artiData.lastName}}</p>
                     </td>
                     <td class="float-right mr-3">
                       <mdb-icon icon="user" size="lg" class="amber-text" />
@@ -85,9 +99,9 @@
                   </tr>
                   
                   <tr>
-                    <td class="font-weight-normal align-middle">Permanent Address</td>
+                    <td class="font-weight-normal align-middle">Contact Address</td>
                     <td class="float-right font-weight-normal">
-                      <p class="mb-1">{{artiData.permanentAddress}}</p>
+                      <p class="mb-1">{{artiData.contactAddress}}</p>
                     </td>
                     <td class="float-right mr-3">
                       <mdb-icon icon="map-marked" size="lg" class="amber-text" />
@@ -103,36 +117,34 @@
                       <mdb-icon icon="envelope" size="lg" class="amber-text" />
                     </td>
                   </tr>
-       
+ 
                   <tr>
-                    <td class="font-weight-normal align-middle">State Origin</td>
+                    <td class="font-weight-normal align-middle">Phone Number</td>
                     <td class="float-right font-weight-normal">
-                      <p class="mb-1">{{artiData.state_origin}}</p>
+                      <p class="mb-1">{{artiData.emailAddress}}</p>
+                    </td>
+                    <td class="float-right mr-3">
+                      <mdb-icon icon="envelope" size="lg" class="amber-text" />
+                    </td>
+                  </tr>      
+                  <tr>
+                    <td class="font-weight-normal align-middle">State of Residence</td>
+                    <td class="float-right font-weight-normal">
+                      <p class="mb-1">{{artiData.stateOfResidence}}</p>
                     </td>
                     <td class="float-right mr-3">
                       <mdb-icon icon="map-marked" size="lg" class="amber-text" />
                     </td>
                   </tr>
-    
                   <tr>
-                    <td class="font-weight-normal align-middle">Local Government</td>
+                    <td class="font-weight-normal align-middle">City / Town</td>
                     <td class="float-right font-weight-normal">
-                      <p class="mb-1">{{artiData.local_government}}</p>
+                      <p class="mb-1">{{artiData.cityOfResidence}}</p>
                     </td>
                     <td class="float-right mr-3">
                       <mdb-icon icon="map-marked" size="lg" class="amber-text" />
                     </td>
-                  </tr>
-   
-                  <tr>
-                    <td class="font-weight-normal align-middle">Nitionality</td>
-                    <td class="float-right font-weight-normal">
-                      <p class="mb-1">{{artiData.nationality}}</p>
-                    </td>
-                    <td class="float-right mr-3">
-                      <mdb-icon icon="map-marked" size="lg" class="amber-text" />
-                    </td>
-                  </tr>                                        
+                  </tr>                                    
 
                 </tbody>
               </mdb-tbl>
@@ -143,36 +155,36 @@
                   <mdb-tbl borderless sm class="mb-0">
                     <tbody>
                       <tr>
-                        <td class="font-weight-normal align-middle">Center Name</td>
+                        <td class="font-weight-normal align-middle">Center of Graduation</td>
                         <td class="float-right font-weight-normal">
-                          <p class="mb-1">{{providerData.centerName}}</p>
+                          <p class="mb-1">{{artiData.centerOfGraduation}}</p>
                         </td>
                         <td class="float-right mr-3">
                           <mdb-icon icon="map-marked" size="lg" class="amber-text" />
                         </td>
                       </tr>
                       <tr>
-                        <td class="font-weight-normal align-middle">Center Number</td>
+                        <td class="font-weight-normal align-middle">Trade</td>
                         <td class="float-right font-weight-normal">
-                          <p class="mb-1">{{providerData.centerNumber}}</p>
+                          <p class="mb-1">{{artiData.trade}}</p>
                         </td>
                         <td class="float-right mr-3">
                           <mdb-icon icon="list" size="lg" class="text-info" />
                         </td>
                       </tr>
                       <tr>
-                        <td class="font-weight-normal align-middle">Candidate ID Number</td>
+                        <td class="font-weight-normal align-middle">Unique Learner's Number</td>
                         <td class="float-right font-weight-normal">
-                          <p class="mb-1">{{providerData.candidateNumber}}</p>
+                          <p class="mb-1">{{artiData.uniqueLearnersNumber}}</p>
                         </td>
                         <td class="float-right mr-3">
                           <mdb-icon icon="list" size="lg" class="amber-text" />
                         </td>
                       </tr>
                       <tr>
-                        <td class="font-weight-normal align-middle">Trade Learnt</td>
+                        <td class="font-weight-normal align-middle">Competency Level</td>
                         <td class="float-right font-weight-normal">
-                          <p class="mb-1">{{providerData.candidateTrade}}</p>
+                          <p class="mb-1">{{artiData.competencyLevel}}</p>
                         </td>
                         <td class="float-right mr-3">
                           <mdb-icon icon="hand-holding-usd" size="lg" class="amber-text" />
@@ -187,36 +199,27 @@
                   <mdb-tbl borderless sm class="mb-0">
                     <tbody>
                       <tr>
-                        <td class="font-weight-normal align-middle">Apprentiship Place</td>
+                        <td class="font-weight-normal align-middle">State of Origin</td>
                         <td class="float-right font-weight-normal">
-                          <p class="mb-1">{{apprentishipData.apprentishipPlace}}</p>
+                          <p class="mb-1">{{artiData.stateOrigin}}</p>
                         </td>
                         <td class="float-right mr-3">
                           <mdb-icon icon="map-marked" size="lg" class="amber-text" />
                         </td>
                       </tr>
                       <tr>
-                        <td class="font-weight-normal align-middle">Apprentiship Year</td>
+                        <td class="font-weight-normal align-middle">Local Government of Origin</td>
                         <td class="float-right font-weight-normal">
-                          <p class="mb-1">{{apprentishipData.apprentishipYear}}</p>
+                          <p class="mb-1">{{artiData.localGovernmentOrigin}}</p>
                         </td>
                         <td class="float-right mr-3">
                           <mdb-icon icon="calendar" size="lg" class="text-info" />
                         </td>
                       </tr>
                       <tr>
-                        <td class="font-weight-normal align-middle">Master's Phone Number</td>
+                        <td class="font-weight-normal align-middle">Nationality</td>
                         <td class="float-right font-weight-normal">
-                          <p class="mb-1">{{apprentishipData.masterPhoneNumber}}</p>
-                        </td>
-                        <td class="float-right mr-3">
-                          <mdb-icon icon="phone" size="lg" class="amber-text" />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="font-weight-normal align-middle">Master's Name</td>
-                        <td class="float-right font-weight-normal">
-                          <p class="mb-1">{{apprentishipData.masterFullName}}</p>
+                          <p class="mb-1">{{artiData.nationality}}</p>
                         </td>
                         <td class="float-right mr-3">
                           <mdb-icon icon="user" size="lg" class="amber-text" />
@@ -238,12 +241,16 @@
 </template>
 
 <script>
-import { mdbContainer,mdbEdgeHeader, mdbRow, mdbCol, mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbIcon, mdbView, mdbMask, mdbBtn, mdbTooltip, mdbProgress, mdbTbl, mdbChip, mdbTab, mdbTabItem, mdbTabContent, mdbTabPane, mdbLineChart } from 'mdbvue';
+import { mdbContainer,mdbEdgeHeader, mdbRow, mdbCol, mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbIcon, mdbView, mdbMask, mdbBtn, mdbTooltip, mdbProgress, mdbTbl, mdbChip, mdbTab, mdbTabItem, mdbTabContent, mdbTabPane, mdbLineChart,mdbDropdown, mdbDropdownItem, mdbDropdownMenu, mdbDropdownToggle } from 'mdbvue';
 import { mixin as clickaway } from 'vue-clickaway';
 
 export default {
   name: 'CardProPage',
   components: {
+    mdbDropdown,
+    mdbDropdownItem,
+    mdbDropdownMenu,
+    mdbDropdownToggle,
     mdbContainer,
     mdbEdgeHeader,
     mdbRow,

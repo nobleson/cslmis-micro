@@ -17,20 +17,18 @@
     <mdb-tab-content>
       <mdb-tab-pane class="fade" key="show1" v-if="pillsActive==0">
         <mdb-row>
-         <b-col v-for="arti in processPersonaDetails" :key="arti.id" cols="6">
+         <b-col v-for="arti in processPersonaDetails" :key="arti.id" cols="4">
          <div>
             <ul class="list-unstyled">
               <li class="media">
-                <img class="d-flex mr-3" :src="arti.photo" alt="photo">
+                  <img v-if="arti.photo == null" src="https://firebasestorage.googleapis.com/v0/b/cslmis-admin-bucket/o/profile%2FAdmin%201.png?alt=media&token=76b1edbe-4aee-4074-bb79-0ffd84dac37e" class="rounded-circle mr-3" height="120px" width="150px" alt="avatar" style="max-height: 100px; max-width: 150px"/>
+                 <img v-else :src="arti.photo" class="rounded-circle mr-3" height="120px" width="150px" alt="avatar" style="max-height: 100px; max-width: 150px" />
                 <div class="media-body">
-                  <h5 class="mt-0 mb-2 font-weight-bold">{{arti.surname}}  {{arti.middleName}}  {{arti.otherName}}</h5>
-                  <!--Review-->
-                  <i class="fas fa-star blue-text"> </i>
-                  <i class="fas fa-star blue-text"> </i>
-                  <i class="fas fa-star blue-text"> </i>
-                  <i class="fas fa-star blue-text"> </i>
-                  <i class="fas fa-star blue-text"> </i>
+                  <h5 class="mt-0 mb-2 font-weight-bold">{{arti.firstName}}  {{arti.middleName}}  {{arti.lastName}}</h5>
+                  <h6 v-if="arti.registrationStatus == '1'"><i class="fas fa-check-circle green-text"> Verified Artisan</i></h6> 
+                  <h6 v-else><i class="fas fa-exclamation-triangle red-text"> Not Verified Artisan</i></h6> 
                   <p>{{arti.permanentAddress}}</p>
+                  <h5><mdb-badge pill color="success">{{arti.trade}}</mdb-badge></h5>
                     <b-button variant="primary"  @click="$emit('changeComponent',{component:'ArtisanProfile',data: arti})" >Manage</b-button>
                 </div>
               </li>
@@ -67,7 +65,7 @@ import datepicker from 'vue-date-picker'
 import vueFlashcard from 'vue-flashcard';
 import Dropzone from 'nuxt-dropzone'
 import Tabs from 'vue-tabs-component';
-import  {mdbModal,mdbModalHeader,mdbModalTitle,mdbModalBody,mdbModalFooter,mdbInput,mdbTab,mdbSelect, mdbTabItem, mdbTabContent, mdbTabPane, mdbLineChart,  mdbDatatable, mdbTabs, mdbJumbotron, mdbCarousel, mdbCarouselItem, mdbEdgeHeader, mdbGoogleMap,mdbContainer,mdbTbl,mdbChip,mdbProgress,mdbTooltip,mdbStretchedLink, mdbRow, mdbCol, mdbCard,  mdbCardImage, mdbCardHeader, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardFooter, mdbCardUp, mdbCardAvatar, mdbCardGroup, mdbBtn, mdbView, mdbMask, mdbIcon, mdbFlippingCard, mdbAvatar } from 'mdbvue';
+import  {mdbBadge,mdbModal,mdbModalHeader,mdbModalTitle,mdbModalBody,mdbModalFooter,mdbInput,mdbTab,mdbSelect, mdbTabItem, mdbTabContent, mdbTabPane, mdbLineChart,  mdbDatatable, mdbTabs, mdbJumbotron, mdbCarousel, mdbCarouselItem, mdbEdgeHeader, mdbGoogleMap,mdbContainer,mdbTbl,mdbChip,mdbProgress,mdbTooltip,mdbStretchedLink, mdbRow, mdbCol, mdbCard,  mdbCardImage, mdbCardHeader, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardFooter, mdbCardUp, mdbCardAvatar, mdbCardGroup, mdbBtn, mdbView, mdbMask, mdbIcon, mdbFlippingCard, mdbAvatar } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
 const firebaseConfig = {
     apiKey: "AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM",
@@ -83,6 +81,7 @@ const firebaseConfig = {
 
 export default {
      components: {
+    mdbBadge,
     mdbTab,   
     mdbTabItem,   
     mdbTabContent,   
@@ -144,11 +143,39 @@ export default {
         verticalWithin: 0,      
         tabIndex: 0,
         batchModal: false,
+        personaForm: {
+          firstName: '',
+          middleName: '',
+          lastName: '',
+          gender: '',
+          dateOfBirth: '',
+          disabilityType: '',
+          phoneNumber: '',
+          emailAddress: '',
+          contactAddress: '',
+          cityOfResidence: '',
+          stateOfResidence: '',
+          centerOfGraduation: '',
+          trade: '',
+          uniqueLearnersNumber: '',
+          competencyLevel: '',
+          stateOrigin: '',
+          localGovernmentOrigin: '',
+          dateRegistered: '',
+          nationality: '',
+          photo: ''
+        },
+
         dataSet: {
           columns: [
             {
-              label: 'Surname',
-              field: 'surname',
+              label: 'Unique Number',
+              field: 'uniqueLearnersNumber',
+              sort: 'asc'
+            },
+            {
+              label: 'First Name',
+              field: 'firstName',
               sort: 'asc'
             },
             {
@@ -157,8 +184,8 @@ export default {
               sort: 'asc'
             },
             {
-              label: 'Other Name',
-              field: 'otherName',
+              label: 'Last Name',
+              field: 'lastName',
               sort: 'asc'
             },
            {
@@ -172,25 +199,20 @@ export default {
               sort: 'asc'
             },
             {
-              label: 'Address',
-              field: 'permanentAddress',
-              sort: 'asc'
-            },
-            {
               label: 'Phone Number',
               field: 'phoneNumber',
               sort: 'asc'
             },
             {
-              label: 'State',
-              field: 'state_origin',
+              label: 'Contact Address',
+              field: 'contactAddress',
               sort: 'asc'
             },
             {
-              label: 'LG Area',
-              field: 'local_government',
+              label: 'State Residence',
+              field: 'stateOfResidence',
               sort: 'asc'
-            }            
+            }    
 
           ],     
           rows: []
@@ -205,7 +227,7 @@ export default {
           ...mapGetters({persona: 'artisan/getPersona', isContentLoading: 'artisan/getLoaderStatus'}),
           processPersonaDetails: function(){
           let json = JSON.parse(JSON.stringify(this.persona));
-          //console.log("Json:"+JSON.stringify(this.persona));
+          console.log("Artisans:"+JSON.stringify(this.persona));
            return  json;
           },
           processTableData: function(){

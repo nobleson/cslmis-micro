@@ -15,6 +15,7 @@ import nuxt_plugin_buefy_77011801 from 'nuxt_plugin_buefy_77011801' // Source: .
 import nuxt_plugin_axios_95bbcea0 from 'nuxt_plugin_axios_95bbcea0' // Source: .\\axios.js (mode: 'all')
 import nuxt_plugin_bootstrapvue_872a6430 from 'nuxt_plugin_bootstrapvue_872a6430' // Source: ..\\plugins\\bootstrapvue.js (mode: 'all')
 import nuxt_plugin_googlemap_9fcb182a from 'nuxt_plugin_googlemap_9fcb182a' // Source: ..\\plugins\\googlemap.js (mode: 'all')
+import nuxt_plugin_vueup_95ce3da8 from 'nuxt_plugin_vueup_95ce3da8' // Source: ..\\plugins\\vueup.js (mode: 'client')
 import nuxt_plugin_leaflet_02f645f1 from 'nuxt_plugin_leaflet_02f645f1' // Source: ..\\plugins\\leaflet.js (mode: 'client')
 
 // Component: <NoSsr>
@@ -165,6 +166,10 @@ async function createApp(ssrContext) {
 
   if (typeof nuxt_plugin_googlemap_9fcb182a === 'function') {
     await nuxt_plugin_googlemap_9fcb182a(app.context, inject)
+  }
+
+  if (process.client && typeof nuxt_plugin_vueup_95ce3da8 === 'function') {
+    await nuxt_plugin_vueup_95ce3da8(app.context, inject)
   }
 
   if (process.client && typeof nuxt_plugin_leaflet_02f645f1 === 'function') {

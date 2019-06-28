@@ -66,9 +66,48 @@ export const state = () => ({
 
     getLoaderStatus: state => state.isContentLoading
   }
-  
 
   export const actions= {
+    registerArtisan(vuexContext,artisanData) {
+
+       let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/admin/user/addUser';
+      let artisanAccount = {
+        email: artisanData.emailAddress,
+        emailVerified: false,
+        phoneNumber: artisanData.phoneNumber,
+        password: 'password',
+        displayName: artisanData.firstName +" "+artisanData.lastName,
+        photoURL: artisanData.photo,
+        disabled: false
+        }    
+        return this.$axios.$post(herokuUrl, 
+          artisanAccount ).then(e => {
+          let date = new Date()
+          let artisan = {
+            _id: e.uid,
+            firstName: artisanData.firstName,
+            middleName: artisanData.middleName,
+            lastName: artisanData.lastName,
+            gender: artisanData.gender,
+            dateOfBirth: artisanData.dateOfBirth,
+            disabilityType: artisanData.disabilityType,
+            phoneNumber: artisanData.phoneNumber,
+            emailAddress: artisanData.emailAddress,
+            contactAddress: artisanData.contactAddress,
+            cityOfResidence: artisanData.cityOfResidence,
+            stateOfResidence: artisanData.stateOfResidence,
+            centerOfGraduation: artisanData.centerOfGraduation,
+            trade: artisanData.trade,
+            uniqueLearnersNumber: artisanData.uniqueLearnersNumber,
+            competencyLevel: artisanData.competencyLevel,
+            photo: artisanData.photo,
+            dateRegistered: date 
+          };
+          vuexContext.dispatch('addPersona',artisan); 
+          vuexContext.dispatch('addCustomClaims',e.uid);
+        }); 
+      },
+
     addPersona(vuexContext,persona) {
         let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/artisan/create';
 
@@ -83,6 +122,23 @@ export const state = () => ({
           this.$bvModal.hide() 
          });
         },
+        addCustomClaims(vuexContext,uid) {  
+          let claims = {
+            portal: 'Microservice Gateway',
+            coporate: false,
+            loginStatus: '0',
+            admin: false,
+            dataClerk: false
+          }       
+          let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/admin/user/updateCustomClaims/'+uid;
+          this.$axios.$put(herokuUrl,claims)
+           .then(function (userRecord) {        
+           vuexContext.commit('successToggle')
+          })
+           .catch(function (error) {
+             vuexContext.commit('errorToggle')
+           });
+          },
       addCenter(vuexContext,center) {
           let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/artisan/nvq/center/create';
   

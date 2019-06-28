@@ -80,15 +80,8 @@ export const state = () => ({
   
        this.$axios.$post(herokuUrl,provider)
         .then(function (response) {        
-        vuexContext.commit('successToggle')
-        vuexContext.dispatch('resetSuccess')
       })
         .catch(function (error) {
-          vuexContext.commit('errorToggle')
-          vuexContext.dispatch('resetError')
-        })
-        .finally(function () {
-          vuexContext.commit('changeFormState')
         });
       },
       addCustomClaims(vuexContext,uid) {  
@@ -104,14 +97,9 @@ export const state = () => ({
         this.$axios.$put(herokuUrl,claims)
          .then(function (userRecord) {        
          vuexContext.commit('successToggle')
-         vuexContext.dispatch('resetSuccess')
         })
          .catch(function (error) {
            vuexContext.commit('errorToggle')
-           vuexContext.dispatch('resetError')
-         })
-         .finally(function () {
-           vuexContext.commit('changeFormState')
          });
         },
       loadprovider(vuexContext){
@@ -157,12 +145,6 @@ export const state = () => ({
       checkproviderData(vuexContext){
        let data  = vuexContext.getters('getProvider')
        console.log("provider loaded:"+data)
-      },
-      resetSuccess(vuexContext) { 
-        setTimeout(function () {vuexContext.commit('successToggle');}, 5000);
-    },
-    resetError(vuexContext) { 
-      setTimeout(function () {vuexContext.commit('errorToggle');}, 5000);
-    }
+      }
   }
   

@@ -63,6 +63,7 @@
     "vue2-simplert": "^1.0.0",
     "vue2-simplert-plugin": "^0.5.3",
     "vuejs-clipper": "^0.2.12",
+    "vueup": "^1.2.2",
     "xlsx": "^0.14.3"
   },
   "devDependencies": {

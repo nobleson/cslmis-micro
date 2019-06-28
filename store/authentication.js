@@ -2,19 +2,33 @@ import Cookie from 'js-cookie'
 
 export const state = () => ({
   user: null,
-  token: null
+  token: null,
+  session: null,
+  responseStatus: 0
 })
 
 export const mutations = {
   setUser(state, user) {
     state.user = user;
   },
+  setSession(state, session) {
+    state.session = session;
+  },
   setToken(state, tok) {
     state.token = tok;
+  },
+  setResponseStatus(state, code){
+    state.responseStatus = code;
   }
 
 }
-
+export const getters = {
+  getUser: state => state.user,
+  getToken: state => state.token,
+  isAuthenticated: state => state.token !== null,
+  getSession: state => state.session,
+  getResponseStatus: state => state.responseStatus
+}
 export const actions= {
   authenticateUser(vuexContext,userData) {
     let myUrl;
@@ -40,17 +54,12 @@ export const actions= {
 
     return this.$axios.$post(myUrl, 
       user ).then(e => {
-      vuexContext.commit('setUser', {email: e.email})
-      let token = e.idToken;
-      vuexContext.commit('setToken', token);
-      Cookie.set('jwt', token);
-      localStorage.setItem('user-token', token);
-
-/*       return this.$axios.$post('https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM',
-          {idToken: token} ).then(e => {
-        }); */
-    }).catch(function (error) { 
-      console.log(error);
+        vuexContext.commit('setSession',e )
+    }).catch(function (error){
+      
+      let json = JSON.parse(JSON.stringify(error)) 
+      vuexContext.commit('setResponseStatus',json.response.status)
+      return json.response.status
     });
   },
   signOut(vuexContext) {
@@ -59,6 +68,30 @@ export const actions= {
     vuexContext.commit('setToken', null);
     this.$router.push('/auth')
   },
+  fetchUserDataById(vuexContext, uid){ 
+    let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/admin/user/getuserbyId/'+uid;
+    return this.$axios.$get(herokuUrl)
+       .then(function (userRecord){
+         vuexContext.commit('setUser',JSON.parse(JSON.stringify(userRecord)))
+       })
+       .catch(function (error) {
+         console.log("user record fails to load")
+       })
+       .finally(function () {
+         console.log("load process completed")
+       });
+    },
+    initSetup(vuexContext){
+      let token = vuexContext.state.session.idToken;
+      vuexContext.commit('setToken', token );
+      Cookie.set('jwt', token);
+      localStorage.setItem('user-token', token);
+      if(vuexContext.state.user.customClaims.admin == true){
+        localStorage.setItem('userRole','Admin');
+      }else{
+        localStorage.setItem('userRole','Data Clerk');
+      }
+    },
   initAuth(vuexContext, req) {
     let token;
     if (req) {
@@ -77,10 +110,4 @@ export const actions= {
     }
     vuexContext.commit("setToken", token);
   }
-}
-
-export const getters = {
-  getUser: state => state.user,
-  getToken: state => state.token,
-  isAuthenticated: state => state.token !== null
 }

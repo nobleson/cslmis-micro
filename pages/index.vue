@@ -36,7 +36,10 @@
                   </b-input-group>
                   <b-row>
                     <b-col cols="6">
-                      <b-button @click="logIn" variant="primary" class="px-4">Login</b-button>
+                      <b-button @click="logIn" variant="primary" class="px-4">Login
+                                <b-spinner small v-if="formReset === true"></b-spinner>
+                                <span class="sr-only" v-if="formReset === true">Wait...</span>
+                      </b-button>
                     </b-col>
                   </b-row>
                   <b-row>
@@ -72,23 +75,55 @@ export default {
         email: '',
         password: '',
         isSignIn: true
-      }
+      },
+      formReset: false
     }
   },
+  computed: {
+    ...mapGetters({session: 'authentication/getSession', userData: 'authentication/getUser', loginStatus:'authentication/getResponseStatus'}),
+  },
   methods: {
-    ...mapActions({authenticateUser: 'authentication/authenticateUser'}),
+    ...mapActions({authenticateUser: 'authentication/authenticateUser',setupUser: 'authentication/initSetup',fetchUserDataById: 'authentication/fetchUserDataById'}),
     logIn() {
-      this.authenticateUser(this.user).then(e => {
-       console.log(JSON.stringify("Login:"+e));
-        this.$router.push('/cslmis/dashboard');
-      });
+      if(!this.user.email) {
+        this.$bvModal.msgBoxOk('Email or Username is required.')
+        return false;
+      }
+      else if(!this.user.password) {
+        this.$bvModal.msgBoxOk('Password is required.')
+        return false;
+      }else{ 
+          this.formReset = !this.formReset 
+          this.authenticateUser(this.user).then(e => this.getUserClaims())
+          .catch(error => this.getStatus(error));
+      }
     },
-    resetPassword() {
-      //reset password code. probably dispatch to an action.
+    getStatus(e){
+      if(this.loginStatus == 400){
+          this.formReset = !this.formReset 
+          this.$bvModal.msgBoxOk('Error: The password or email is invalid')
+      }
+      console.log("Error:"+e) 
     },
-    checkEmailVerificationStstus(){
-      return
-    }
+    getUserClaims(){
+      console.log("Logged UID:"+this.session.localId)
+      this.fetchUserDataById(this.session.localId).then(e => this.validate());
+    },
+    validate(){
+     // var loggedUser = this.userData
+      console.log("Logged User Claims:"+JSON.stringify(this.userData.customClaims))
+      if(this.userData.customClaims.portal == 'CORBON Admin'){
+           this.formReset = !this.formReset 
+           this.init()
+           this.$router.push('/cslmis/dashboard');
+      }else{
+        this.formReset = !this.formReset 
+        this.$bvModal.msgBoxOk('Unauthorized Access, please contact your administrator')
+      }
+    },
+    init(){
+      this.setupUser();
+    },
   }
 }
 </script>

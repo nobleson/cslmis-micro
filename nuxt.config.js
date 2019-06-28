@@ -41,6 +41,7 @@ module.exports = {
   plugins: [
       "~plugins/bootstrapvue.js",
       "~plugins/googlemap.js",
+      { src: '~/plugins/vueup.js', ssr: false },
       {src: '~plugins/leaflet.js', ssr: false}
   ],
   /*

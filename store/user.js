@@ -68,8 +68,6 @@ export const state = () => ({
        })
         .catch(function (error) {
           vuexContext.commit('errorToggle')
-          vuexContext.dispatch('resetError')
-
         });
       },
     fetchUserDataById(vuexContext, uid){
@@ -110,14 +108,9 @@ export const state = () => ({
       this.$axios.$put(herokuUrl,claims)
        .then(function (userRecord) {        
        vuexContext.commit('successToggle')
-       vuexContext.dispatch('resetSuccess')
       })
        .catch(function (error) {
          vuexContext.commit('errorToggle')
-         vuexContext.dispatch('resetError')
-       })
-       .finally(function () {
-         vuexContext.commit('changeFormState')
        });
       },
       resetSuccess(vuexContext) { 

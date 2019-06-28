@@ -7,10 +7,12 @@
 <script>
 import ProgramView from '~/components/program/ProgramView.vue';
 import NewProgram from '~/components/program/NewProgram.vue';
+import NewProgramTrainingProvider from '~/components/program/NewProgramTrainingProvider.vue';
   export default {
     components: {
       ProgramView,
-      NewProgram
+      NewProgram,
+      NewProgramTrainingProvider
           },
     data(){
       return{

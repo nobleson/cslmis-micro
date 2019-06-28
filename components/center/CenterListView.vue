@@ -104,43 +104,33 @@ export default {
         dataSet: {
           columns: [
             {
-              label: 'Center No.',
-              field: 'centerNumber',
-              sort: 'asc'
-            },
-            {
               label: 'Name',
               field: 'fullLegalName',
               sort: 'asc'
             },
             {
-              label: 'Address',
+              label: 'Acronym',
               field: 'accronym',
               sort: 'asc'
             },
             {
               label: 'Tel. Number',
-              field: 'telephoneNumber',
+              field: 'telephone',
               sort: 'asc'
             },
             {
               label: 'Email Address',
-              field: 'emailAddress',
+              field: 'email',
               sort: 'asc'
             },
             {
-              label: 'City',
-              field: 'city',
+              label: 'Address',
+              field: 'officialAddress',
               sort: 'asc'
             },
             {
-              label: 'State',
-              field: 'state',
-              sort: 'asc'
-            },
-            {
-              label: 'Local Government',
-              field: 'localgovernment',
+              label: 'Date Created',
+              field: 'dateRegistered',
               sort: 'asc'
             }
           ],     
@@ -168,10 +158,7 @@ export default {
     methods: {
       ...mapActions({loadTrainingProvider: 'provider/loadprovider'}),
         create() {
-          this.loadTrainingProvider().then((ev) => {
-          })
-          .catch((e) => {
-          })
+          this.loadTrainingProvider().then((ev) => {})
         },
       linkClass(idx) {
         if (this.tabIndex === idx) {

@@ -5,7 +5,7 @@
   <b-row class="justify-content-center" >
   </b-row>
 <b-row class="justify-content-center">
-  <b-col md="10">
+  <b-col md="12">
                     <div class="form-wizard"  color="red">
                     <form-wizard @on-complete="onComplete"
                                       :start-index="0"
@@ -16,53 +16,137 @@
                       <div>
                         <mdb-card class="card-body">
                           <mdb-card-title>Artisans Excel Records</mdb-card-title>
-                          <mdb-card-text>Prepare and upload the Artisans records in Excel worksheet</mdb-card-text>
                            <div class="flex-row">
-                                <p class="text-danger">Worksheet Template Format: </p>
-                                 <mdb-row style="background: gray;">
-                                  <mdb-col class="align-self-start">Surname</mdb-col>
-                                  <mdb-col class="align-self-center">Middle Name</mdb-col>
-                                  <mdb-col class="align-self-end">Other Name</mdb-col>
-                                  <mdb-col class="align-self-center">Training Center Number</mdb-col>
-                                  <mdb-col class="align-self-center">Center Name</mdb-col>
-                                  <mdb-col class="align-self-end">Apprentiship Place</mdb-col>
-                                  <mdb-col class="align-self-end">Supervisor Name</mdb-col>
-                                  <mdb-col class="align-self-end">Supervisor Phone Number</mdb-col>
-                                  <mdb-col class="align-self-end">Apprentice Performance</mdb-col>
-                                </mdb-row>
+                            <mdb-alert color="info">
+                              <h4 class="alert-heading">Notce!</h4>
+                              <p>Use the Excel temaplate to prepare and upload the artisans records</p>
+                              <hr>
+                              <p class="red-text">The selected data properties will overwrite the Excel columns during transformation process</p>
+                            </mdb-alert>
 
-                            <input type="file" ref="fileInput" style="display: none" v-on:change="onFileChange">
+                            <mdb-card class="card-body" style="width: 22rem; margin-top: 1rem;">
+                              <mdb-card-title>Select Batch Data Properties</mdb-card-title>
+                                <b-form>   
+                                  <b-form-group  label="Gender:" label-for="gender">
+
+                                <b-form-select 
+                                  id="gender"
+                                  v-model="form.gender"
+                                  required
+                                  >
+                                  <option disabled value="">[ Select Gender ]</option>
+                                  <option  value="Male">Male</option>
+                                  <option  value="Female">Female</option>
+                                  </b-form-select>
+                                  </b-form-group>
+                                  <b-form-group  label="State of Residence:" label-for="state">
+
+                                  <b-form-select
+                                  v-model="form.stateOfResidence"
+                                  required
+                                      >
+                                  <option disabled value="" selected>[ Select State ]</option>
+                                  <option value="Abia">Abia</option>
+                                  <option value="Adamawa">Adamawa</option>
+                                  <option value="Akwa Ibom">Akwa Ibom</option>
+                                  <option value="Anambra">Anambra</option>
+                                  <option value="Bauchi">Bauchi</option>
+                                  <option value="Bayelsa">Bayelsa</option>
+                                  <option value="Benue">Benue</option>
+                                  <option value="Borno">Borno</option>
+                                  <option value="Cross River">Cross River</option>
+                                  <option value="Delta">Delta</option>
+                                  <option value="Ebonyi">Ebonyi</option>
+                                  <option value="Enugu">Enugu</option>
+                                  <option value="Edo">Edo</option>
+                                  <option value="Ekiti">Ekiti</option>
+                                  <option value="Gombe">Gombe</option>
+                                  <option value="Imo">Imo</option>
+                                  <option value="Jigawa">Jigawa</option>
+                                  <option value="Kaduna">Kaduna</option>
+                                  <option value="Kano">Kano</option>
+                                  <option value="Katsina">Katsina</option>
+                                  <option value="Kebbi">Kebbi</option>
+                                  <option value="Kogi">Kogi</option>
+                                  <option value="Kwara">Kwara</option>
+                                  <option value="Lagos">Lagos</option>
+                                  <option value="Nasarawa">Nasarawa</option>
+                                  <option value="Niger">Niger</option>
+                                  <option value="Ogun">Ogun</option>
+                                  <option value="Ondo">Ondo</option>
+                                  <option value="Osun">Osun</option>
+                                  <option value="Oyo">Oyo</option>
+                                  <option value="Plateau">Plateau</option>
+                                  <option value="Rivers">Rivers</option>
+                                  <option value="Sokoto">Sokoto</option>
+                                  <option value="Taraba">Taraba</option>
+                                  <option value="Yobe">Yobe</option>
+                                  <option value="Zamfara">Zamfara</option>
+                                  <option value="FCT">FCT</option>
+                                  </b-form-select>
+                                  </b-form-group>
+                                  <b-form-group  label="Trade:" label-for="trade">
+
+                                  <b-form-select 
+                                    id="trade"
+                                    v-model="form.trade"
+                                    required
+                                    >
+                                    <option disabled value="">[ Select Trade ]</option>
+                                    <option  value="Automobile">Automobile</option>
+                                    <option  value="Electrical Installation">Electrical Installation</option>
+                                    <option  value="Paintiing and Decoration">Paintiing and Decoration</option>
+                                    <option  value="Welding and Fabrication">Welding and Fabrication</option>
+                                    <option  value="Carpentry and Joinery">Carpentry and Joinery</option>
+                                    <option  value="Masonry">Masonry</option>
+                                    <option  value="Plumbing and Pipefitting">Plumbing and Pipefitting</option>
+                                    </b-form-select>
+                                  </b-form-group>
+                                  <b-form-group  label="Center of Graduation:" label-for="trainingProvider">
+                                  <b-form-select 
+                                  id="trainingProvider"
+                                  v-model="form.centerOfGraduation"
+                                  required
+                                  >
+                                  <option disabled value="">[ Select Center of Graduation ]</option>
+                                  <option v-for="provider in trainingProviders" v-bind:key ="provider.id" :value="provider.fullLegalName">{{provider.fullLegalName}}</option>
+                                  </b-form-select>
+                                </b-form-group>
+                                  <b-form-group  label="Competency Level:" label-for="nsq">
+
+                                <b-form-select 
+                                  id="nsq"
+                                  v-model="form.competencyLevel"
+                                  required
+                                  >
+                                  <option disabled value="">[ Select Compentency Level ]</option>
+                                  <option  value="NSQ LEVEL 1">NSQ LEVEL 1</option>
+                                  <option  value="NSQ LEVEL 2">NSQ LEVEL 2</option>
+                                  <option  value="NSQ LEVEL 3">NSQ LEVEL 3</option>
+                                  <option  value="NSQ LEVEL 4">NSQ LEVEL 4</option>
+                                  <option  value="NSQ LEVEL 5">NSQ LEVEL 5</option>
+                                  <option  value="NSQ LEVEL 6">NSQ LEVEL 6</option>
+                                  </b-form-select>
+                                  </b-form-group>
+                                </b-form>
+                            </mdb-card>
+
+
+                            <input type="file" ref="fileInput" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"  v-on:change="onFileChange">
                             <b-button type="button" variant="primary" v-on:click="onPickFile">Upload Excel Sheet</b-button>
                           </div>
                           <hr />
                           <div cols="12">
                             <h5 class="text-center">Artisans Personal Details</h5>
-                           <mdb-datatable 
-                              :data="processArtisans"
-                              striped
-                              bordered
-                              materialInputs
-                            />
+                            <mdb-tbl style="overflow-y: auto; overflow-x: auto">
+                                <mdb-datatable
+                                  :data="processArtisans"
+                                  striped
+                                  bordered
+                                  materialInputs
+                                  /> 
+                            </mdb-tbl>  
                           </div>
-                          <div cols="12">
-                            <h5 class="text-center">Artisans Training Provider Details</h5>
-                           <mdb-datatable 
-                              :data="processArtisansProvider"
-                              striped
-                              bordered
-                              materialInputs
-                            />
-                          </div>
-                          <div cols="12">
-                            <h5 class="text-center">Artisans Apprentiship Details</h5>
-                           <mdb-datatable 
-                              :data="processArtisansApprentiship"
-                              striped
-                              bordered
-                              materialInputs
-                            />
-                          </div>
-
                         </mdb-card>                
                       </div>
                     </tab-content>
@@ -72,11 +156,11 @@
                       <div>
                         <mdb-card class="card-body">
                           <mdb-card-title>Artisans Passports</mdb-card-title>
-                          <mdb-card-text>Some quick example text to build on the panel title and make up the bulk of the panel's content.</mdb-card-text>
+                          <mdb-card-text>Image name must match with artisans records on serial numbers</mdb-card-text>
                           <div class="large-12 medium-12 small-12 cell">
                             <p class="text-danger">Files size more than 50KB will not be uploaded</p>
                             <label>
-                              <input type="file" id="files" ref="file_input"  multiple v-on:change="handleFileUploads()"/>
+                              <input type="file" id="files" ref="file_input" accept="image/x-png,image/gif,image/jpeg"  multiple v-on:change="handleFileUploads()"/>
                             </label>
                             <h4 v-if="getEventStatus">Names</h4>
                             <ul>
@@ -112,6 +196,7 @@
                           </div>
                           <hr/>
                           <div>
+                            <mdb-tbl style="overflow-y: auto; overflow-x: auto">
                             <mdb-datatable
                               :data="artisansMasterDataSet"
                               bordered
@@ -126,6 +211,7 @@
                               :sorting="false"
                               cols="12"
                             />
+                            </mdb-tbl>  
                           </div>
                         </mdb-card>   
                         </div>
@@ -134,11 +220,22 @@
                                   icon="icon-pencil">
                         <div>
                         <mdb-card class="card-body">
-                          <mdb-card-title>Artisans Batch</mdb-card-title>
+                          <mdb-card-title>Artisans Batching</mdb-card-title>
                           <mdb-card-text class="text-danger">Final batch process, you can not revert once submitted.</mdb-card-text>
+                            <div>
+                              <b-alert v-if="errorOcurred" show variant="danger"><a href="#" class="alert-link"><strong>Error!</strong>  Batch processs aborted. Please reload and try again</a></b-alert>
+                              <b-alert v-if="isCompleted" show variant="primary"><a href="#" class="alert-link"><strong>Success!</strong>  Batching completed</a></b-alert>
+                            </div>
+                            <b-progress v-if="isBatchReady" :max="max" height="2rem" variant="success">
+                              <b-progress-bar :value="value" :label="`${((value / max) * 100).toFixed(2)}%`">
+                              </b-progress-bar>
+                            </b-progress>
                            <hr/> 
                           <div class="flex-row">
-                            <b-button type="button" variant="primary">Submit Batch</b-button>
+                            <b-button type="button" variant="primary" @click="processBatch()"   :disabled='isButtonDisabled'>Start Batching
+                               <b-spinner small v-if="isButtonDisabled === true"></b-spinner>
+                                <span class="sr-only" v-if="isButtonDisabled === true">Wait...</span>     
+                            </b-button>
                           </div>
                         </mdb-card>                             
                         </div>
@@ -158,7 +255,7 @@ import  uuidv4 from 'uuid/v4';
 import datepicker from 'vue-date-picker'
 import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
 import { clipperBasic } from 'vuejs-clipper'
-import { mdbCard, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardGroup, mdbInput,mdbRow, mdbCol,mdbTbl,mdbDatatable } from 'mdbvue';
+import { mdbCard, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardGroup, mdbInput,mdbRow, mdbCol,mdbTbl,mdbDatatable,mdbIcon,mdbAlert} from 'mdbvue';
 import { URL } from 'url';
 const firebaseConfig = {
     apiKey: "AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM",
@@ -175,7 +272,8 @@ const firebaseConfig = {
   export default {
     
     name: 'new-artisan',
-     components: {
+     components: { 
+       mdbAlert,
       mdbDatatable,
       datepicker,
       mdbRow,
@@ -187,83 +285,119 @@ const firebaseConfig = {
       mdbCardGroup,
       mdbCardTitle,
       mdbCardText,
-      mdbInput    
+      mdbInput ,
+      mdbIcon   
      },
     data() {
-
       return {
+        value: 0,
+        max: 0,
+        timer: null,
+        isButtonDisabled: false,
+        isCompleted: false,
+        errorOcurred: false,
+        isBatchReady: false,
+        uploadCompleted: false,
         files: [],
         images: [],
         fileData: null,
         filesLoaded: false,
         totalFileSize: 0,
+        photoUrl: '',
+        form: {
+          gender: '',
+          stateOfResidence: '',
+          trade: '',
+          centerOfGraduation: '',
+          competencyLevel: ''
+        },
+        artisanPersona: {},
         artisansDataSet: {
           columns: [
             {
-              label: 'Surname',
-              field: 'surname',
+              label: 'S/N',
+              field: 'sn',
+              sort: 'asc'
+            },
+            {
+              label: 'First Name',
+              field: 'firstName',
               sort: 'asc'
             },
             {
               label: 'Middle Name',
-              field: 'firstname',
+              field: 'middleName',
               sort: 'asc'
             },
             {
-              label: 'Other Name',
-              field: 'lastname',
+              label: 'Last Name',
+              field: 'lastName',
+              sort: 'asc'
+            },
+            {
+              label: 'Gender',
+              field: 'gender',
+              sort: 'asc'
+            },
+            {
+              label: 'Date of Birth',
+              field: 'dateOfBirth',
+              sort: 'asc'
+            },
+            {
+              label: 'Disability Type',
+              field: 'disabilityType',
+              sort: 'asc'
+            },
+            {
+              label: 'Phone Number',
+              field: 'phoneNumber',
+              sort: 'asc'
+            },
+            {
+              label: 'Email Address',
+              field: 'emailAddress',
+              sort: 'asc'
+            },
+            {
+              label: 'Contact Address',
+              field: 'contactAddress',
+              sort: 'asc'
+            },
+            {
+              label: 'City of Residence',
+              field: 'cityOfResidence',
+              sort: 'asc'
+            },
+            {
+              label: 'State of Residence',
+              field: 'stateOfResidence',
+              sort: 'asc'
+            },
+            {
+              label: 'Center of Graduation',
+              field: 'centerOfGraduation',
+              sort: 'asc'
+            },
+            {
+              label: 'Trade',
+              field: 'trade',
+              sort: 'asc'
+            },
+            {
+              label: 'Unique Learners Number',
+              field: 'uniqueLearnersNumber',
+              sort: 'asc'
+            },
+            {
+              label: 'Competency Level',
+              field: 'competencyLevel',
               sort: 'asc'
             }
           ],     
           rows: []
         },
-        providerDataSet: {
-          columns: [
-            {
-              label: 'Center Number',
-              field: 'centernumber',
-              sort: 'asc'
-            },
-            {
-              label: 'Center Name',
-              field: 'centername',
-              sort: 'asc'
-            }
-          ],     
-          rows: []
-        },
-        apprentishipDataSet: {
-          columns: [
-            {
-              label: 'Apprentiship Place',
-              field: 'apprentishipplace',
-              sort: 'asc'
-            },
-            {
-              label: 'Supervisor Name',
-              field: 'supervisior',
-              sort: 'asc'
-            },
-            {
-              label: 'Supervisor Phone Number',
-              field: 'supervisornumber',
-              sort: 'asc'
-            },
-            {
-              label: 'Apprentiship Status',
-              field: 'apprentishipstatus',
-              sort: 'asc'
-            },
-            {
-              label: 'Apprentice Performance',
-              field: 'performance',
-              sort: 'asc'
-            }
-
-          ],     
-          rows: []
-        },
-       artisansMasterDataSet: {
+        artisansMasterDataSet: {
           columns: [
             {
               label: 'Photo',
@@ -274,25 +408,21 @@ const firebaseConfig = {
               label: 'Bio Data',
               field: 'persona',
               sort: 'asc'
-            },
-            {
-              label: 'Provider',
-              field: 'provider',
-              sort: 'asc'
-            },
-            {
-              label: 'Apprentiship',
-              field: 'apprentiship',
-              sort: 'asc'
-            },
+            }
           ],
           rows: []
         }
-
       }
      },
+    beforeDestroy() {
+      clearInterval(this.timer)
+      this.timer = null
+    },
+    mounted(){
+      this.loadTrainingProviders();
+    },
     computed: {
-        ...mapGetters({successState: 'artisan/getSuccessState',errorState: 'artisan/getErrorState',localgovernment: 'artisan/getLocalGovernment',personaId: 'artisan/getArtisanId'}),
+        ...mapGetters({trainingProviders: 'program/getTraininProviders',successState: 'artisan/getSuccessState',errorState: 'artisan/getErrorState',localgovernment: 'artisan/getLocalGovernment',personaId: 'artisan/getArtisanId'}),
         getEventStatus(){
           if( this.totalFileSize  > 0){
            return this.filesLoaded = true; 
@@ -301,48 +431,103 @@ const firebaseConfig = {
         },
         processArtisans(){
           return this.artisansDataSet;
-        },
-        processArtisansProvider(){
-          return this.providerDataSet;
-        },
-        processArtisansApprentiship(){
-          return this.apprentishipDataSet;
         }
-
   //v-if="artisansDataSet.length > 0"
      },
     methods: {
-      ...mapActions({addPersona: 'artisan/addPersona',fetchLocalGovernment: 'artisan/loadLocalGovernment',addCenter: 'artisan/addCenter',addEmployment: 'artisan/addEmployment',addEducation: 'artisan/addEducation',addApprentiship: 'artisan/addApprentiship'}),
-      getResult: function () {
-          let imageUrl;
-          let uuid = uuidv4();
-          const canvas = this.$refs.clipper.clip();//call component's clip method
-          this.resultURL = canvas.toDataURL("image/jpg", 1);//canvas->image
-          this.isImageCliped = true;
+      ...mapActions({registerArtisan: 'artisan/registerArtisan',loadProviders: 'program/loadTrainingProviders'}),
+      batchAtisans(i){
 
-          let filename = this.image.name
-          const metadata = { contentType: this.image.type };
-          let ext = filename.slice(filename.lastIndexOf('.'))
-          const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
-          task.then(snapshot => snapshot.ref.getDownloadURL())
-         .then(function(url){this.personaForm.photo = url; console.log("testimonialImage:"+url)})
-         .catch(console.error);
+          var imageObj = this.images[i] 
+          
+          this.artisanPersona = this.artisansDataSet.rows[i]
 
+              if(typeof this.artisanPersona !== 'undefined'){
+              
+              if(typeof this.artisanPersona.emailAddress !== 'undefined'){
+                  let date = new Date()
+                  let artisan = {
+                    firstName: this.artisanPersona.firstName,
+                    middleName: this.artisanPersona.middleName,
+                    lastName: this.artisanPersona.lastName,
+                    gender: this.artisanPersona.gender,
+                    dateOfBirth: this.artisanPersona.dateOfBirth,
+                    disabilityType: this.artisanPersona.disabilityType,
+                    phoneNumber: "+234"+this.artisanPersona.phoneNumber.replace(/^0+/, ''),
+                    emailAddress: this.artisanPersona.emailAddress,
+                    contactAddress: this.artisanPersona.contactAddress,
+                    cityOfResidence: this.artisanPersona.cityOfResidence,
+                    stateOfResidence: this.artisanPersona.stateOfResidence,
+                    centerOfGraduation: this.artisanPersona.centerOfGraduation,
+                    trade: this.artisanPersona.trade,
+                    uniqueLearnersNumber: this.artisanPersona.uniqueLearnersNumber,
+                    competencyLevel: this.artisanPersona.competencyLevel,
+                    dateRegistered: date,
+                    photo: this.photoUrl
+                }
+                this.storePhotoOnFirebase(imageObj.base64,artisan); 
+              }
+          }
       },
-      processArtisansPreview(){
+      processBatch(){
+         this.isButtonDisabled = true
+         this.uploadCompleted = !this.this.uploadCompleted
+        this.timer = setInterval(() => {
+          if(this.value == this.max && this.value > 0){
+             this.isCompleted = true
+             this.isButtonDisabled = false
+              clearInterval(this.timer)
+              this.timer = null
+          }else{
+            if(this.uploadCompleted){
+             this.batchAtisans(this.value);
+            }
+          }
+        }, 2000)
+      },
+      stopBatchProcess(){
+        this.errorOcurred = true
+        clearInterval(this.timer)
+        this.timer = null
+      },
+      setNextValue(){
+        this.uploadCompleted = !this.uploadCompleted
+        this.value ++
+      },
+     loadTrainingProviders(){
+        this.loadProviders().then((ev) => {})
+      },
+      processArtisansPreview(){ 
         for(var i = 0; i < this.totalFileSize; i++ ){
           var imageObj = this.images[i]
-          var artisanPersona = this.artisansDataSet.rows[i]
-          var artisanProvider = this.providerDataSet.rows[i]
-          var artisanApprentiship = this.apprentishipDataSet.rows[i] 
+          this. artisanPersona = this.artisansDataSet.rows[i]
           var obj = {
             avatar: '<img class="img-fluid rounded-circle" style="max-width: 80px;" src="'+imageObj.base64+'"/>',
-            persona: '<ul><li>'+artisanPersona.surname+'</li><li>'+artisanPersona.firstname+'</li><li>'+artisanPersona.lastname+'</li></ul>',
-            provider: '<ul><li>'+artisanProvider.centernumber+'</li><li>'+artisanProvider.centername+'</li></ul>',
-            apprentiship: '<ul><li>'+artisanApprentiship.apprentishipplace+'</li><li>'+artisanApprentiship.supervisior+'</li><li>'+artisanApprentiship.supervisornumber+'</li><li>'+artisanApprentiship.apprentishipstatus+'</li><li>'+artisanApprentiship.performance+'</li></ul>',
+            
+            persona: '<ul>'+
+            '<li>'+this.artisanPersona.sn+'</li>'+
+            '<li>'+this.artisanPersona.firstName+'</li>'+
+            '<li>'+this.artisanPersona.middleName+'</li>'+
+            '<li>'+this.artisanPersona.lastName+'</li>'+
+            '<li>'+this.artisanPersona.gender+'</li>'+
+            '<li>'+this.artisanPersona.dateOfBirth+'</li>'+
+            '<li>'+this.artisanPersona.disabilityType+'</li>'+
+            '<li>'+this.artisanPersona.phoneNumber+'</li>'+
+            '<li>'+this.artisanPersona.emailAddress+'</li>'+
+            '<li>'+this.artisanPersona.contactAddress+'</li>'+
+            '<li>'+this.artisanPersona.cityOfResidence+'</li>'+
+            '<li>'+this.artisanPersona.stateOfResidence+'</li>'+
+            '<li>'+this.artisanPersona.centerOfGraduation+'</li>'+
+            '<li>'+this.artisanPersona.trade+'</li>'+
+            '<li>'+this.artisanPersona.uniqueLearnersNumber+'</li>'+
+            '<li>'+this.artisanPersona.competencyLevel+'</li>'+
+            '</ul>',
           }
+
           this.artisansMasterDataSet.rows.push(obj);
         }
+        
+
         return this.artisansMasterDataSet;
       },
       removeAllFiles: function(){
@@ -375,16 +560,13 @@ const firebaseConfig = {
 
               const fileReader =  new FileReader()
               fileReader.addEventListener('load',() =>{
-                 this.images.push({image: files[i],base64: fileReader.result})
+                 this.images.push({base64: fileReader.result})
               })
               fileReader.readAsDataURL(files[i])
             
           }
          //this.files = this.fileData.getAll('input_name[]')
          //this.myFunction();
-        },
-        createAvatarObject(files, boa){
-           this.images.push({base64: boa})
         },
         dataURItoBlob: function(dataURI) {
             // convert base64/URLEncoded data component to raw binary data held in a string
@@ -411,27 +593,22 @@ const firebaseConfig = {
           request.open("POST", "./upload");
           request.send(formData);
         },
-      storePhoto: function () {
-          let uuid = uuidv4();
-          let filename = this.image.name
-          const metadata = { contentType: this.image.type };
-          let ext = filename.slice(filename.lastIndexOf('.'))
-          const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
-          task.then(snapshot => snapshot.ref.getDownloadURL())
-         .then(function(url){this.personaForm.photo = url; console.log("testimonialImage:"+url)})
-         .catch(console.error);
-      },
-      storeTestimonial: function () {
-          let uuid = uuidv4();
+      storePhotoOnFirebase(base64,artisan) {
+        let image  =  this.dataURItoBlob(base64)
 
-          let filename = this.testimonialImage.name
-          const metadata = { contentType: this.testimonialImage.type };
-          let ext = filename.slice(filename.lastIndexOf('.'))
-          const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.testimonialImage, metadata);
-          task.then(snapshot => snapshot.ref.getDownloadURL())
-         .then(function(url){this.apprentishipForm.certificateTestimonial = url; console.log("testimonialImage:"+url)}
-         )
-         .catch(console.error);
+        let uuid = uuidv4();
+         let logoURL = ''
+         const metadata = { contentType: image.type };
+         const task = firebase.app().storage().ref('profile/'+uuid+".png").put(image, metadata);
+         return task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => this.getPhotoUrl(url)).then(k => this.registerArtisan(artisan)).then(e => this.setNextValue()).catch(e => this.stopBatchProcess());  
+
+      },
+      getPhotoUrl(url){
+        if(url.length > 0){
+          this.uploadCompleted = !this.uploadCompleted
+          return this.photoUrl = url
+        }
+        return this.photoUrl;
       },
       onFileChange(e) {
         var files = e.target.files || e.dataTransfer.files;
@@ -450,26 +627,38 @@ const firebaseConfig = {
 
           let arrayOfRows = XLSX.utils.sheet_to_json(worksheet, {header: 1})
 
-          for(var i = 0; i<= arrayOfRows.length-1; i++) {
-            let pObj = {
-              surname: `${arrayOfRows[i][0]}`,
-              firstname: `${arrayOfRows[i][1]}`,
-              lastname: `${arrayOfRows[i][2]}`,
+             
+          for(var i = 1; i<= arrayOfRows.length -1; i++) {
+
+            if (typeof arrayOfRows[i][0] !== 'undefined'){
+
+            let artisanObject = {
+              sn: `${arrayOfRows[i][0]}`,
+              firstName: `${arrayOfRows[i][1]}`,
+              middleName: `${arrayOfRows[i][2]}`,
+              lastName: `${arrayOfRows[i][3]}`,
+              gender: this.form.gender,
+              dateOfBirth: `${arrayOfRows[i][5]}`,
+              disabilityType: `${arrayOfRows[i][6]}`,
+              phoneNumber: `${arrayOfRows[i][7]}`,
+              emailAddress: `${arrayOfRows[i][8]}`,
+              contactAddress: `${arrayOfRows[i][9]}`,
+              cityOfResidence: `${arrayOfRows[i][10]}`,
+              stateOfResidence: this.form.stateOfResidence,
+              centerOfGraduation: this.form.centerOfGraduation,
+              trade: this.form.trade,
+              uniqueLearnersNumber: `${arrayOfRows[i][14]}`,
+              competencyLevel: this.form.competencyLevel
             };
 
-            let centerObj = {
-              centername: `${arrayOfRows[i][3]}`
-            };
-
-            let artObj = {
-              //forgot what the last property name is, hence named it art.
-              apprentishipplace: `${arrayOfRows[i][4]}`
-            };
-            this.artisansDataSet.rows.push(pObj);
-            this.providerDataSet.rows.push(centerObj);
-            this.apprentishipDataSet.rows.push(artObj);
-
+            this.artisansDataSet.rows.push(artisanObject);
+            }
           }
+          this.max = this.artisansDataSet.rows.length;
+          if(this.max > 0){
+            this.isBatchReady = true
+          }
+          console.log("total number of artisans:"+this.artisansDataSet.rows.length)
         };
         reader.readAsArrayBuffer(file);
       },
@@ -485,7 +674,29 @@ const firebaseConfig = {
       },
 
       onPickFile(){
+
+        if(!this.form.gender){
+           this.$bvModal.msgBoxOk('Gender is required.')
+          return false
+        }
+        else if(!this.form.stateOfResidence){
+         this.$bvModal.msgBoxOk('State of residence is required.')
+          return false
+        }
+        else if(!this.form.trade){
+         this.$bvModal.msgBoxOk('Trade is required.')
+          return false
+        }
+        else if(!this.form.centerOfGraduation){
+         this.$bvModal.msgBoxOk('Center of graduation is required.')
+          return false
+        }
+        else if(!this.form.competencyLevel){
+         this.$bvModal.msgBoxOk('Competency level is required.')
+          return false
+        }else{
         this.$refs.fileInput.click()
+        }
       },
       onFilePicked(event){
 
@@ -531,7 +742,7 @@ const firebaseConfig = {
         })
       },
      onComplete: function(){
-          alert('Yay. Done!');
+          this.$router.go();
      },
      changedValue(){
         this.fetchLocalGovernment(this.personaForm.state_origin).then(e => { 

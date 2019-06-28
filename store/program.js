@@ -4,6 +4,7 @@ export const state = () => ({
     programFormReset: false,
     programs:  [],
     programProviders: [],
+    traininigProviders: [],
     isContentLoading: true,
   })
   
@@ -23,6 +24,9 @@ export const state = () => ({
     setProgramProviders (state,data){
       state.programProviders = data
     },
+    setTraininProviders (state,data){
+      state.traininigProviders = data
+    },
     changeLoaderStatus(state){
       state.isContentLoading = !state.isContentLoading;
     } 
@@ -37,9 +41,11 @@ export const state = () => ({
   
     getPrograms: state => state.programs,
   
-    getProgramProvider: state => state.programProviders,
+    getProgramProviders: state => state.programProviders,
 
-    getLoaderStatus: state => state.isContentLoading
+    getLoaderStatus: state => state.isContentLoading,
+
+    getTraininProviders: state => state.traininigProviders
   }
   
   export const actions= {
@@ -66,14 +72,9 @@ export const state = () => ({
        this.$axios.$post(herokuUrl,programProviderData)
         .then(function (response) {        
         vuexContext.commit('successToggle')
-        vuexContext.dispatch('resetSuccess')
       })
         .catch(function (error) {
           vuexContext.commit('errorToggle')
-          vuexContext.dispatch('resetError')
-        })
-        .finally(function () {
-          vuexContext.commit('changeFormState')
         });
       },
   
@@ -93,8 +94,8 @@ export const state = () => ({
         });
       },
   
-      loadTradeProgramProvider(vuexContext){
-        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/program/provider/getall';
+      loadTradeProgramProvider(vuexContext,id){
+        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/program/provider/'+id;
        this.$axios.$get(herokuUrl)
         .then(function (response){
          // let data = JSON.parse(response);
@@ -109,7 +110,22 @@ export const state = () => ({
         });
   
       },
-  
+      loadTrainingProviders(vuexContext){
+        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/getall';
+       this.$axios.$get(herokuUrl)
+        .then(function (response){
+         // let data = JSON.parse(response);
+          vuexContext.commit('setTraininProviders',response);
+          vuexContext.commit('changeLoaderStatus')
+          //console.log("provider:"+response)
+        })
+        .catch(function (error) {
+          console.log("provider fails to load")
+        })
+        .finally(function () {
+        });
+      },
+
       toggleFormState(vuexContext) {
         vuexContext.commit('changeFormState')
       },

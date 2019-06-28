@@ -1,6 +1,6 @@
 <template>
  <div class="animated fadeIn">
-  <FlashMessage></FlashMessage>
+  <vue-up></vue-up> 
   <section style="background: #ededed; padding-bottom: 100px">
     <!-- Purple Header -->
     <mdb-edge-header style="background-color: #2BBBAD"/>
@@ -176,6 +176,7 @@ const firebaseConfig = {
       return re.test(email);
       },
       create() { 
+
       if(!this.form.companyName) {
         this.$bvModal.msgBoxOk('Company name required.')
         return false;
@@ -192,6 +193,10 @@ const firebaseConfig = {
 
       }else{
         this.providerFormReset = !this.providerFormReset
+        if(this.image == null){
+          this.saveProfile('');
+        }else{
+
           let uuid = uuidv4();
           let logoURL = ''
           let filename = this.image.name || ''
@@ -201,25 +206,41 @@ const firebaseConfig = {
           const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
           task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => this.saveProfile(url))
          .catch(console.error);
+        
+        }
+
        } 
+      },
+      showSuccessState(){
+        this.$popup({
+          message         : "GOT IT done!",
+          backgroundColor : 'rgba(0, 0, 0, 0.7)',
+          color           : '#00c853'
+        })
+        .then(() => {
+          console.log('finished')
+        })
+      },
+      showErrorState(){
+        this.$popup({
+          message         : "Oops! error occur",
+          backgroundColor : 'rgba(244, 67, 54, 0.7)',
+          color           : '#d50000'
+        })
+        .then(() => {
+          console.log('finished')
+        })
       },
      resetForm(){
           this.providerFormReset = !this.providerFormReset  
-          this.watchSuccessState();
-          this.watchErrorState();
-          
-      },
-      watchSuccessState(){
           if(this.successState){
-            this.flashMessage.success({title: 'GOT IT', message: 'Training Provider registered successfully',icon: true});
-            this.form.companyName = this.form.companyAcronym = this.form.companyAddress = this.form.companyEmail = this.form.companyTelephone = '';
+              this.showSuccessState();
           }
-        },
-        watchErrorState(){ 
           if(this.errorState){
-            this.flashMessage.error({title: 'Oops!: ', message: 'Training Provider failed to register. Try again',icon: true});
+            this.showErrorState()
           }
-        },
+          this.form.companyName = this.form.companyAcronym = this.form.companyAddress = this.form.companyEmail = this.form.companyTelephone = '';
+      },
       onPickFile(){
         this.$refs.fileInput.click()
       },

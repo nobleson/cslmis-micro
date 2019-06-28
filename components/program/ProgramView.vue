@@ -20,8 +20,9 @@
               <div>
                 <mdb-card class="chart-card">
                   <mdb-card-body class="pb-0">
-                    <mdb-card-title class="font-weight-bold">{{program.programName}}</mdb-card-title>
+                    <mdb-card-title class="font-weight-bold">{{program.programName}}<mdb-btn color="success" @click="$emit('changeComponent',{component:'NewProgramTrainingProvider',data: program})" class="pull-right" >Add Training Provider</mdb-btn></mdb-card-title>
                     <p class="card-text mb-4">{{program.programDescription}}</p>
+                    
                     <div class="d-flex justify-content-between mb-4">
                       <p><mdb-icon icon="calendar" size="lg" class="text-info pr-2"/>{{program.programYear}}</p>
                       <p><mdb-icon icon="time" size="lg" class="grey-text pr-2"/>{{program.programDuration}}</p>
@@ -29,27 +30,24 @@
                       <hr class="my-4">
                       <p class="lead"><strong>All Trainees</strong></p>
                     <div class="d-flex justify-content-between">
-                      <p class="display-4 align-self-end">887</p>
+                      <p class="display-4 align-self-end">0</p>
                     </div>
                     <hr class="my-4">
                       <p class="lead"><strong>All Training Providers</strong></p>
                     <div class="d-flex justify-content-between">
-                      <p class="display-4 align-self-end">100</p>
+                      <p class="display-4 align-self-end">{{getProgramProviderData(program._id)}}</p>
                     </div>             
-                    <div>
-                      <b-form-select v-model="selected" :options="options" multiple :select-size="4"></b-form-select>
-                      <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
-                    </div>
-                  <mdb-btn color="success">Add Provider</mdb-btn>
                   </mdb-card-body>
                   <mdb-card>
                     <mdb-card-body>
                       <div>
+                         <mdb-tbl style="overflow-y: auto; overflow-x: auto">
                           <mdb-datatable
-                            :data="providersData"
+                            :data="programProviderDataSet"
                             striped
                             bordered
                           />
+                       </mdb-tbl>  
                       </div>
                     </mdb-card-body>
                   </mdb-card>
@@ -65,9 +63,9 @@
           </mdb-tab-pane>
           <mdb-tab-pane class="fade" key="show2" v-if="pillsActive==1" style="min-height: 700px; overflow-y: auto;">
             <mdb-card>
-                  <mdb-tbl style="overflow-y: auto; overflow-x: hidden">
+                  <mdb-tbl style="overflow-y: auto; overflow-x: auto">
                     <mdb-datatable
-                      :data="processTableData"
+                      :data="getProgramData"
                       striped
                       bordered
                       materialInputs
@@ -140,7 +138,27 @@ export default {
           { value: 'f', text: 'This is option f' },
           { value: 'g', text: 'This is option g' }
         ],
-        dataSet: {
+        programProviderDataSet: {
+          columns: [
+            {
+              label: 'S/N',
+              field: 'id',
+              sort: 'asc'
+            },
+            {
+              label: 'Provider Name',
+              field: 'name',
+              sort: 'asc'
+            },
+            {
+              label: 'Date Registered',
+              field: 'dateRegistered',
+              sort: 'asc'
+            }
+          ],     
+          rows: []
+        },
+        programDataSet: {
           columns: [
             {
               label: 'Program Name',
@@ -163,69 +181,44 @@ export default {
               sort: 'asc'
             },
             {
-              label: 'Date Created',
+              label: 'Date Registered',
               field: 'dateRegistered',
               sort: 'asc'
             }
+
           ],     
           rows: []
-        },
-        providersData: {
-          columns: [{
-              label: 'Provider No.',
-              field: 'id',
-              sort: 'asc'
-            },
-            {
-              label: 'Name',
-              field: 'name',
-              sort: 'asc'
-            },
-            {
-              label: 'Date Registered',
-              field: 'date',
-              sort: 'asc'
-            },],
-          rows: [
-            {
-              id: '57373738',
-              name: 'Avaken',
-              date: '07/12/2018'
-            },
-            {
-              id: '020292',
-              name: 'Sev-Av',
-              date: '04/07/2017'
-            },
-            {
-              label: '342522',
-              field: 'TY-Fuandation',
-              sort: '03/03/2019'
-            },]
         }
-
       }
     }, 
     mounted(){
       this.create();
     },
     computed: {
-          ...mapGetters({program: 'program/getPrograms',isContentLoading :'program/getLoaderStatus'}),
-          processPrograms: function(){
-          let json = JSON.parse(JSON.stringify(this.program));
-          console.log("Json:"+json);
+          ...mapGetters({program: 'program/getPrograms',isContentLoading :'program/getLoaderStatus',programProviders: 'program/getProgramProviders'}),
+          processPrograms(){
+             let json = JSON.parse(JSON.stringify(this.program));
            return  json;
           },
-          processTableData: function(){
-          this.dataSet.rows = this.program;
-          //console.log("Json:"+json);
-           return  this.dataSet;
+          getProgramData(){
+             this.programDataSet.rows = this.program;
+             return this.program;
           }
+
     },
     methods: {
-      ...mapActions({loadTradePrograms: 'program/loadTradePrograms'}),
+      ...mapActions({loadTradePrograms: 'program/loadTradePrograms',loadProgramProviders: 'program/loadTradeProgramProvider'}),
         create() {
           this.loadTradePrograms().then((ev) => {})
+       },
+        getProgramProviderData(id){
+            this.providers(id)
+            this.programProviderDataSet.rows = this.programProviders.programTrainingProviders;
+            return this.programProviders.programTrainingProviders.length;
+        },
+       providers(id){
+
+          this.loadProgramProviders(id).then((ev) => {})
        },
       linkClass(idx) {
         if (this.tabIndex === idx) {
