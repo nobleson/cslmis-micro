@@ -2,84 +2,120 @@
   <section id="dashboard">
     <mdb-card class="mb-4">
       <mdb-card-body>
-    <div class="search">
-      <div class="form-group has-search">
-        <span class="fa fa-search form-control-feedback"></span>
-        <input type="text" class="form-control" placeholder="Search">
-     </div>
-     </div>
+     <div class="search"> 
+       <div class="wrapper">
+       <input type="text"  v-model="isSearchResult" placeholder="Search" class="rounded">          
+          <b-button>Search</b-button>
+          </div>
+       <div v-if="isSearchResult">
+          <mdb-card>
+            <mdb-card-header>Search results</mdb-card-header>
+            <mdb-card-body>
+              <mdb-table>
+                <tr>
+                  <td>Centers</td>
+                </tr>
+                <tr>
+                  <td>Assesors</td>
+                </tr>
+              </mdb-table>
+            </mdb-card-body>
+          </mdb-card>
+          </div>
+        <div v-if="isSearchHasNoResult">
+          <mdb-card>
+            <mdb-card-header>No search result found</mdb-card-header>
+            <mdb-card-body>
+              <mdb-table>
+                <tr>
+                  <td>{{isSearchResult}}</td>
+                </tr>
+               
+              </mdb-table>
+            </mdb-card-body>
+          </mdb-card> 
+          </div>
+          </div>
       </mdb-card-body>
     </mdb-card>
     <section class="mt-lg-5">
       <mdb-row>
         <mdb-col xl="3" md="6" class="mb-r">
-          <mdb-card cascade class="cascading-admin-card">
+          <mdb-card cascade class="cascading-admin-card secondary-color">
             <div class="admin-up">
               <mdb-icon icon="users" class="primary-color"/>
               <div class="data">
-                <strong>Currently on Training</strong>
+                <p>Currently on Training</p>
                 <h4>
-                  <strong>2000</strong>
+                  <p>2000</p>
                 </h4>
               </div>
             </div>
             <mdb-card-body>
-              <strong> Trainees </strong>
-            </mdb-card-body>
+              <div class="data">
+              <p>Trainees</p>
+              </div>
+          </mdb-card-body>
           </mdb-card>
         </mdb-col>
         <mdb-col xl="3" md="6" class="mb-r">
-          <mdb-card cascade class="cascading-admin-card">
+          <mdb-card cascade class="cascading-admin-card primary-color">
             <div class="admin-up">
-              <mdb-icon icon="users" class="warning-color"/>
+              <mdb-icon icon="users" class="green accent"/>
               <div class="data">
-                <strong>Total Trainers</strong>
+                <p>Total Trainers</p>
                 <h4> 
-                  <strong>500</strong>
+                  <p>500</p>
                 </h4>
               </div>
             </div>
             <mdb-card-body>
-              <strong>Trainers</strong>
+              <div class="data">
+              <p>Trainers</p>
+              </div>
             </mdb-card-body>
           </mdb-card>
         </mdb-col>
         
         <mdb-col xl="3" md="6" class="mb-r">
-          <mdb-card cascade class="cascading-admin-card">
+          <mdb-card cascade class="cascading-admin-card red accent-2">
             <div class="admin-up">
               <mdb-icon icon="users" class="secondary-color" />
               <div class="data">
-                <p><strong>Currently on Apprentiship</strong></p>
+                <p>On Apprentiship</p>
                 <h4> 
-                  <strong>7000</strong>
+                  <p>7000</p>
                 </h4>
               </div>
             </div>
             <mdb-card-body>
-              <strong>Apprentice</strong>
+              <div class="data">
+              <p>Apprentice</p>
+              </div>
             </mdb-card-body>
           </mdb-card>
         </mdb-col>
         <mdb-col xl="3" md="6" class="mb-r">
-          <mdb-card cascade class="cascading-admin-card">
+          <mdb-card cascade class="cascading-admin-card green accent 2">
             <div class="admin-up">
-              <mdb-icon icon="file-alt" class="light-blue lighten-1" />
+              <mdb-icon icon="lightbulb" class="light-blue lighten-1" />
               <div class="data">
-                <strong>Dev Programs</strong>
+                <p>Dev Programs</p>
                 <h4>
-                  <strong>21</strong>
+                  <p>21</p>
                 </h4>
               </div>
             </div>
             <mdb-card-body>
-              <strong>21 Total Programs</strong>
+              <div class="data">
+              <p>21 Total Programs</p>
+              </div>
             </mdb-card-body>
           </mdb-card>
         </mdb-col>
-        
       </mdb-row>
     </section>
+    <!--- Chart Section ---->
     <section>
       <mdb-row class="mt-5">
          <mdb-col md="6" class="mb-4">
@@ -157,7 +193,8 @@ export default {
   },
   data () {
     return {
-      
+      isSearchResult:null,
+      isSearchHasNoResult:false,
       barChartData: {
         labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
         datasets: [
@@ -322,12 +359,15 @@ export default {
   text-align: right;
 }
 .admin-up .data p {
-  color: black;
-  font-size: 12px;
+  color:white;
+  font-size: 20px;
 }
-.admin-up1 .data p {
-  color: black;
- 
+.admin-up1 .data1 p {
+  color: white;
+}
+.data{
+  color:white;
+  font-size: 20px;
 }
 .classic-admin-card .card-body {
   color: #fff;
@@ -356,6 +396,10 @@ export default {
 }
 .search {
     width: 60%;
-    margin: 15px auto;
+    margin: 20px auto;
+   
 }
+
+
+
 </style>
