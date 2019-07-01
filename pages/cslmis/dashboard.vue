@@ -116,12 +116,12 @@
               <div class="pull-right">
                 <img src="~/assets/images/favicon-32x32.png"/>
               </div>
-              <p class="white-text">Regulartory Bodies</p>
+              <p class="white-text">Regulatory Bodies</p>
               <h4><strong>2000</strong></h4>
             </mdb-card-body>
             
             <mdb-card-body>
-              <p>Available Regulartory Bodies </p>
+              <p>Available Regulatory Bodies </p>
             </mdb-card-body>
           </mdb-card>
         </mdb-col>
