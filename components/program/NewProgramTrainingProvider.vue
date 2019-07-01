@@ -33,7 +33,7 @@
                                 <b-spinner small v-if="formReset === true"></b-spinner>
                                 <span class="sr-only" v-if="formReset === true">Wait...</span>
                                 </mdb-btn>
-                            </form>                         
+                            </form> 
                         </div>
           </mdb-card-body>
           </mdb-card>
@@ -71,14 +71,16 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
       return {
           form: {
             _id:'',
-            programTrainingProviders: {
-                id: '',
-                name: '',
-                dateRegistered: ''
-            },
+            programTrainingProviders: [],
+          },
+          provider: {
+            id: '',
+            name: '',
+            dateRegistered: ''
           },
           selected: '',
-          formReset: false
+          formReset: false,
+          alreadyExist: false
           
       }
     },
@@ -86,10 +88,10 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
         this.loadTrainingProviders();
     },
     computed: {
-        ...mapGetters({trainingProviders: 'program/getTraininProviders',successState: 'program/getSuccessState',errorState: 'program/getErrorState'})
+        ...mapGetters({trainingProviders: 'program/getTraininProviders',successState: 'program/getSuccessState',errorState: 'program/getErrorState',programProviderList: 'program/getProgramProvider'})
     }, 
     methods: {
-      ...mapActions({registerTradeProgramProviders: 'program/registerTradeProgramProviders',loadProviders: 'program/loadTrainingProviders'}),
+      ...mapActions({init: 'program/initProgramProvider',registerTradeProgramProviders: 'program/register',updateProgramProviderData: 'program/updateProgramProviders',loadProviders: 'program/loadTrainingProviders',loadProgramDetails: 'program/loadProgramDetails'}),
 
       create() { 
 
@@ -98,50 +100,110 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
         return false;
       }else{
          this.formReset = !this.formReset 
-         this.registerTradeProgramProviders(this.form).then(e => this.resetForm()).catch(console.error);
+         this.addProgramProvider()
       } 
       },
-      showSuccessState(){
-        this.$popup({
-          message         : "GOT IT done!",
-          backgroundColor : 'rgba(0, 0, 0, 0.7)',
-          color           : '#00c853'
-        })
-        .then(() => {
-          console.log('finished')
-        })
-      },
-      showErrorState(){
-        this.$popup({
-          message         : "Oops! error occur",
-          backgroundColor : 'rgba(244, 67, 54, 0.7)',
-          color           : '#d50000'
-        })
-        .then(() => {
-          console.log('finished')
-        })
-      },
       getData(){
-                var date = new Date()    
-                this.form._id = this.programData._id
-                this.form.programTrainingProviders.id = this.selected.id
-                this.form.programTrainingProviders.name = this.selected.name
-                this.form.programTrainingProviders.dateRegistered = date
+          this.alreadyExist = false
+          var date = new Date()    
+          this.provider.id = this.selected.id
+          this.provider.name = this.selected.name
+          this.provider.dateRegistered = date
 
       },
+       addProgramProvider(){
+         this.init().then(status => this.checkStatus(status));
+       },
+       checkStatus(status){
+         if(status == 0){
+           this.processPostForm()
+
+         }else{
+           let self = this
+           this.loadProgramDetails(this.programData._id).then(function (e){
+            console.log("process:"+self.programProviderList.programTrainingProviders)           
+            for(var i = 0; i < self.programProviderList.programTrainingProviders.length; i++){
+                  var objProvider = self.programProviderList.programTrainingProviders[i]
+                  if(objProvider.id == self.selected.id){
+                    self.alreadyExist = true
+                  }
+                }
+                self.processPutForm()
+           })
+
+            //console.log("process put form")
+         }
+       },
+       processPostForm(){
+         let self = this;
+         return new Promise(
+           function(resolve , reject){
+              self.form._id = self.programData._id
+              self.form.programTrainingProviders.push(self.provider)
+              resolve(self.form)           
+         }).then(form =>self.registerTradeProgramProviders(form)).then(e => self.resetForm(e)).catch(function (error){});;
+       },
+       processPutForm(){
+         let self = this;
+         return new Promise(
+           function(resolve , reject){
+
+            if(self.alreadyExist){
+              self.formReset = !self.formReset 
+              self.$bvModal.msgBoxOk('Training Provider selected already exist on this program.')
+            }else{
+              self.form._id = self.programData._id
+             // self.form.programTrainingProviders = self.programProviderList.programTrainingProviders
+             for(var i = 0; i < self.programProviderList.programTrainingProviders.length; i++){
+                  var objProvider = self.programProviderList.programTrainingProviders[i]
+                  self.form.programTrainingProviders.push(objProvider) 
+                } 
+
+              self.form.programTrainingProviders.push(self.provider)
+              resolve(self.form)    
+            }       
+         }).then(form =>self.updateProgramProviderData(form)).then(e => self.resetForm(e)).catch(function (error){});;
+       },
+
       loadTrainingProviders(){
         this.loadProviders().then((ev) => {})
       },
-      resetForm(){
-          if(this.successState){
-              this.showSuccessState();
+     resetForm(status){
+          this.formReset = !this.formReset   
+          console.log("status:"+status)
+         if(status == 'success'){
+            this.showSuccessMsg();
+            this.selected = ''
           }
-          if(this.errorState){
-              this.showErrorState()
+          else if(status == 'error'){
+            this.showErrorMsg();
           }
-          this.formReset = !this.formReset    
-          this.selected = ''
+          
+      },
+      showSuccessMsg() {
+          this.$bvModal.msgBoxOk('Data was submitted successfully', {
+          title: 'GOT IT',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'success',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
+          centered: true
+        });
+      },
+      showErrorMsg() {
+          this.$bvModal.msgBoxOk('Data fail to submit. Try it again', {
+          title: 'Oops! Error Occured',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
+          centered: true
+        });        
       }
+
+
 
     }
   }

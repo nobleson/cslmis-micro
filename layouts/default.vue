@@ -15,7 +15,6 @@
           <b-dropdown-item @click="logout" href="#">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
-
     </AppHeader>
     <div class="app-body">
       <AppSidebar :navItems="nav" style="background-color: #00695c"></AppSidebar>

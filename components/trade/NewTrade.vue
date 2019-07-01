@@ -5,7 +5,11 @@
   <section style="background: #ededed; padding-bottom: 100px">
     <!-- Purple Header -->
     <mdb-edge-header style="background-color: #2BBBAD"/>
-
+    <b-modal ref="my-modal" hide-footer title="Using Component Methods">
+      <div class="d-block text-center">
+        <h3>Hello From My Modal!</h3>
+      </div>
+    </b-modal>
     <!-- Card Container -->
     <mdb-container free-bird>
       <mdb-row>
@@ -109,7 +113,7 @@ import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
       ...mapActions({registerTrade: 'trade/registerTrade'}),
 
       create() { 
-      if(!this.form.tradeName) {
+       if(!this.form.tradeName) {
         this.$bvModal.msgBoxOk('Name required.')
         return false;
       }
@@ -117,28 +121,44 @@ import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
         this.$bvModal.msgBoxOk('Description required.')
         return false;
       }else{ 
-         this.formReset = !this.formReset 
-        this.registerTrade(this.form).then(e =>this.resetForm()).catch(console.error);
-      }
+        this.formReset = !this.formReset 
+        this.registerTrade(this.form).then(e =>this.resetForm()).catch(function (error){});
+      } 
 
       },
      resetForm(){
           this.formReset = !this.formReset   
-          this.watchSuccessState();
-          this.watchErrorState();
-          
-      },
-      watchSuccessState(){
-          if(this.successState){
-            this.flashMessage.success({title: 'GOT IT', message: 'Trade Created Successfully',icon: true});
+         if(this.successState){
+            this.showSuccessMsg();
             this.form.tradeName = this.form.tradeDecsription = '';
           }
-        },
-        watchErrorState(){ 
-          if(this.errorState){
-            this.flashMessage.error({title: 'Oops!: ', message: 'Trade  Fail to Create. Try again',icon: true});
+          else if(this.errorState){
+            this.showErrorMsg();
           }
-        },
+          
+      },
+      showSuccessMsg() {
+          this.$bvModal.msgBoxOk('Data was submitted successfully', {
+          title: 'GOT IT',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'success',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
+          centered: true
+        });
+      },
+      showErrorMsg() {
+          this.$bvModal.msgBoxOk('Data fail to submit. Try it again', {
+          title: 'Oops! Error Occured',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
+          centered: true
+        });        
+      }
 
     }
   }

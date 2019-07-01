@@ -28,14 +28,16 @@
                       <p><mdb-icon icon="time" size="lg" class="grey-text pr-2"/>{{program.programDuration}}</p>
                     </div>
                       <hr class="my-4">
-                      <p class="lead"><strong>All Trainees</strong></p>
                     <div class="d-flex justify-content-between">
-                      <p class="display-4 align-self-end">0</p>
+                      <mdb-btn outline="primary" class="display-4 align-self-end">
+                        <h5> All Trainees <span class="badge badge-danger ml-2">{{trainees}}</span></h5>
+                      </mdb-btn>
                     </div>
                     <hr class="my-4">
-                      <p class="lead"><strong>All Training Providers</strong></p>
                     <div class="d-flex justify-content-between">
-                      <p class="display-4 align-self-end">{{getProgramProviderData(program._id)}}</p>
+                      <mdb-btn outline="primary" class="display-4 align-self-end">
+                        <h5> All Training Providers <span class="badge badge-danger ml-2">{{trainingProviders}}</span></h5>
+                      </mdb-btn>
                     </div>             
                   </mdb-card-body>
                   <mdb-card>
@@ -43,7 +45,7 @@
                       <div>
                          <mdb-tbl style="overflow-y: auto; overflow-x: auto">
                           <mdb-datatable
-                            :data="programProviderDataSet"
+                            :data="getProvidersData"
                             striped
                             bordered
                           />
@@ -53,8 +55,9 @@
                   </mdb-card>
 
                 </mdb-card>
-
+                {{providers(program._id)}}
                 </div>
+                
               </b-col>
             </mdb-row>
             <div class="text-center" v-if="isContentLoading">
@@ -141,11 +144,6 @@ export default {
         programProviderDataSet: {
           columns: [
             {
-              label: 'S/N',
-              field: 'id',
-              sort: 'asc'
-            },
-            {
               label: 'Provider Name',
               field: 'name',
               sort: 'asc'
@@ -188,38 +186,61 @@ export default {
 
           ],     
           rows: []
-        }
+        },
+        trainingProviders: 0,
+        trainees: 0,
+        providersList: []
+
       }
     }, 
     mounted(){
       this.create();
     },
     computed: {
-          ...mapGetters({program: 'program/getPrograms',isContentLoading :'program/getLoaderStatus',programProviders: 'program/getProgramProviders'}),
-          processPrograms(){
-             let json = JSON.parse(JSON.stringify(this.program));
-           return  json;
+          ...mapGetters({program: 'program/getPrograms',isContentLoading :'program/getLoaderStatus',programProvider: 'program/getProgramProvider'}),
+          processPrograms: function(){
+             //let json = JSON.parse(JSON.stringify(this.program));
+           return  this.program;
           },
-          getProgramData(){
+          getProgramData: function(){
              this.programDataSet.rows = this.program;
-             return this.program;
-          }
+             return this.programDataSet;
+          },
+          getProvidersData: function(){
+              if(typeof this.programProvider.programTrainingProviders != 'undefined'){
+                 this.programProviderDataSet.rows = this.programProvider.programTrainingProviders; 
+              }
+             return this.programProviderDataSet;
+          },
 
     },
     methods: {
-      ...mapActions({loadTradePrograms: 'program/loadTradePrograms',loadProgramProviders: 'program/loadTradeProgramProvider'}),
+      ...mapActions({loadTradePrograms: 'program/loadTradePrograms',loadProgramProvider: 'program/loadTradeProgramProvider'}),
         create() {
           this.loadTradePrograms().then((ev) => {})
        },
-        getProgramProviderData(id){
-            this.providers(id)
-            this.programProviderDataSet.rows = this.programProviders.programTrainingProviders;
-            return this.programProviders.programTrainingProviders.length;
-        },
-       providers(id){
+       getProviderData(programProvider){
+         let self = this;
+         return new Promise(
+           function(resolve , reject){
+              if(typeof programProvider.programTrainingProviders != 'undefined'){
+                  self.trainingProviders =  programProvider.programTrainingProviders.length
+                  resolve( programProvider.programTrainingProviders)           
+                }else{
+                  reject("undefined")
+                }
+         }).catch(function (error){console.log(error.message)});
 
-          this.loadProgramProviders(id).then((ev) => {})
        },
+       providers(id){
+          this.loadProgramProvider(id).then(e => this.getProgramProviderDataset());
+       },
+        getProgramProviderDataset(){
+              if(typeof this.programProvider.programTrainingProviders != 'undefined'){
+              this.trainingProviders =  this.programProvider.programTrainingProviders.length
+              }
+        },
+
       linkClass(idx) {
         if (this.tabIndex === idx) {
           return ['bg-primary', 'text-light']

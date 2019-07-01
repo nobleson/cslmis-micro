@@ -49,14 +49,9 @@ export const state = () => ({
        this.$axios.$post(herokuUrl,tradeData)
         .then(function (response) {        
         vuexContext.commit('successToggle')
-        vuexContext.dispatch('resetSuccess')
       })
         .catch(function (error) {
           vuexContext.commit('errorToggle')
-          vuexContext.dispatch('resetError')
-        })
-        .finally(function () {
-          vuexContext.commit('changeFormState')
         });
       },
       registerTradeSkillLevel(vuexContext,tradeSkillData){
@@ -64,14 +59,9 @@ export const state = () => ({
        this.$axios.$post(herokuUrl,tradeSkillData)
         .then(function (response) {        
         vuexContext.commit('successToggle')
-        vuexContext.dispatch('resetSuccess')
       })
         .catch(function (error) {
           vuexContext.commit('errorToggle')
-          vuexContext.dispatch('resetError')
-        })
-        .finally(function () {
-          vuexContext.commit('changeFormState')
         });
       },
   
@@ -107,25 +97,9 @@ export const state = () => ({
         });
   
       },
-  
-      toggleFormState(vuexContext) {
-        vuexContext.commit('changeFormState')
-      },
-      toggleSucessAlert(vuexContext){
-        vuexContext.commit('successToggle')
-      },
-      toggleErrorAlert(vuexContext){
-        vuexContext.commit('errorToggle')
-      },
       checkTradeData(vuexContext){
        let data  = vuexContext.getters('getTrades')
        console.log("trade loaded:"+data)
-      },
-      resetSuccess(vuexContext) { 
-        setTimeout(function () {vuexContext.commit('successToggle');}, 5000);
-    },
-    resetError(vuexContext) { 
-      setTimeout(function () {vuexContext.commit('errorToggle');}, 5000);
-    }
+      }
   }
   
