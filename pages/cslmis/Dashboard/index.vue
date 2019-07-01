@@ -1,41 +1,14 @@
 <template>
   <section id="dashboard">
     <mdb-card class="mb-4">
-      <mdb-card-body>
-     <div class="search"> 
-       <div class="wrapper">
-       <input type="text"  v-model="isSearchResult" placeholder="Search" class="rounded">          
-          <b-button>Search</b-button>
-          </div>
-       <div v-if="isSearchResult">
-          <mdb-card>
-            <mdb-card-header>Search results</mdb-card-header>
-            <mdb-card-body>
-              <mdb-table>
-                <tr>
-                  <td>Centers</td>
-                </tr>
-                <tr>
-                  <td>Assesors</td>
-                </tr>
-              </mdb-table>
-            </mdb-card-body>
-          </mdb-card>
-          </div>
-        <div v-if="isSearchHasNoResult">
-          <mdb-card>
-            <mdb-card-header>No search result found</mdb-card-header>
-            <mdb-card-body>
-              <mdb-table>
-                <tr>
-                  <td>{{isSearchResult}}</td>
-                </tr>
-               
-              </mdb-table>
-            </mdb-card-body>
-          </mdb-card> 
-          </div>
-          </div>
+      <mdb-card-body class="d-sm-flex justify-content-between">
+        <h4 class="mb-sm-0 pt-2">
+         
+        </h4>
+        <form class="d-flex md-form justify-content-center" style="margin:0;">
+          <input aria-label="Search" class="form-control" placeholder="Type your query" type="search" />
+          <mdb-btn color="primary" size="sm" class="my-0" type="submit"><i class="fa fa-search"></i></mdb-btn>
+        </form>
       </mdb-card-body>
     </mdb-card>
     <section class="mt-lg-5">
