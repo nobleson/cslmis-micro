@@ -168,7 +168,7 @@
             </mdb-card-body>
           
             <mdb-card-body>
-              <p>Avialable Licensing Bodies</p>
+              <p>Available Licensing Bodies</p>
             </mdb-card-body>
           </mdb-card>
         </mdb-col>
