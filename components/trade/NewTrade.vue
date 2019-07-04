@@ -1,7 +1,6 @@
 
 <template>
  <div class="animated fadeIn">
-  <FlashMessage></FlashMessage>
   <section style="background: #ededed; padding-bottom: 100px">
     <!-- Purple Header -->
     <mdb-edge-header style="background-color: #2BBBAD"/>
@@ -122,44 +121,49 @@ import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
         return false;
       }else{ 
         this.formReset = !this.formReset 
-        this.registerTrade(this.form).then(e =>this.resetForm()).catch(function (error){});
+        this.registerTrade(this.form).then(e =>this.resetForm(e)).catch(function (error){});
       } 
 
       },
-     resetForm(){
+      resetForm(status){
           this.formReset = !this.formReset   
-         if(this.successState){
-            this.showSuccessMsg();
+        if(status == 'success'){
+              this.showSuccessState();
             this.form.tradeName = this.form.tradeDecsription = '';
           }
-          else if(this.errorState){
-            this.showErrorMsg();
+          if(status == 'error'){
+            this.showErrorState()
           }
-          
       },
-      showSuccessMsg() {
-          this.$bvModal.msgBoxOk('Data was submitted successfully', {
-          title: 'GOT IT',
-          size: 'sm',
-          buttonSize: 'sm',
-          okVariant: 'success',
-          headerClass: 'p-2 border-bottom-0',
-          footerClass: 'p-2 border-top-0',
-          centered: true
-        });
+      showSuccessState(){
+        this.$popup({
+          message         : "GOT IT done!",
+          backgroundColor : 'rgba(0, 0, 0, 0.7)',
+          color           : '#00c853'
+        })
+        .then(() => {
+          console.log('finished')
+        })
       },
-      showErrorMsg() {
-          this.$bvModal.msgBoxOk('Data fail to submit. Try it again', {
-          title: 'Oops! Error Occured',
-          size: 'sm',
-          buttonSize: 'sm',
-          okVariant: 'danger',
-          headerClass: 'p-2 border-bottom-0',
-          footerClass: 'p-2 border-top-0',
-          centered: true
-        });        
-      }
-
+      showErrorState(){
+        this.$popup({
+          message         : "Oops! error occur",
+          backgroundColor : 'rgba(244, 67, 54, 0.7)',
+          color           : '#d50000'
+        })
+        .then(() => {
+          console.log('finished')
+        })
+      },
+      resetForm(){
+        this.onReset()
+        if(this.successState){
+              this.showSuccessState();
+          }
+          if(this.errorState){
+            this.showErrorState()
+          }
+      },
     }
   }
 

@@ -45,14 +45,21 @@ export const state = () => ({
   export const actions= {
   
       registerTrade(vuexContext,tradeData){
-        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/trade/create';
-       this.$axios.$post(herokuUrl,tradeData)
-        .then(function (response) {        
-        vuexContext.commit('successToggle')
-      })
-        .catch(function (error) {
-          vuexContext.commit('errorToggle')
-        });
+        let self = this
+        return  new Promise(
+          function (resolve, reject) {
+
+            let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/trade/create';
+            self.$axios.$post(herokuUrl)
+              .then(function (response){
+                vuexContext.commit('successToggle');
+                resolve(response)
+              })
+              .catch(function (error) {
+                vuexContext.commit('errorToggle')
+                reject(error.message)
+              })
+            });
       },
       registerTradeSkillLevel(vuexContext,tradeSkillData){
         let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/trade/skills/create';
