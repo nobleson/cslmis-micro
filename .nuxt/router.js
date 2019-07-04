@@ -2,18 +2,18 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import { interopDefault } from './utils'
 
-const _a84b65d0 = () => interopDefault(import('..\\pages\\Dashboard\\index.vue' /* webpackChunkName: "pages_Dashboard_index" */))
-const _6cef1705 = () => interopDefault(import('..\\pages\\register\\index.vue' /* webpackChunkName: "pages_register_index" */))
-const _66e0c7bc = () => interopDefault(import('..\\pages\\cslmis\\apprentiship\\index.vue' /* webpackChunkName: "pages_cslmis_apprentiship_index" */))
-const _4fae2d5c = () => interopDefault(import('..\\pages\\cslmis\\aprCenters\\index.vue' /* webpackChunkName: "pages_cslmis_aprCenters_index" */))
-const _47330333 = () => interopDefault(import('..\\pages\\cslmis\\Dashboard\\index.vue' /* webpackChunkName: "pages_cslmis_Dashboard_index" */))
-const _1985433e = () => interopDefault(import('..\\pages\\cslmis\\devProgram\\index.vue' /* webpackChunkName: "pages_cslmis_devProgram_index" */))
-const _461ceba8 = () => interopDefault(import('..\\pages\\cslmis\\facilities\\index.vue' /* webpackChunkName: "pages_cslmis_facilities_index" */))
-const _2576099e = () => interopDefault(import('..\\pages\\cslmis\\login\\index.vue' /* webpackChunkName: "pages_cslmis_login_index" */))
-const _16e939ce = () => interopDefault(import('..\\pages\\cslmis\\report\\index.vue' /* webpackChunkName: "pages_cslmis_report_index" */))
-const _0e157e62 = () => interopDefault(import('..\\pages\\cslmis\\trainees\\index.vue' /* webpackChunkName: "pages_cslmis_trainees_index" */))
-const _2abcd2ef = () => interopDefault(import('..\\pages\\cslmis\\trainers\\index.vue' /* webpackChunkName: "pages_cslmis_trainers_index" */))
-const _97f43af0 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
+const _3490d4ce = () => interopDefault(import('..\\pages\\Dashboard\\index.vue' /* webpackChunkName: "pages_Dashboard_index" */))
+const _13f63a64 = () => interopDefault(import('..\\pages\\register\\index.vue' /* webpackChunkName: "pages_register_index" */))
+const _e4ccadfe = () => interopDefault(import('..\\pages\\cslmis\\apprentiship\\index.vue' /* webpackChunkName: "pages_cslmis_apprentiship_index" */))
+const _27bea1f1 = () => interopDefault(import('..\\pages\\cslmis\\aprCenters\\index.vue' /* webpackChunkName: "pages_cslmis_aprCenters_index" */))
+const _49c43ab4 = () => interopDefault(import('..\\pages\\cslmis\\Dashboard\\index.vue' /* webpackChunkName: "pages_cslmis_Dashboard_index" */))
+const _691afbdd = () => interopDefault(import('..\\pages\\cslmis\\devProgram\\index.vue' /* webpackChunkName: "pages_cslmis_devProgram_index" */))
+const _2c8742cb = () => interopDefault(import('..\\pages\\cslmis\\facilities\\index.vue' /* webpackChunkName: "pages_cslmis_facilities_index" */))
+const _2689299f = () => interopDefault(import('..\\pages\\cslmis\\login\\index.vue' /* webpackChunkName: "pages_cslmis_login_index" */))
+const _15dc4338 = () => interopDefault(import('..\\pages\\cslmis\\report\\index.vue' /* webpackChunkName: "pages_cslmis_report_index" */))
+const _1eaed2c1 = () => interopDefault(import('..\\pages\\cslmis\\trainees\\index.vue' /* webpackChunkName: "pages_cslmis_trainees_index" */))
+const _3b56274e = () => interopDefault(import('..\\pages\\cslmis\\trainers\\index.vue' /* webpackChunkName: "pages_cslmis_trainers_index" */))
+const _8afe3eb2 = () => interopDefault(import('..\\pages\\index.vue' /* webpackChunkName: "pages_index" */))
 
 Vue.use(Router)
 
@@ -91,51 +91,51 @@ export function createRouter() {
 
     routes: [{
       path: "/Dashboard",
-      component: _a84b65d0,
+      component: _3490d4ce,
       name: "Dashboard"
     }, {
       path: "/register",
-      component: _6cef1705,
+      component: _13f63a64,
       name: "register"
     }, {
       path: "/cslmis/apprentiship",
-      component: _66e0c7bc,
+      component: _e4ccadfe,
       name: "cslmis-apprentiship"
     }, {
       path: "/cslmis/aprCenters",
-      component: _4fae2d5c,
+      component: _27bea1f1,
       name: "cslmis-aprCenters"
     }, {
       path: "/cslmis/Dashboard",
-      component: _47330333,
+      component: _49c43ab4,
       name: "cslmis-Dashboard"
     }, {
       path: "/cslmis/devProgram",
-      component: _1985433e,
+      component: _691afbdd,
       name: "cslmis-devProgram"
     }, {
       path: "/cslmis/facilities",
-      component: _461ceba8,
+      component: _2c8742cb,
       name: "cslmis-facilities"
     }, {
       path: "/cslmis/login",
-      component: _2576099e,
+      component: _2689299f,
       name: "cslmis-login"
     }, {
       path: "/cslmis/report",
-      component: _16e939ce,
+      component: _15dc4338,
       name: "cslmis-report"
     }, {
       path: "/cslmis/trainees",
-      component: _0e157e62,
+      component: _1eaed2c1,
       name: "cslmis-trainees"
     }, {
       path: "/cslmis/trainers",
-      component: _2abcd2ef,
+      component: _3b56274e,
       name: "cslmis-trainers"
     }, {
       path: "/",
-      component: _97f43af0,
+      component: _8afe3eb2,
       name: "index"
     }],
 

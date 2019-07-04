@@ -38,6 +38,7 @@
     "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.15.0",
     "simple-line-icons": "^2.4.1",
+    "uuid": "^3.3.2",
     "vue": "^2.6.10",
     "vue-bootstrap-datetimepicker": "^5.0.1",
     "vue-chartjs": "^3.4.2",
@@ -46,6 +47,7 @@
     "vue-moment": "^4.0.0",
     "vue-perfect-scrollbar": "git+https://github.com/Degfy/vue-perfect-scrollbar.git#1.x",
     "vue-tabs-component": "^1.5.0",
+    "firebase": "^6.0.1",
     "vue-wysiwyg": "^1.7.2"
   },
   "devDependencies": {

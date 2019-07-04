@@ -11,10 +11,10 @@
          <b-link @click="$emit('changeComponent',{component: 'AprCenterView', id: null})"  href="#" class="card-link text-white"><mdb-icon icon="arrow-left" size="lg" class="text-white" />  View All Apprentiship Centers</b-link>
          <mdb-card class="weather-card">
           <mdb-card-body  class="pb-3">
-            <b-alert v-if="successState" show variant="success">Apprentice Center created successfully</b-alert>
-           <b-alert v-if="errorState" show variant="danger">Apprentice Center  Fail to Create. Try again</b-alert>         
-            <h2 class="h2-responsive"><strong>New Apprentice Center Form</strong></h2>
-            <p class="pb-4">Create Apprentice Center</p>
+            <b-alert v-if="successState" show variant="success">Apprentiship Center created successfully</b-alert>
+           <b-alert v-if="errorState" show variant="danger">Apprentiship Center  Fail to Create. Try again</b-alert>         
+            <h2 class="h2-responsive"><strong>New Apprentiship Center Form</strong></h2>
+            <p class="pb-4">Create Apprentiship Center</p>
             <!--Body-->
             <form>
               <mdb-input label="Job Title"  v-model="jobAdvertForm.jobTitle" />
@@ -85,7 +85,7 @@
   </div>
 </template>
 <script>
-//import  uuidv4 from 'uuid/v4';
+import  uuidv4 from 'uuid/v4';
 import datepicker from 'vue-date-picker'
 import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter,  mdbListGroup, mdbListGroupItem, mdbBadge,  mdbEdgeHeader, mdbContainer, mdbRow, mdbCol, mdbCardBody,mdbCard,  mdbInput, mdbBtn,mdbIcon } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'

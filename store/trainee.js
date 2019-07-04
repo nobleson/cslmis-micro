@@ -1,13 +1,13 @@
 export const state = () => ({
     regsuccess: false,
     regerror: false,
-    traineesFormReset: false,
-    trainees:  [],
+    traineeFormReset: false,
+    trainee:  [],
     isContentLoading: true
   })
   export const mutations = {
     changeFormState (state) {
-      state.traineesFormReset = !state.traineesFormReset
+      state.traineeFormReset = !state.traineeFormReset
     },
     successToggle (state) {
       state.regsuccess = !state.regsuccess
@@ -15,45 +15,49 @@ export const state = () => ({
     errorToggle (state) {
       state.regerror = !state.regerror
     },
-    setTrainees (state,data){
-      state.trainees = data
+    setTrainee (state,data){
+      state.trainee = data
     }
   }
   export const getters = {
-    getFormState: state => state.traineesFormReset,
+    getFormState: state => state.traineeFormReset,
   
     getSuccessState: state => state.regsuccess,
   
     getErrorState: state => state.regerror,
   
-    getTrainees: state => state.trainees
+    getTrainee: state => state.trainee
   
   } 
   
   export const actions= {
   
-    registerTrainees(vuexContext,){
-      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/advert/create';
-     this.$axios.$post(herokuUrl,traineesData)
-      .then(function (response) {        
-      vuexContext.commit('successToggle')
-    })
-      .catch(function (error) {
-        vuexContext.commit('errorToggle')
-      })
-      .finally(function () {
-        vuexContext.commit('changeFormState')
+    registerTrainee(vuexContext,traineeData){
+      let self = this
+      return new Promise( function(resolve,reject){
+        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/advert/create';
+        self.$axios.$post(herokuUrl,traineeData)
+         .then(function (response) {   
+
+          resolve('success')
+           vuexContext.commit('successToggle')
+       })
+         .catch(function (error) {
+           reject('error')
+           vuexContext.commit('errorToggle')
+         });
       });
+
     },
   
-    registerTrainees(vuexContext){
+    registerTrainee(vuexContext){
       
       let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/bodies/licensing/getall';
      this.$axios.$get(herokuUrl)
       .then(function (response){
        // let data = JSON.parse(response);
         vuexContext.commit('setLicensingBodies',response);
-        console.log("Job Advert:"+vuexContext.state.trainees)
+        console.log("Job Advert:"+vuexContext.state.trainee)
         //console.log("trade:"+response)
       })
       .catch(function (error) {

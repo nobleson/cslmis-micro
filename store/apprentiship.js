@@ -31,21 +31,24 @@ export const getters = {
 } 
 
 export const actions= {
+  registerTrainee(vuexContext,apprentishipData){
+    let self = this
+    return new Promise( function(resolve,reject){
+      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/advert/create';
+      self.$axios.$post(herokuUrl,apprentishipData)
+       .then(function (response) {   
 
-  registerApprentiship(vuexContext,){
-    let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/advert/create';
-   this.$axios.$post(herokuUrl,apprentishipData)
-    .then(function (response) {        
-    vuexContext.commit('successToggle')
-  })
-    .catch(function (error) {
-      vuexContext.commit('errorToggle')
-    })
-    .finally(function () {
-      vuexContext.commit('changeFormState')
+        resolve('success')
+         vuexContext.commit('successToggle')
+     })
+       .catch(function (error) {
+         reject('error')
+         vuexContext.commit('errorToggle')
+       });
     });
-  },
 
+  },
+ 
   registerApprentiship(vuexContext){
     
     let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/bodies/licensing/getall';
