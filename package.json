@@ -48,6 +48,8 @@
     "vue-perfect-scrollbar": "git+https://github.com/Degfy/vue-perfect-scrollbar.git#1.x",
     "vue-tabs-component": "^1.5.0",
     "firebase": "^6.0.1",
+    "xlsx": "^0.14.3",
+    "vue-timeago": "^5.1.2",
     "vue-wysiwyg": "^1.7.2"
   },
   "devDependencies": {

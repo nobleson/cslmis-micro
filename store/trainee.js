@@ -2,7 +2,7 @@ export const state = () => ({
     regsuccess: false,
     regerror: false,
     traineeFormReset: false,
-    trainee:  [],
+    trainees:  null,
     isContentLoading: true
   })
   export const mutations = {
@@ -15,9 +15,12 @@ export const state = () => ({
     errorToggle (state) {
       state.regerror = !state.regerror
     },
-    setTrainee (state,data){
-      state.trainee = data
-    }
+    setTrainees (state,data){
+      state.trainees = data
+    },
+    changeLoaderStatus(state){
+      state.isContentLoading = !state.isContentLoading;
+    } 
   }
   export const getters = {
     getFormState: state => state.traineeFormReset,
@@ -26,47 +29,42 @@ export const state = () => ({
   
     getErrorState: state => state.regerror,
   
-    getTrainee: state => state.trainee
+    getTrainees: state => state.trainees,
+
+    getLoaderStatus: state => state.isContentLoading
   
   } 
   
   export const actions= {
-  
-    registerTrainee(vuexContext,traineeData){
+    registerTrainee(vuexContext,traineesData){
       let self = this
       return new Promise( function(resolve,reject){
-        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/advert/create';
-        self.$axios.$post(herokuUrl,traineeData)
+        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/trainee/create';
+        self.$axios.$post(herokuUrl,traineesData)
          .then(function (response) {   
-
           resolve('success')
            vuexContext.commit('successToggle')
-       })
+          })
          .catch(function (error) {
            reject('error')
            vuexContext.commit('errorToggle')
          });
       });
-
     },
-  
-    registerTrainee(vuexContext){
-      
-      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/bodies/licensing/getall';
-     this.$axios.$get(herokuUrl)
+   loadTrainees(vuexContext){
+    let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/trainee/getall';
+     return this.$axios.$get(herokuUrl)
       .then(function (response){
-       // let data = JSON.parse(response);
-        vuexContext.commit('setLicensingBodies',response);
-        console.log("Job Advert:"+vuexContext.state.trainee)
-        //console.log("trade:"+response)
+        vuexContext.commit('setTrainees',response);
+        vuexContext.commit('changeLoaderStatus')
       })
       .catch(function (error) {
-        console.log("trade fails to load")
+        console.log("trainee fails to load")
       })
       .finally(function () {
-      });
+      }); 
   
-    },
+    }, 
     toggleFormState(vuexContext) {
       vuexContext.commit('changeFormState')
     },

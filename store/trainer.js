@@ -1,13 +1,13 @@
 export const state = () => ({
   regsuccess: false,
   regerror: false,
-  apprentishipFormReset: false,
-  apprentiship: null,
+  trainerFormReset: false,
+  trainers:  null,
   isContentLoading: true
 })
 export const mutations = {
   changeFormState (state) {
-    state.apprentishipReset = !state.apprentishipFormReset
+    state.trainerFormReset = !state.trainerFormReset
   },
   successToggle (state) {
     state.regsuccess = !state.regsuccess
@@ -15,57 +15,57 @@ export const mutations = {
   errorToggle (state) {
     state.regerror = !state.regerror
   },
-  setApprentiship (state,data){
-    state.apprentiship = data
-  }
+  setTrainers (state,data){
+    state.trainers = data
+  },
+  changeLoaderStatus(state){
+    state.isContentLoading = !state.isContentLoading;
+  } 
 }
 export const getters = {
-  getFormState: state => state.apprentishipFormReset,
+  getFormState: state => state.traineeFormReset,
 
   getSuccessState: state => state.regsuccess,
 
   getErrorState: state => state.regerror,
 
-  getApprentiship: state => state.apprentiship,
+  getTrainers: state => state.trainers,
 
   getLoaderStatus: state => state.isContentLoading
 
 } 
 
 export const actions= {
-  registerApprentice(vuexContext,apprentishipData){
+  registerTrainer(vuexContext,trainersData){
     let self = this
     return new Promise( function(resolve,reject){
-      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/apr/create';
-      self.$axios.$post(herokuUrl,apprentishipData)
+      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/trainer/create';
+      self.$axios.$post(herokuUrl,trainersData)
        .then(function (response) {   
-
         resolve('success')
          vuexContext.commit('successToggle')
-     })
+        })
        .catch(function (error) {
          reject('error')
          vuexContext.commit('errorToggle')
        });
     });
-
   },
+ loadTrainers(vuexContext){
+  let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/trainer/getall';
+   return this.$axios.$get(herokuUrl)
+    .then(function (response){
+      vuexContext.commit('setTrainers',response);
+      vuexContext.commit('changeLoaderStatus')
+    })
+    .catch(function (error) {
+      console.log("trainers fails to load")
+    })
+    .finally(function () {
+    }); 
 
-  loadApprentiship(vuexContext){
-    let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/trainee/getall';
-     return this.$axios.$get(herokuUrl)
-      .then(function (response){
-        vuexContext.commit('setApprentiship',response);
-        vuexContext.commit('changeLoaderStatus')
-      })
-      .catch(function (error) {
-        console.log("Apprentiship fails to load")
-      })
-      .finally(function () {
-      }); 
-    }, 
- 
-   toggleFormState(vuexContext) {
+  }, 
+  toggleFormState(vuexContext) {
     vuexContext.commit('changeFormState')
   },
   toggleSucessAlert(vuexContext){

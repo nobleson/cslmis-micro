@@ -1,76 +1,59 @@
 <template>
-<section>
-    <b-row>
-            <b-col align-self="end"  class="pb-3 pl-auto" cols="12">
-                <mdb-btn color="primary"  @click="$emit('changeComponent',{component: 'NewDevProgram', id: null})" class="">Create New</mdb-btn>
-             <hr>
-            </b-col>
-            <hr>
-      </b-row>
-
- <div class="classic-tabs">      
- <mdb-tabs
-    :active="0"
-    tabs
-    card
-    color="primary"
-    class="mb-5"
-    :links="[
-      { text: 'Card View', icon: 'square', bigIcon: true  },
-      { text: 'Table View', icon: 'table', bigIcon: true  }]"
-    :transition-duration="0.5"
-    transition-style="linear"
-  >
-    <template :slot="'Card View'">
-      <mdb-container>
+    <mdb-container>
+      <mdb-row>
+        {{processPrograms}}
+        <mdb-col md="8" lg="7" class="mx-auto float-none">
+    <mdb-card class="weather-card">
+      <mdb-card-body class="pb-3">
+      <div class="d-flex flex-row">
+        <div>
+          <mdb-card-title class="font-weight-bold mb-2">{{fullname}}</mdb-card-title> 
+          <mdb-card-text><mdb-icon icon="clock" class="pr-2" /><timeago :datetime="dateRegistered"></timeago></mdb-card-text>
+        </div>
+      </div>
+        <mdb-card-title class="font-weight-bold">{{accronym}}</mdb-card-title>
+        <mdb-card-text>{{programList}}</mdb-card-text>
+        <div>
+        </div>
+        <div class="collapse-content">
+          <transition @before-enter="beforeEnter" @enter="enter" @before-leave="beforeLeave" @leave="leave">
+            <div v-if="show2" class="collapse-item">
+              <mdb-tbl borderless sm class="mb-0">
+                <tbody>
+                  <tr>
+                    <td class="font-weight-normal align-middle">Email Address</td>
+                    <td class="float-right font-weight-normal">
+                      <p class="mb-1">{{emailAddress}}</p>
+                    </td>
+                    <td class="float-right mr-3">
+                      <mdb-icon icon="envelope" size="lg" class="text-info" />
+                    </td>
+                  </tr>
+                </tbody>
+              </mdb-tbl>
+            </div>
+          </transition>
+          <hr />
+          <mdb-btn tag="a" @click.native="show2 = !show2" :class="['p-1 my-1 mr-0 deep-purple-text', !show2 && 'collapsed']" flat darkWaves aria-expanded="false" aria-controls="collapseExample" />
+        </div>
+      </mdb-card-body>
+    </mdb-card>
+        </mdb-col>
           <div class="text-center" v-if="isContentLoading">
             <b-spinner variant="primary" label="Text Centered"></b-spinner>
           </div>
-              <b-row>
-                <b-col  cols="4">
-                <div>
-                  <mdb-card wide>
-                    <mdb-card-up style="background-color: #2BBBAD">
-                      <img class="center" src="../../assets/images/licbdy.png" width="100%" />
-                    </mdb-card-up>
-                    <mdb-card-avatar color="white" class="mx-auto"><img src="../../assets/images/licbdy.png" class="rounded-circle mr-3" height=170px width=150px/></mdb-card-avatar>
-                    <mdb-card-body class="text-center pb-0" cascade>
-                      <mdb-card-title><strong></strong></mdb-card-title>
-                      <h5 class="blue-text"><strong></strong></h5>
-                      <mdb-card-text></mdb-card-text>
-                      <mdb-card-footer class="text-muted mt-4"><mdb-btn outline="default" darkWaves size="lg" @click="$emit('changeComponent',{component:'JobAdvertDetail',data: null})" >Manage</mdb-btn></mdb-card-footer>
-                    </mdb-card-body>
-                  </mdb-card>
-                  </div>
-                </b-col>
-                </b-row>
-      </mdb-container>
-    </template>
-    <template :slot="'Table View'">
-      <mdb-container>
-          <mdb-row>
-            <mdb-col md="12">
-              <mdb-datatable
-                :data="dataSet"
-                striped
-                bordered
-                materialInputs
-              />
-          </mdb-col>
-          </mdb-row>
-      </mdb-container>
-    </template>
-  </mdb-tabs>
-  </div>
- </section>
+      </mdb-row>
+    </mdb-container>
+    <!-- /.Card Container -->
 </template>
+
 <script>
-import Tabs from 'vue-tabs-component';
-import {mdbDatatable, mdbTabs, mdbJumbotron, mdbCarousel, mdbCarouselItem, mdbEdgeHeader, mdbGoogleMap,mdbContainer,mdbTbl,mdbChip,mdbProgress,mdbTooltip,mdbStretchedLink, mdbRow, mdbCol, mdbCard,  mdbCardImage, mdbCardHeader, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardFooter, mdbCardUp, mdbCardAvatar, mdbCardGroup, mdbBtn, mdbView, mdbMask, mdbIcon, mdbAvatar } from 'mdbvue';
+import VueTimeago from 'vue-timeago'
+import {mdbEdgeHeader, mdbGoogleMap,mdbContainer,mdbTbl,mdbChip,mdbProgress,mdbTooltip,mdbStretchedLink, mdbRow, mdbCol, mdbCard,  mdbCardImage, mdbCardHeader, mdbCardBody, mdbCardTitle, mdbCardText, mdbCardFooter, mdbCardUp, mdbCardAvatar, mdbCardGroup, mdbBtn, mdbView, mdbMask, mdbIcon, mdbFlippingCard, mdbAvatar } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations } from 'vuex'
+import { mixin as clickaway } from 'vue-clickaway';
 export default {
    components: {
-    mdbDatatable, 
     mdbTooltip,
     mdbGoogleMap,
     mdbContainer,
@@ -92,179 +75,175 @@ export default {
     mdbMask,
     mdbStretchedLink,
     mdbIcon,
+    mdbFlippingCard,
     mdbAvatar,
     mdbTbl,
     mdbChip,
-    mdbTabs, 
-    mdbJumbotron, 
-    mdbCarousel, 
-    mdbCarouselItem,
     mdbProgress
   },
    data() {
       return {
-        isContentLoading: true,
         tabIndex: 0,
-        dataSet: {
-          columns: [
-            {
-              label: 'Name',
-              field: 'fullname',
-              sort: 'asc'
-            },
-            {
-              label: 'Accronym',
-              field: 'accronym',
-              sort: 'asc'
-            },
-            {
-              label: 'Tel. Number',
-              field: 'telephoneNumber',
-              sort: 'asc'
-            },
-            {
-              label: 'Email Address',
-              field: 'emailAddress',
-              sort: 'asc'
-            },
-            {
-              label: 'City',
-              field: 'city',
-              sort: 'asc'
-            }
-          ],     
-          rows: []
-        }
+        programList: [],
+        show1: false,
+        show2: false,
+        height1: '2.65rem',
+        zoom:15,
+        markers: [{ lat: 45.508, lng: -73.587 }],
+        center: { lat: 45.508, lng: -73.587 },
+        places: ['Lagos'],
+        currentPlace: null,
+        accronym: '',
+        emailAddress: '',
+        dateRegistered:'',
+        fullname: '',
+        missionStatment: ''
       }
     },
     mounted(){
-      //this.create();
+      this.create();
     },
     computed: {
-          ...mapGetters({jobadverts: 'jobadvert/getJobAdverts'}),
-          processLicensingBody: function(){
-          let json = JSON.parse(JSON.stringify(this.licensingBodies));
-          console.log("Json:"+json);
-           return  json;
-          },
-          processTableData: function(){
-          this.dataSet.rows = this.licensingBodies;
-          //console.log("Json:"+json);
-           return  this.dataSet;
-          }
-
+          ...mapGetters({devPrograms: 'devprogram/getDevPrograms',isContentLoading:'devprogram/getLoaderStatus'}),
+            processPrograms(){
+              if(typeof this.devPrograms[0] != 'undefined' || this.devPrograms[0] != null){
+                this.dataObject = this.devPrograms[0]
+                for(var i = 0; i < this.dataObject.programTrainingProviders.length; i++){
+                  var object = this.dataObject.programTrainingProviders[i]
+                  if(object.id == localStorage.getItem('centerId')){
+                     this.getProgramDetails(this.dataObject._id)
+                  }
+                }
+              } 
+           } 
     },
     methods: {
-      ...mapActions({loadJobAdvert: 'jobadvert/loadJobAdverts'}),
+      ...mapActions({loadPrograms: 'devprogram/loadDevPrograms',program: 'devprogram/loadProgramDetails'}),
         create() {
-          this.loadLicensingBodies().then((ev) => {
-             this.successHandleLoder()
-          })
+          this.loadPrograms().then((ev) => {console.log("Load successfully")})
           .catch((e) => {
-            this.errorHandleLoder() 
+            console.log(e.message)
           })
         },
-       successHandleLoder(){
-            return this.isContentLoading = false;
-       },
-       errorHandleLoder(){
-         return this.isContentLoading = true;
-       },
+        getProgramDetails(id){
+          this.program(id).then(function(program){
+
+               // this.programList = this.dataObject.programTrainingProviders
+              /// return this.programList = this.dataObject.programTrainingProviders
+            this.programList.push(program);
+            })
+        },
       linkClass(idx) {
         if (this.tabIndex === idx) {
           return ['bg-primary', 'text-light']
         } else {
           return ['bg-light', 'text-info']
         }
-      }         
+      },         
+    toggle1() {
+      this.show1 = !this.show1;
+      this.show1 ? this.height1 = this.fullHeight1 : this.height1 = '2.65rem';
+    },
+    beforeEnter(el) {
+      el.style.height = '0';
+      el.style.opacity = '0';
+    },
+    enter(el) {
+      el.style.height = el.scrollHeight + 'px';
+      el.style.opacity = '1';
+    },
+    beforeLeave(el) {
+      el.style.height = el.scrollHeight + 'px';
+      el.style.opacity = '1';
+    },
+    leave(el) {
+      el.style.height = '0';
+      el.style.opacity = '0';
+    },
+    away1() {
+      this.gradient1 = false;
+    },
+    away2() {
+      this.gradient2 = false;
+    },
+    away3() {
+      this.gradient3 = false;
+    },
+    away4() {
+      this.gradient4 = false;
+    },
+    setPlace(place) {
+      this.currentPlace = place;
     }
+
+  },
+  mixins: [clickaway]
   }
 </script>
 <style scoped>
-.tabs-component {
-  margin: 4em 0;
+h4 {
+  font-weight: bold;
+}
+.collapse {
+  transition: height 0.3s;  
+}
+.collapse-item {
+  transition: all 0.5s;  
+}
+.gradient-card {
+  transition: 0.5s ease-in-out; 
+}
+.gradient-card.show {
+  margin-top: 20px;
+}
+.gradient-card .card-image {
+  display: inline-block;
+  width: 100%;
+  transition: 0.5s ease-in-out; 
+}
+.gradient-card.show .card-image {
+  width: 112px;
+  height: 112px;
+  margin-left: 20px;
+  margin-top: -20px;
+}
+.gradient-card .card-body {
+  padding: 0 1.25rem;
+}
+.collapse-content .fas.fa-heart:hover {
+  color: #f44336 !important;
+}
+.collapse-content .fas.fa-share-alt:hover {
+  color: #0d47a1 !important;
+}
+.card.weather-card .collapse-content a.collapsed:after {
+  content: 'Expand'; }
+
+.card.weather-card .collapse-content a:not(.collapsed):after {
+  content: 'Collapse'; }
+</style>
+
+<style>
+.card.chart-card .classic-tabs .nav.tabs-white li a {
+  color: #757575;
+  font-weight: 500;
+}
+.card.chart-card .classic-tabs .nav.tabs-white li a.active {
+  color: #673ab7;
+}
+.myMap {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
 }
 
-.tabs-component-tabs {
-  border: solid 1px #ddd;
-  border-radius: 6px;
-  margin-bottom: 5px;
-}
-
-@media (min-width: 700px) {
-  .tabs-component-tabs {
-    border: 0;
-    align-items: stretch;
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: -1px;
-  }
-}
-
-.tabs-component-tab {
-  color: #999;
-  font-size: 14px;
-  font-weight: 600;
-  margin-right: 0;
-  list-style: none;
-}
-
-.tabs-component-tab:not(:last-child) {
-  border-bottom: dotted 1px #ddd;
-}
-
-.tabs-component-tab:hover {
-  color: #666;
-}
-
-.tabs-component-tab.is-active {
-  color: #000;
-}
-
-.tabs-component-tab.is-disabled * {
-  color: #cdcdcd;
-  cursor: not-allowed !important;
-}
-
-@media (min-width: 700px) {
-  .tabs-component-tab {
-    background-color: #fff;
-    border: solid 1px #ddd;
-    border-radius: 3px 3px 0 0;
-    margin-right: .5em;
-    transform: translateY(2px);
-    transition: transform .3s ease;
-  }
-
-  .tabs-component-tab.is-active {
-    border-bottom: solid 1px #fff;
-    z-index: 2;
-    transform: translateY(0);
-  }
-}
-
-.tabs-component-tab-a {
-  align-items: center;
-  color: inherit;
-  display: flex;
-  padding: .75em 1em;
-  text-decoration: none;
-}
-
-.tabs-component-panels {
-  padding: 4em 0;
-}
-
-@media (min-width: 700px) {
-  .tabs-component-panels {
-    border-top-left-radius: 0;
-    background-color: #fff;
-    border: solid 1px #ddd;
-    border-radius: 0 6px 6px 6px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .05);
-    padding: 4em 2em;
-  }
-  
-}
 </style>
 

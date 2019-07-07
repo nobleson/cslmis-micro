@@ -17,6 +17,7 @@
             <p class="pb-4">Create Trainee</p>
             <!--Body-->
             <form>
+              <mdb-input label="Trainee Id Number"  v-model="traineeForm.idNumber" />
               <mdb-input label="First Name"  v-model="traineeForm.firstName" />
               <mdb-input label="Middle Name"   v-model="traineeForm.middleName"/>
               <mdb-input label="Last Name"  v-model="traineeForm.lastName" />
@@ -57,7 +58,6 @@
                   <span class="sr-only" v-if="traineeFormReset === true">Wait...</span>
                 </mdb-btn>
               </div>
-             
             </form>
            </mdb-card-body>
           </mdb-card>
@@ -65,7 +65,6 @@
       </mdb-row>
     </mdb-container>
     <!-- /.Card Container -->
-  
   </section>
   <FlashMessage></FlashMessage>
   </div>
@@ -121,10 +120,11 @@ const firebaseConfig = {
         login: false,
            
         traineeForm: {
-                _id: '',//TraineeId
+                idNumber: '',//TraineeId
                 firstName: '',
                 middleName: '',
                 lastName: '',
+                gender: '',
                 residentialAddress: '',
                 residetialLgArea: '',
                 stateOfResidence: '',
@@ -145,6 +145,10 @@ const firebaseConfig = {
                 dateRegistered: null
                           
             },
+            form:{
+              _id: '',
+              traineeList: []
+            },
            
             price:null,
             image: null,
@@ -161,10 +165,13 @@ const firebaseConfig = {
     }, 
     methods: {
       ...mapActions({registerTrainee: 'trainee/registerTrainee'}),
-         
 
       create() { 
-     if(!this.traineeForm.firstName) {
+     if(!this.traineeForm.idNumber) {
+        this.$bvModal.msgBoxOk('First Name is required.')
+        return false;
+      }
+      else if(!this.traineeForm.firstName) {
         this.$bvModal.msgBoxOk('First Name is required.')
         return false;
       } 
@@ -237,13 +244,10 @@ const firebaseConfig = {
      else if(!this.traineeForm.disabilityType) {
         this.$bvModal.msgBoxOk('Disability type if any is required.')
         return false;
-      }
-
-     
+      }   
 
    else{
          this.traineeFormReset = !this.traineeFormReset
-          this.traineeForm._id = localStorage.getItem('centerId')
           let uuid = uuidv4();
           let logoURL = ''
           let filename = this.image.name || ''
@@ -256,13 +260,15 @@ const firebaseConfig = {
 
       },
 
+   
+
      resetForm(status){
           if(status == 'success'){
-            this.showSuccessMsg()
-          this.traineeForm.firstName = this.traineeForm.middleName = this.traineeForm.lastName = this.traineeForm.residentialAddress =  this.traineeForm.residetialLgArea =  
-          this.traineeForm.stateOfResidence =  this.traineeForm.dateOfBirth =  this.traineeForm.phoneNumber =  this.traineeForm.alternativePhoneNumber = this.traineeForm.emailAddress = 
-          this.traineeForm.bankName = this.traineeForm.accountNumber = this.traineeForm.bvnNumber = this.traineeForm.centerName = this.traineeForm.centerAddress =
-          this.traineeForm.lgArea =  this.traineeForm.state =  this.traineeForm.trade =  this.traineeForm.disabilityType =  this.traineeForm.photo = this.traineeForm.dateRegistered ='';         
+          this.showSuccessMsg()
+            this.traineeForm.idNumber = this.traineeForm.firstName = this.traineeForm.middleName = this.traineeForm.lastName = this.traineeForm.gender =  this.traineeForm.tradeSpecilisation =  
+          this.traineeForm.highestQualification =  this.traineeForm.residentialAddress =  this.traineeForm.phoneNumber =  this.traineeForm.alternativePhoneNumber = this.traineeForm.emailAddress = 
+          this.traineeForm.emailAddress = this.traineeForm.phoneNumber = this.traineeForm.bvnNumber = this.traineeForm.centerName = this.traineeForm.centerAddress =
+          this.traineeForm.lgArea =  this.traineeForm.state =  this.traineeForm.trade =  this.traineeForm.disabilityType =  this.traineeForm.photo = this.traineeForm.dateRegistered = this.resultURL ='';         
           this.traineeFormReset = !this.traineeFormReset 
 
           }
@@ -313,9 +319,11 @@ const firebaseConfig = {
          let date = new Date()
          this.traineeForm.dateRegistered = date
          this.traineeForm.photo = url
+         
          console.log('Photo URL:'+this.traineeForm.photo);  
-         console.log('traineeForm:'+JSON.stringify(this.traineeForm))
-          return this.registerTrainee(this.traineeForm).then(e => resetForm(e));  
+         this.form._id = localStorage.getItem('centerId')
+         this.form.traineeList.push(this.traineeForm) 
+         return this.registerTrainee(this.form).then(e => this.resetForm(e));  
       }
     }
   }

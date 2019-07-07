@@ -29,19 +29,17 @@
               <b-row>
                 <b-col  cols="4">
                 <div>
-                  <mdb-card wide>
-                    <mdb-card-up style="background-color: #2BBBAD">
-                      <img class="center" src="../../assets/images/licbdy.png" width="100%" />
-                    </mdb-card-up>
-                    <mdb-card-avatar color="white" class="mx-auto"><img src="../../assets/images/licbdy.png" class="rounded-circle mr-3" height=170px width=150px/></mdb-card-avatar>
-                    <mdb-card-body class="text-center pb-0" cascade>
-                      <mdb-card-title><strong></strong></mdb-card-title>
-                      <h5 class="blue-text"><strong></strong></h5>
-                      <mdb-card-text></mdb-card-text>
-                      <mdb-card-footer class="text-muted mt-4"><mdb-btn outline="default" darkWaves size="lg" @click="$emit('changeComponent',{component:'JobAdvertDetail',data: null})" >Manage</mdb-btn></mdb-card-footer>
-                    </mdb-card-body>
-                  </mdb-card>
-                  </div>
+                  <b-card no-body>
+                     <b-link to="/">
+              <b-card-body>
+               
+                  <h4>Hello</h4>
+               
+                <p class="card-text">Aha</p>
+              </b-card-body>
+               </b-link>
+            </b-card>
+                </div>
                 </b-col>
                 </b-row>
       </mdb-container>

@@ -16,59 +16,34 @@
             <h2 class="h2-responsive"><strong>New Apprentiship Center Form</strong></h2>
             <p class="pb-4">Create Apprentiship Center</p>
             <!--Body-->
-            <form>
-              <mdb-input label="Job Title"  v-model="jobAdvertForm.jobTitle" />
-              <mdb-input label="Job Description"   v-model="jobAdvertForm.jobDescription"/>
-              <p>Message<p/>
-              <wysiwyg v-model="jobAdvertForm.jobRequirement" placeholder="Write details about your adverts..." />
-              <hr/>
-              <div>
-                <b-card title="Duration" sub-title="Start and End Date">
-                  <b-card-text>
-                    <date-picker v-model="jobAdvertForm.adsStartDate" :config="{format: 'MM/DD/YYYY'}" placeholder="Start date"></date-picker>
-                     <br/>
-                    <date-picker v-model="jobAdvertForm.deadLineDate" :config="{format: 'MM/DD/YYYY'}" placeholder="End date"></date-picker>
-                  </b-card-text>
-                  <div class="text-center">
-                      <mdb-list-group>
-                        <mdb-list-group-item >Advert Days <h5><mdb-badge  color="primary" pill >{{duration}}</mdb-badge></h5>
-                        </mdb-list-group-item>
-                        <mdb-list-group-item>Billing<h5><mdb-badge color="danger" pill> <b>&#x20A6;</b> {{price}} </mdb-badge></h5>
-                        </mdb-list-group-item>
-                      </mdb-list-group>
-                  </div>
-                  <hr/>
-                   <b-button variant="outline-primary" @click="adsDuration()">Checkout Days</b-button>
-               
-                      <b-button id="show-btn" @click="$bvModal.show('bv-modal-example') " variant="success">Checkout <i class="fas fa-cart-plus ml-1"></i></b-button>
+            <form>              
+              <mdb-input label="Apprentiship Center ID Number"  v-model="aprCenterForm.IdNumber" />
+              <mdb-input label="Apprentiship Center Name"  v-model="aprCenterForm.aprCenterName" />
+              <mdb-input label="Phone Number"   v-model="aprCenterForm.phoneNumber"/>
+              <mdb-input label="Contact Address"  v-model="aprCenterForm.contactAddress" />
+              <mdb-input label="Local Government Area" v-model="aprCenterForm.lgArea"/>
+              <mdb-input label="State"  v-model="aprCenterForm.state"/>
+              <mdb-input label="Trade"   v-model="aprCenterForm.trade"/>
+                <b-card class="mt-3">
+                <h4>Profile Photo</h4>
+                <div>
+                  <mdb-btn color="default" type="button" @click="onPickFile">Upload Image<mdb-icon icon="image" class="ml-1"/></mdb-btn>
+                <input 
+                type="file" 
+                style="display: none" 
+                ref="fileInput"
+                accept="image/*"
+                @change="onFilePicked"/>
+                </div>
+                <div>
+                <img :src="resultURL" height="150"/>
+                </div>
+                </b-card> 
 
-                      <b-modal id="bv-modal-example" hide-footer>
-                        <template slot="modal-title">
-                          Payment Getway
-                        </template>
-                        <div class="d-flex justify-content-center">
-                        <div class="spinner-border" role="status">
-                          <span class="sr-only">Loading...</span>
-                        </div>
-                      </div>
-                        <p class="my-4">Loading...</p>
-                
-                        <hr/>
-                        
-                      </b-modal>
-                </b-card>
-              </div>
-              <hr/>
-              <div>
-                <b-card title="Payment History" sub-title="Advert Payment History">
-                  <b-card-text>
-                  </b-card-text>
-                </b-card>
-              </div>
-               <div class="text-xs-left">
-                <mdb-btn color="primary" @click.native.prevent="create()" :disabled='jobAdvertFormReset'>Submit
-                  <b-spinner small v-if="jobAdvertFormReset === true"></b-spinner>
-                  <span class="sr-only" v-if="jobAdvertFormReset === true">Wait...</span>
+             <div class="text-xs-left">
+                <mdb-btn color="primary" @click.native.prevent="create()" :disabled='aprCenterFormReset'>Submit
+                  <b-spinner small v-if="aprCenterFormReset === true"></b-spinner>
+                  <span class="sr-only" v-if="aprCenterFormReset === true">Wait...</span>
                 </mdb-btn>
               </div>
              
@@ -78,8 +53,7 @@
         </mdb-col>
       </mdb-row>
     </mdb-container>
-    <!-- /.Card Container -->
-  
+    <!-- /.Card Container -->  
   </section>
   <FlashMessage></FlashMessage>
   </div>
@@ -89,7 +63,25 @@ import  uuidv4 from 'uuid/v4';
 import datepicker from 'vue-date-picker'
 import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter,  mdbListGroup, mdbListGroupItem, mdbBadge,  mdbEdgeHeader, mdbContainer, mdbRow, mdbCol, mdbCardBody,mdbCard,  mdbInput, mdbBtn,mdbIcon } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
+import * as firebase from 'firebase/app'
+import 'firebase/storage'
 
+ const focus = {
+    inserted(el) {
+      el.focus()
+    },
+  }
+const firebaseConfig = {
+    apiKey: "AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM",
+    authDomain: "cslmis-admin.firebaseapp.com",
+    databaseURL: "https://cslmis-admin.firebaseio.com",
+    projectId: "cslmis-admin",
+    storageBucket: "gs://cslmis-admin-bucket",
+    messagingSenderId: "263391859932",
+    appId: "1:263391859932:web:4a6a7871600a3acd"
+  };
+  
+!firebase.apps.length ? firebase.initializeApp(firebaseConfig) : ''
   export default {
       components: {
       mdbEdgeHeader,
@@ -115,27 +107,26 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
       return {
         login: false,
            
-        jobAdvertForm: {
-                _id: '',//companyid
-                jobTitle: '', 
-                jobDescription:'',
-                jobRequirement:  '',
-                adsStartDate: null,
-                deadLineDate: null,
-                //jobStatus: '',
-                //jobLocation: '',
-                //subcriptionId: '',
-                //jobQualification: '',
+        aprCenterForm: {
+                IdNumber: '',//centerid
+                aprCenterName:'',
+                phoneNumber:'',
+                contactAddress:'',
+                lgArea:'',
+                state:'',
+                trade:'',
+                photo:null,
+                dateRegistered:''
+                
               
             },
-            duration: null,
-            price:null,
-            image: null,
+            form:{
+              _id: '',
+              aprCenterList:[]
+            },
             resultURL: '',
-            jobAdvertFormReset: false,
-            spinner: '0',
-            modal: false
-                
+            aprCenterFormReset: false,
+            spinner: '0',    
           }
     },
 /*     ...mapMutations({
@@ -153,53 +144,41 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
          */
       },
     computed: {
-        ...mapGetters({successState: 'apprentiship/getSuccessState',errorState: 'apprentiship/getErrorState'})
+        ...mapGetters({successState: 'aprcenters/getSuccessState',errorState: 'aprcenters/getErrorState'})
 
     }, 
     methods: {
-      ...mapActions({registerApprentiship: 'apprentiship/registerApprentiship'}),
-        adsDuration(){
-          if(Date.parse(this.jobAdvertForm.adsStartDate) < Date.parse(this.jobAdvertForm.deadLineDate )){
-              this.duration =  Math.round((Date.parse(this.jobAdvertForm.deadLineDate ) - Date.parse(this.jobAdvertForm.adsStartDate))/(1000*60*60*24));
-          }else{
-             this.$bvModal.msgBoxOk('The start date is higher than the end')
-            
-          }
-           if(Date.parse(this.jobAdvertForm.adsStartDate) < Date.parse(this.jobAdvertForm.deadLineDate )){
-              this.price =  Math.round((Date.parse(this.jobAdvertForm.deadLineDate ) - Date.parse(this.jobAdvertForm.adsStartDate))/(1000*60*60*24)*(200));
-          }
-        },
+      ...mapActions({registerAprCenter: 'aprcenters/registerAprCenter'}),
        
-         
       create() { 
-     if(!this.jobAdvertForm.jobTitle) {
-        this.$bvModal.msgBoxOk('Job Title is required.')
+     if(!this.aprCenterForm.aprCenterName) {
+        this.$bvModal.msgBoxOk('Apprentiship Center Name is required.')
         return false;
       } 
-       else if(!this.jobAdvertForm.jobDescription) {
-        this.$bvModal.msgBoxOk('Job Description is required.')
+       else if(!this.aprCenterForm.phoneNumber) {
+        this.$bvModal.msgBoxOk('Phone Number is required.')
         return false;
       }
-      else if(!this.jobAdvertForm.jobRequirement) {
-        this.$bvModal.msgBoxOk('Job Requirement is required.')
+       else if(!this.aprCenterForm.contactAddress) {
+        this.$bvModal.msgBoxOk('Contact Address is required.')
         return false;
       }
-    else if(!this.jobAdvertForm.adsStartDate) {
-        this.$bvModal.msgBoxOk('Advert Start Date is required.')
-        return false;
-    }
-     else if(!this.jobAdvertForm.deadLineDate) {
-        this.$bvModal.msgBoxOk('End Date is required.')
+      else if(!this.aprCenterForm.lgArea) {
+        this.$bvModal.msgBoxOk('L.G.A is required.')
         return false;
      }
+    else if(!this.aprCenterForm.state) {
+        this.$bvModal.msgBoxOk('State is required.')
+        return false;
+    }
+     else if(!this.aprCenterForm.trade) {
+        this.$bvModal.msgBoxOk('Trade is required.')
+        return false;
+     }
+     
 
    else{
-         this.jobAdvertFormReset = !this.jobAdvertFormReset
-          this.flashMessage.success({title: 'GOT IT', message: 'Your advert is submitted successfully',});
-         //this.flashMessage.error({title: 'Error Message Title', message: 'Oh, you broke my heart! Shame on you!',icon: true});
-        //jobAdvertForm._id = localStorage.getItem('companyId')
-        console.log("Form Data"+JSON.stringify(this.jobAdvertForm))
-/*         this.licensingProfileFormReset = !this.licensingProfileFormReset
+          this.aprCenterFormReset= !this.aprCenterFormReset
           let uuid = uuidv4();
           let logoURL = ''
           let filename = this.image.name || ''
@@ -207,25 +186,45 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
           let ext = filename.slice(filename.lastIndexOf('.'))
           const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
           task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => this.saveProfile(url))
-         .catch(console.error).finally(reset => this.resetForm()); */
+         .catch(function (error){});
       }
 
       },
-     resetForm(){
-          this.jobAdvertForm.jobTitle = this.jobAdvertForm.jobDescription = this.jobAdvertForm.jobRequirement = this.jobAdvertForm.adsStartDate =  this.jobAdvertForm.deadLineDate = '';         
-          this.jobAdvertFormReset = !this.jobAdvertFormReset  
-          this.watchSuccessState();   
-          this.watchErrorState();   
+
+     resetForm(status){ 
+          if(status == 'success'){
+          this.showSuccessMsg()
+          this.aprCenterForm.aprCenterName = this.aprCenterForm.contactAddress = this.aprCenterForm.phoneNumber = this.aprCenterForm.state =  this.aprCenterForm.trade = this.aprCenterForm.lgArea = '';         
+          this.aprCenterFormReset = !this.aprCenterFormReset 
+          }
+          else if(status == 'error'){
+            showErrorMsg()
+          }
       },
-      watchSuccessState(){
-        if(this.successState){
-          this.flashMessage.success({title: 'GOT IT', message: 'Your advert is submitted successfully',});
-        }
+       showSuccessMsg() {
+          this.$bvModal.msgBoxOk('Data was submitted successfully', {
+          title: 'GOT IT',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'success',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
+          centered: true
+        });
       },
-      watchErrorState(){
-          this.flashMessage.error({title: 'Oops!', message: 'Your advert fail to  submit. Try again',icon: true});
+      showErrorMsg() {
+          this.$bvModal.msgBoxOk('Data fail to submit. Try it again', {
+          title: 'Oops! Error Occured',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          headerClass: 'p-2 border-bottom-0',
+          footerClass: 'p-2 border-top-0',
+          centered: true
+        });        
       },
-      onPickFile(){
+
+       onPickFile(){
         this.$refs.fileInput.click()
       },
       onFilePicked(event){
@@ -244,15 +243,16 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
       },
        saveProfile(url) {
          let date = new Date()
-         this.licensingProfileForm.dateRegistered = date
-         this.licensingProfileForm.logo = url
-         console.log('Photo URL:'+this.licensingProfileForm.logo);  
-         console.log('licensingProfileForm:'+JSON.stringify(this.licensingProfileForm))
-          return this.registerLicensingBody(this.licensingProfileForm).then(e => { 
-            console.log('Licensing Body Registered Successfully'); 
-          }); 
+         this.aprCenterForm.dateRegistered = date
+         this.aprCenterForm.photo = url
+         console.log('Photo URL:'+this.aprCenterForm.photo);  
+         this.form._id = localStorage.getItem('centerId')
+         this.form.aprCenterList.push(this.aprCenterForm) 
+          return this.registerAprCenter(this.aprCenterForm).then(e => resetForm(e)); 
       }
     }
+     
+     
   }
 
 </script>

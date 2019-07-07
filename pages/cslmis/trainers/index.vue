@@ -1,6 +1,6 @@
 <template>
   <div class="animated fadeIn">
-       <component :trainersViewData="currentTrainersViewData" @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
+       <component :trainersData="currentTrainersData" @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
   </div>
 </template>
 

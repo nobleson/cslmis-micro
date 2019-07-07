@@ -11,8 +11,18 @@ export default {
       }
     },
     {
+      name: 'Dev Program',
+      url: '/cslmis/devProgram',
+      icon: 'icon-pencil'
+    },
+    {
       name: 'Trainee',
       url: '/cslmis/trainees',
+      icon: 'icon-star'
+    },
+    {
+      name: 'Trainers',
+      url: '/cslmis/trainers',
       icon: 'icon-star'
     },
     {
@@ -25,11 +35,7 @@ export default {
       url: '/cslmis/apprentiship',
       icon: 'icon-star'
     },
-    {
-      name: 'Trainers',
-      url: '/cslmis/trainers',
-      icon: 'icon-star'
-    },
+    
     {
       name: 'Facilities',
       url: '/cslmis/facilities',
@@ -40,11 +46,7 @@ export default {
       url: '/cslmis/report',
       icon: 'icon-pencil'
     },
-    {
-      name: 'Dev Program',
-      url: '/cslmis/devProgram',
-      icon: 'icon-pencil'
-    },
+    
     
   ]
 }

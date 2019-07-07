@@ -1,13 +1,13 @@
 export const state = () => ({
     regsuccess: false,
     regerror: false,
-    aprcentersFormReset: false,
-    aprcenters:  [],
+    aprCenterFormReset: false,
+    aprCenters:  null,
     isContentLoading: true
   })
   export const mutations = {
     changeFormState (state) {
-      state.aprcentersFormReset = !state.aprcentersFormReset
+      state.aprCenterFormReset = !state.aprCenterFormReset
     },
     successToggle (state) {
       state.regsuccess = !state.regsuccess
@@ -16,53 +16,62 @@ export const state = () => ({
       state.regerror = !state.regerror
     },
     setAprCenters (state,data){
-      state.aprcenters = data
-    }
+      state.aprCenters = data
+    },
+    changeLoaderStatus(state){
+      state.isContentLoading = !state.isContentLoading;
+    } 
   }
   export const getters = {
-    getFormState: state => state.aprcentersFormReset,
+    getFormState: state => state.aprCenterFormReset,
   
     getSuccessState: state => state.regsuccess,
   
     getErrorState: state => state.regerror,
   
-    getAprCenters: state => state.aprcenters
+    getAprCenters: state => state.aprCenters,
+
+    getLoaderStatus: state => state.isContentLoading
   
   } 
   
   export const actions= {
   
-    registerAprCenters(vuexContext,){
-      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/advert/create';
-     this.$axios.$post(herokuUrl,aprcentersData)
-      .then(function (response) {        
-      vuexContext.commit('successToggle')
-    })
-      .catch(function (error) {
-        vuexContext.commit('errorToggle')
-      })
-      .finally(function () {
-        vuexContext.commit('changeFormState')
-      });
-    },
+    registerAprCenter(vuexContext,aprCentersData){
+      let self = this
+      return new Promise( function(resolve,reject){
+        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/aprCenter/create';
+        self.$axios.$post(herokuUrl,aprCentersData)
+         .then(function (response) {   
   
-    registerAprCenters(vuexContext){
-      
-      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/bodies/licensing/getall';
-     this.$axios.$get(herokuUrl)
-      .then(function (response){
-       // let data = JSON.parse(response);
-        vuexContext.commit('setAprCenters',response);
-        console.log("Job Advert:"+vuexContext.state.aprcenters)
-        //console.log("trade:"+response)
-      })
-      .catch(function (error) {
-        console.log("trade fails to load")
-      })
-      .finally(function () {
+          resolve('success')
+           vuexContext.commit('successToggle')
+       })
+         .catch(function (error) {
+           reject('error')
+           vuexContext.commit('errorToggle')
+         });
       });
   
     },
+
+    loadAprCenters(vuexContext,){
+      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/trainee/getall';
+        this.$axios.$get(herokuUrl)
+         .then(function (response){
+          vuexContext.commit('changeLoaderStatus')
+           vuexContext.commit('setAprCenter',response);
+           //console.log("Job Advert:"+vuexContext.state.trainee)
+           //console.log("trade:"+response)
+         })
+         .catch(function (error) {
+           console.log("trade fails to load")
+         })
+         .finally(function () {
+         });
+     
+    },
+
     toggleFormState(vuexContext) {
       vuexContext.commit('changeFormState')
     },
@@ -73,6 +82,25 @@ export const state = () => ({
       vuexContext.commit('errorToggle')
     },
   }
+
+
+ /*  registeraprcenter(vuexContext){
+      
+    let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/bodies/licensing/getall';
+   this.$axios.$get(herokuUrl)
+    .then(function (response){
+     // let data = JSON.parse(response);
+      vuexContext.commit('setaprcenter',response);
+      console.log("Job Advert:"+vuexContext.state.aprcenter)
+      //console.log("trade:"+response)
+    })
+    .catch(function (error) {
+      console.log("trade fails to load")
+    })
+    .finally(function () {
+    });
+
+  }, */
   
   
   /* export const state = () => ({
