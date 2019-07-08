@@ -2,7 +2,7 @@ export const state = () => ({
     regsuccess: false,
     regerror: false,
     facilitiesFormReset: false,
-    facilities:  [],
+    facilities: null,
     isContentLoading: true
   })
   export const mutations = {
@@ -15,7 +15,7 @@ export const state = () => ({
     errorToggle (state) {
       state.regerror = !state.regerror
     },
-    setApprentiship (state,data){
+    setFacilities (state,data){
       state.facilities = data
     }
   }
@@ -26,43 +26,44 @@ export const state = () => ({
   
     getErrorState: state => state.regerror,
   
-    getFacilities: state => state.facilities
+    getFacilities: state => state.facilities,
+
+    changeLoaderStatus(state){
+      state.isContentLoading = !state.isContentLoading;
+    } 
   
   } 
   
   export const actions= {
-  
-    registerFacilities(vuexContext,){
-      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/advert/create';
-     this.$axios.$post(herokuUrl,facilitiesData)
-      .then(function (response) {        
-      vuexContext.commit('successToggle')
-    })
-      .catch(function (error) {
-        vuexContext.commit('errorToggle')
-      })
-      .finally(function () {
-        vuexContext.commit('changeFormState')
+    registerFacilities(vuexContext,facilitiesData){
+      let self = this
+      return new Promise( function(resolve,reject){
+        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/facility/create';
+        self.$axios.$post(herokuUrl,facilitiesData)
+         .then(function (response) {   
+          resolve('success')
+           vuexContext.commit('successToggle')
+          })
+         .catch(function (error) {
+           reject('error')
+           vuexContext.commit('errorToggle')
+         });
       });
     },
-  
-    registerFacilities(vuexContext){
-      
-      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/bodies/licensing/getall';
-     this.$axios.$get(herokuUrl)
+   loadFacilities(vuexContext){
+    let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/facility/getall';
+     return this.$axios.$get(herokuUrl)
       .then(function (response){
-       // let data = JSON.parse(response);
         vuexContext.commit('setFacilities',response);
-        console.log("facilities:"+vuexContext.state.facilities)
-        //console.log("trade:"+response)
+        vuexContext.commit('changeLoaderStatus')
       })
       .catch(function (error) {
-        console.log("facilities fails to load")
+        console.log("Facilities fails to load")
       })
       .finally(function () {
-      });
+      }); 
   
-    },
+    }, 
     toggleFormState(vuexContext) {
       vuexContext.commit('changeFormState')
     },

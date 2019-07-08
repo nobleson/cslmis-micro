@@ -17,36 +17,21 @@
             <p class="pb-4">Create Apprentice</p>
             <!--Body-->
             <form>
-              <mdb-input label="Apprentice Id Number"  v-model="apprentishipForm.idNumber" />
-              <mdb-input label="First Name"  v-model="apprentishipForm.firstName" />
-              <mdb-input label="Middle Name"   v-model="apprentishipForm.middleName"/>
-              <mdb-input label="Last Name"  v-model="apprentishipForm.lastName" />
-              <mdb-input label="Gender"  v-model="apprentishipForm.gender"/>
-              <mdb-input label="Trade"  v-model="apprentishipForm.trade"/>
-              <mdb-input label="Supervisor Name"  v-model="apprentishipForm.supervisorName"/>
-              <mdb-input label="Phone Number"   v-model="apprentishipForm.phoneNumber"/>
-              <mdb-input label="E-mail Address"   v-model="apprentishipForm.emailAddress"/>
-
-                <b-card class="mt-3">
-                <h4>Profile Photo</h4>
-                <div>
-                  <mdb-btn color="default" type="button" @click="onPickFile">Upload Image<mdb-icon icon="image" class="ml-1"/></mdb-btn>
-                <input 
-                type="file" 
-                style="display: none" 
-                ref="fileInput"
-                accept="image/*"
-                @change="onFilePicked"/>
-                </div>
-                <div>
-                <img :src="resultURL" height="150"/>
-                </div>
-                </b-card> 
+              <mdb-input label="Apprentice Id Number"  v-model="apprenticeForm.idNumber" />
+              <mdb-input label="First Name"  v-model="apprenticeForm.firstName" />
+              <mdb-input label="Middle Name"   v-model="apprenticeForm.middleName"/>
+              <mdb-input label="Last Name"  v-model="apprenticeForm.lastName" />
+              <mdb-input label="Gender"  v-model="apprenticeForm.gender"/>
+              <mdb-input label="Trade"  v-model="apprenticeForm.trade"/>
+              <mdb-input label="Supervisor Name"  v-model="apprenticeForm.supervisorName"/>
+              <mdb-input label="Phone Number"   v-model="apprenticeForm.phoneNumber"/>
+              <mdb-input label="E-mail Address"   v-model="apprenticeForm.emailAddress"/>
+              <mdb-input label="Residential Address"   v-model="apprenticeForm.residentialAddress"/>
 
                <div class="text-xs-left">
-                <mdb-btn color="primary" @click.native.prevent="create()" :disabled='apprentishipFormReset'>Submit
-                  <b-spinner small v-if="apprentishipFormReset === true"></b-spinner>
-                  <span class="sr-only" v-if="apprentishipFormReset === true">Wait...</span>
+                <mdb-btn color="primary" @click.native.prevent="create()" :disabled='apprenticeFormReset'>Submit
+                  <b-spinner small v-if="apprenticeFormReset === true"></b-spinner>
+                  <span class="sr-only" v-if="apprenticeFormReset === true">Wait...</span>
                 </mdb-btn>
               </div>
             </form>
@@ -62,7 +47,7 @@
   </div>
 </template>
 <script>
-//import  uuidv4 from 'uuid/v4';
+import  uuidv4 from 'uuid/v4';
 import datepicker from 'vue-date-picker'
 import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter,  mdbListGroup, mdbListGroupItem, mdbBadge,  mdbEdgeHeader, mdbContainer, mdbRow, mdbCol, mdbCardBody,mdbCard,  mdbInput, mdbBtn,mdbIcon } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
@@ -91,7 +76,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
     data() {
       return {
         login: false,
-        apprentishipForm: {
+        apprenticeForm: {
               idNumber:'',
               firstName:'',
               middleName:'',
@@ -104,13 +89,11 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
               residentialAddress:'',
               dateRegistered:'',
             },
-             form:{
+              form:{
               _id: '',
-              apprentishipList: []
+              apprenticeList: []
             },
-           
-            resultURL: '',
-            apprentishipFormReset: false,
+            apprenticeFormReset: false,
             spinner: '0',
           
                 
@@ -131,77 +114,72 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
          */
       },
     computed: {
-        ...mapGetters({successState: 'apprentiship/getSuccessState',errorState: 'apprentiship/getErrorState'})
+        ...mapGetters({successState: 'apprentice/getSuccessState',errorState: 'apprentice/getErrorState'})
 
     },
     methods: {
-      ...mapActions({registerApprentiship: 'apprentiship/registerApprentiship'}),
+      ...mapActions({registerApprentice: 'apprentice/registerApprentice'}),
       
-     
-       
-         
       create() { 
-     if(!this.apprentishipForm.idNumber) {
+     if(!this.apprenticeForm.idNumber) {
         this.$bvModal.msgBoxOk('First Name is required.')
         return false;
       }
-      else if(!this.apprentishipForm.firstName) {
+      else if(!this.apprenticeForm.firstName) {
         this.$bvModal.msgBoxOk('First Name is required.')
         return false;
       } 
-       else if(!this.apprentishipForm.middleName) {
+       else if(!this.apprenticeForm.middleName) {
         this.$bvModal.msgBoxOk('Middle Name is required.')
         return false;
       }
-      else if(!this.apprentishipForm.lastName) {
+      else if(!this.apprenticeForm.lastName) {
         this.$bvModal.msgBoxOk('Last Name is required.')
         return false;
       }
-      else if(!this.apprentishipForm.gender) {
+      else if(!this.apprenticeForm.gender) {
         this.$bvModal.msgBoxOk('Gender is required.')
         return false;
     }
-    else if(!this.apprentishipForm.trade) {
+    else if(!this.apprenticeForm.trade) {
         this.$bvModal.msgBoxOk('Apprentice is required.')
         return false;
     }
-    else if(!this.apprentishipForm.supervisorName) {
+    else if(!this.apprenticeForm.supervisorName) {
         this.$bvModal.msgBoxOk('Suppervisor Name is required.')
         return false;
     }
-    else if(!this.apprentishipForm.phoneNumber) {
+    else if(!this.apprenticeForm.phoneNumber) {
         this.$bvModal.msgBoxOk('Highest Qualification is required.')
         return false;
     }
-    else if(!this.apprentishipForm.emailAddress) {
+    else if(!this.apprenticeForm.emailAddress) {
         this.$bvModal.msgBoxOk('E-mail address is required.')
         return false;
      } 
-    else if(!this.apprentishipForm.residentialAddress) {
+    else if(!this.apprenticeForm.residentialAddress) {
         this.$bvModal.msgBoxOk('Residential Address is required.')
         return false;
      }
 
    else{
-          this.apprentishipFormReset = !this.apprentishipFormReset
-          let uuid = uuidv4();
-          let logoURL = ''
-          let filename = this.image.name || ''
-          const metadata = { contentType: this.image.type };
-          let ext = filename.slice(filename.lastIndexOf('.'))
-          const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
-          task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => this.saveProfile(url))
-         .catch(function (error){});
+         this.apprenticeFormReset = !this.apprenticeFormReset
+         let date = new Date()
+         this.apprenticeForm.dateRegistered = date 
+         this.form._id = localStorage.getItem('centerId')
+         this.form. apprenticeList.push(this.apprenticeForm) 
+         return this.registerApprentice(this.form).then(e => this.resetForm(e));
+         
       }
 
       },
     resetForm(status){
           if(status == 'success'){
           this.showSuccessMsg()
-          this.apprentishipForm.idNumber = this.apprentishipForm.firstName = this.apprentishipForm.middleName = this.apprentishipForm.lastName = this.apprentishipForm.gender =  
-          this.apprentishipForm.trade = this.apprentishipForm.supervisorName =  this.apprentishipForm.phoneNumber =  
-          this.apprentishipForm.emailAddress = this.apprentishipForm.residentialAddress =  this.resultURL ='';       
-          this.apprentishipFormReset = !this.apprentishipFormReset 
+          this.apprenticeForm.idNumber = this.apprenticeForm.firstName = this.apprenticeForm.middleName = this.apprenticeForm.lastName = this.apprenticeForm.gender =  
+          this.apprenticeForm.trade = this.apprenticeForm.supervisorName =  this.apprenticeForm.phoneNumber =  
+          this.apprenticeForm.emailAddress = this.apprenticeForm.residentialAddress =  this.resultURL ='';       
+          this.apprenticeFormReset = !this.apprenticeFormReset 
 
           }
           else if(status == 'error'){
@@ -230,33 +208,7 @@ import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
           centered: true
         });        
       },
-      
-      onPickFile(){
-        this.$refs.fileInput.click()
-      },
-      onFilePicked(event){
-
-        let files = event.target.files
-        let filename = files[0].name;
-        if(filename.lastIndexOf('.') <= 0){
-          alert('please enter a valid file')
-        }
-        const fileReader =  new FileReader()
-        fileReader.addEventListener('load',() =>{
-          this.resultURL = fileReader.result
-        })
-        fileReader.readAsDataURL(files[0])
-        this.image = files[0]
-      },
-       saveProfile(url) {
-         let date = new Date()
-         this.apprentishipForm.dateRegistered = date
-         this.apprentishipForm.photo = url
-         console.log('Photo URL:'+this.apprentishipForm.photo);  
-         this.form._id = localStorage.getItem('centerId')
-         this.form.apprentishipList.push(this.apprentishipForm) 
-         return this.registerApprentice(this.form).then(e => this.resetForm(e));  
-      }
+    
     }
   }
 

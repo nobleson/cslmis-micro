@@ -33,7 +33,7 @@ Vue.use(FlashMessage);
 Vue.use(wysiwyg, {
     hideModules: { "link":true,
                    "code":true,
-                   "table":true,
+                   "table":false,
                    "image":true,
                    "bold":true,
                    "italic":true,

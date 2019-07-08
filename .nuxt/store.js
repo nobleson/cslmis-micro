@@ -12,14 +12,10 @@ void (function updateModules() {
 
   // If store is an exported method = classic mode (deprecated)
 
-  if (typeof store === 'function') {
-    return log.warn('Classic mode for store/ is deprecated and will be removed in Nuxt 3.')
-  }
-
   // Enforce store modules
   store.modules = store.modules || {}
 
-  resolveStoreModules(require('..\\store\\apprentiship.js'), 'apprentiship.js')
+  resolveStoreModules(require('..\\store\\apprentice.js'), 'apprentice.js')
   resolveStoreModules(require('..\\store\\aprcenters.js'), 'aprcenters.js')
   resolveStoreModules(require('..\\store\\authentication.js'), 'authentication.js')
   resolveStoreModules(require('..\\store\\devprogram.js'), 'devprogram.js')
@@ -29,26 +25,6 @@ void (function updateModules() {
   resolveStoreModules(require('..\\store\\trainer.js'), 'trainer.js')
 
   // If the environment supports hot reloading...
-
-  if (process.client && module.hot) {
-    // Whenever any Vuex module is updated...
-    module.hot.accept([
-      '..\\store\\apprentiship.js',
-      '..\\store\\aprcenters.js',
-      '..\\store\\authentication.js',
-      '..\\store\\devprogram.js',
-      '..\\store\\facilities.js',
-      '..\\store\\index.js',
-      '..\\store\\report.js',
-      '..\\store\\trainee.js',
-      '..\\store\\trainer.js',
-    ], () => {
-      // Update `root.modules` with the latest definitions.
-      updateModules()
-      // Trigger a hot update in the store.
-      window.$nuxt.$store.hotUpdate(store)
-    })
-  }
 })()
 
 // createStore

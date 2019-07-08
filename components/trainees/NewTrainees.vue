@@ -265,7 +265,7 @@ const firebaseConfig = {
      resetForm(status){
           if(status == 'success'){
           this.showSuccessMsg()
-            this.traineeForm.idNumber = this.traineeForm.firstName = this.traineeForm.middleName = this.traineeForm.lastName = this.traineeForm.gender =  this.traineeForm.tradeSpecilisation =  
+          this.traineeForm.idNumber = this.traineeForm.firstName = this.traineeForm.middleName = this.traineeForm.lastName = this.traineeForm.gender =  this.traineeForm.tradeSpecilisation =  
           this.traineeForm.highestQualification =  this.traineeForm.residentialAddress =  this.traineeForm.phoneNumber =  this.traineeForm.alternativePhoneNumber = this.traineeForm.emailAddress = 
           this.traineeForm.emailAddress = this.traineeForm.phoneNumber = this.traineeForm.bvnNumber = this.traineeForm.centerName = this.traineeForm.centerAddress =
           this.traineeForm.lgArea =  this.traineeForm.state =  this.traineeForm.trade =  this.traineeForm.disabilityType =  this.traineeForm.photo = this.traineeForm.dateRegistered = this.resultURL ='';         

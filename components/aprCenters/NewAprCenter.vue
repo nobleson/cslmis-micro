@@ -24,21 +24,6 @@
               <mdb-input label="Local Government Area" v-model="aprCenterForm.lgArea"/>
               <mdb-input label="State"  v-model="aprCenterForm.state"/>
               <mdb-input label="Trade"   v-model="aprCenterForm.trade"/>
-                <b-card class="mt-3">
-                <h4>Profile Photo</h4>
-                <div>
-                  <mdb-btn color="default" type="button" @click="onPickFile">Upload Image<mdb-icon icon="image" class="ml-1"/></mdb-btn>
-                <input 
-                type="file" 
-                style="display: none" 
-                ref="fileInput"
-                accept="image/*"
-                @change="onFilePicked"/>
-                </div>
-                <div>
-                <img :src="resultURL" height="150"/>
-                </div>
-                </b-card> 
 
              <div class="text-xs-left">
                 <mdb-btn color="primary" @click.native.prevent="create()" :disabled='aprCenterFormReset'>Submit
@@ -63,25 +48,7 @@ import  uuidv4 from 'uuid/v4';
 import datepicker from 'vue-date-picker'
 import { mdbModal, mdbModalHeader, mdbModalTitle, mdbModalBody, mdbModalFooter,  mdbListGroup, mdbListGroupItem, mdbBadge,  mdbEdgeHeader, mdbContainer, mdbRow, mdbCol, mdbCardBody,mdbCard,  mdbInput, mdbBtn,mdbIcon } from 'mdbvue';
 import {mapGetters, mapActions,mapState,mapMutations} from 'vuex'
-import * as firebase from 'firebase/app'
-import 'firebase/storage'
 
- const focus = {
-    inserted(el) {
-      el.focus()
-    },
-  }
-const firebaseConfig = {
-    apiKey: "AIzaSyA73Wdeedk01ZoL-oWX08r5UxWing28knM",
-    authDomain: "cslmis-admin.firebaseapp.com",
-    databaseURL: "https://cslmis-admin.firebaseio.com",
-    projectId: "cslmis-admin",
-    storageBucket: "gs://cslmis-admin-bucket",
-    messagingSenderId: "263391859932",
-    appId: "1:263391859932:web:4a6a7871600a3acd"
-  };
-  
-!firebase.apps.length ? firebase.initializeApp(firebaseConfig) : ''
   export default {
       components: {
       mdbEdgeHeader,
@@ -105,8 +72,7 @@ const firebaseConfig = {
      },
     data() {
       return {
-        login: false,
-           
+     
         aprCenterForm: {
                 IdNumber: '',//centerid
                 aprCenterName:'',
@@ -115,16 +81,14 @@ const firebaseConfig = {
                 lgArea:'',
                 state:'',
                 trade:'',
-                photo:null,
                 dateRegistered:''
                 
               
             },
             form:{
               _id: '',
-              aprCenterList:[]
+              apprentishipCenterList:[]
             },
-            resultURL: '',
             aprCenterFormReset: false,
             spinner: '0',    
           }
@@ -149,7 +113,7 @@ const firebaseConfig = {
     }, 
     methods: {
       ...mapActions({registerAprCenter: 'aprcenters/registerAprCenter'}),
-       
+      
       create() { 
      if(!this.aprCenterForm.aprCenterName) {
         this.$bvModal.msgBoxOk('Apprentiship Center Name is required.')
@@ -175,26 +139,23 @@ const firebaseConfig = {
         this.$bvModal.msgBoxOk('Trade is required.')
         return false;
      }
-     
-
-   else{
+    else{
+            
           this.aprCenterFormReset= !this.aprCenterFormReset
-          let uuid = uuidv4();
-          let logoURL = ''
-          let filename = this.image.name || ''
-          const metadata = { contentType: this.image.type };
-          let ext = filename.slice(filename.lastIndexOf('.'))
-          const task = firebase.app().storage().ref('profile/'+uuid+"."+ext).put(this.image, metadata);
-          task.then(snapshot => snapshot.ref.getDownloadURL()).then(url => this.saveProfile(url))
-         .catch(function (error){});
-      }
+          let date = new Date()
+          this.aprCenterForm.dateRegistered = date
+          this.form._id = localStorage.getItem('centerId')
+          this.form.apprentishipCenterList.push(this.aprCenterForm) 
+            return this.registerAprCenter(this.form).then(e => resetForm(e)); 
+        }
 
       },
 
      resetForm(status){ 
           if(status == 'success'){
           this.showSuccessMsg()
-          this.aprCenterForm.aprCenterName = this.aprCenterForm.contactAddress = this.aprCenterForm.phoneNumber = this.aprCenterForm.state =  this.aprCenterForm.trade = this.aprCenterForm.lgArea = '';         
+          this.aprCenterForm.aprCenterName = this.aprCenterForm.contactAddress = this.aprCenterForm.phoneNumber = 
+          this.aprCenterForm.state =  this.aprCenterForm.trade = this.aprCenterForm.lgArea = '';         
           this.aprCenterFormReset = !this.aprCenterFormReset 
           }
           else if(status == 'error'){
@@ -222,33 +183,6 @@ const firebaseConfig = {
           footerClass: 'p-2 border-top-0',
           centered: true
         });        
-      },
-
-       onPickFile(){
-        this.$refs.fileInput.click()
-      },
-      onFilePicked(event){
-
-        let files = event.target.files
-        let filename = files[0].name;
-        if(filename.lastIndexOf('.') <= 0){
-          alert('please enter a valid file')
-        }
-        const fileReader =  new FileReader()
-        fileReader.addEventListener('load',() =>{
-          this.resultURL = fileReader.result
-        })
-        fileReader.readAsDataURL(files[0])
-        this.image = files[0]
-      },
-       saveProfile(url) {
-         let date = new Date()
-         this.aprCenterForm.dateRegistered = date
-         this.aprCenterForm.photo = url
-         console.log('Photo URL:'+this.aprCenterForm.photo);  
-         this.form._id = localStorage.getItem('centerId')
-         this.form.aprCenterList.push(this.aprCenterForm) 
-          return this.registerAprCenter(this.aprCenterForm).then(e => resetForm(e)); 
       }
     }
      

@@ -2,7 +2,7 @@ export const state = () => ({
     regsuccess: false,
     regerror: false,
     reportFormReset: false,
-    report:  [],
+    reports:null,
     isContentLoading: true
   })
   export const mutations = {
@@ -15,9 +15,12 @@ export const state = () => ({
     errorToggle (state) {
       state.regerror = !state.regerror
     },
-    setReport (state,data){
-      state.report = data
-    }
+    setReports (state,data){
+      state.reports = data
+    },
+    changeLoaderStatus(state){
+      state.isContentLoading = !state.isContentLoading;
+    } 
   }
   export const getters = {
     getFormState: state => state.reportFormReset,
@@ -26,43 +29,43 @@ export const state = () => ({
   
     getErrorState: state => state.regerror,
   
-    getReport: state => state.report
+    getReports: state => state.reports,
+
+    getLoaderStatus: state => state.isContentLoading
   
   } 
   
   export const actions= {
-  
-    registerReport(vuexContext,){
-      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/company/advert/create';
-     this.$axios.$post(herokuUrl,ReportData)
-      .then(function (response) {        
-      vuexContext.commit('successToggle')
-    })
-      .catch(function (error) {
-        vuexContext.commit('errorToggle')
-      })
-      .finally(function () {
-        vuexContext.commit('changeFormState')
+    registerReport(vuexContext,reportsData){
+      let self = this
+      console.log(JSON.stringify(reportsData))
+      return new Promise( function(resolve,reject){
+        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/report/create';
+        self.$axios.$post(herokuUrl,reportsData)
+         .then(function (response) {   
+          resolve('success')
+           vuexContext.commit('successToggle')
+          })
+         .catch(function (error) {
+           reject('error')
+           vuexContext.commit('errorToggle')
+         });
       });
     },
-  
-    registerReport(vuexContext){
-      
-      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/bodies/licensing/getall';
-     this.$axios.$get(herokuUrl)
+   loadReports(vuexContext){
+    let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/report/getall';
+     return this.$axios.$get(herokuUrl)
       .then(function (response){
-       // let data = JSON.parse(response);
-        vuexContext.commit('setReport',response);
-        console.log("report:"+vuexContext.state.report)
-        //console.log("trade:"+response)
+        vuexContext.commit('setReports',response);
+        vuexContext.commit('changeLoaderStatus')
       })
       .catch(function (error) {
-        console.log("report fails to load")
+        console.log("Report fails to load")
       })
       .finally(function () {
-      });
+      }); 
   
-    },
+    }, 
     toggleFormState(vuexContext) {
       vuexContext.commit('changeFormState')
     },

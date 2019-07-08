@@ -39,28 +39,27 @@ export const state = () => ({
   
     registerAprCenter(vuexContext,aprCentersData){
       let self = this
+      console.log("Apr CenterData"+JSON.stringify(aprCentersData))
+
       return new Promise( function(resolve,reject){
-        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/aprCenter/create';
+        let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/apprentiship/create';
         self.$axios.$post(herokuUrl,aprCentersData)
          .then(function (response) {   
-  
           resolve('success')
-           vuexContext.commit('successToggle')
        })
          .catch(function (error) {
            reject('error')
-           vuexContext.commit('errorToggle')
          });
       });
   
     },
 
     loadAprCenters(vuexContext,){
-      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/trainee/getall';
+      let herokuUrl = 'https://shielded-savannah-72922.herokuapp.com/api/center/apprentiship/getall';
         this.$axios.$get(herokuUrl)
          .then(function (response){
           vuexContext.commit('changeLoaderStatus')
-           vuexContext.commit('setAprCenter',response);
+           vuexContext.commit('setAprCenters',response);
            //console.log("Job Advert:"+vuexContext.state.trainee)
            //console.log("trade:"+response)
          })

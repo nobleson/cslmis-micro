@@ -1,6 +1,6 @@
 <template>
   <div class="animated fadeIn">
-       <component :aprcenterData="currentAprCenterData" @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
+       <component :reportData="currentReportData" @changeComponent="changeCurrentComponent" :is="currentComponent"></component>
   </div>
 </template>
 
