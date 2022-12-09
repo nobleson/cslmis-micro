@@ -21,7 +21,7 @@
     "core-js": "^2.6.5",
     "css-vars-ponyfill": "^1.17.2",
     "ejs": "^2.4.1",
-    "express": "^4.13.4",
+    "express": "^4.17.3",
     "firebase": "^6.0.1",
     "flag-icon-css": "^3.3.0",
     "font-awesome": "^4.7.0",
